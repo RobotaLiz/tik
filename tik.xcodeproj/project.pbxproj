@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F23492A0E191400F9FF24 /* tikApp.swift */; };
+		B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F234B2A0E191400F9FF24 /* ContentView.swift */; };
+		B37F234E2A0E191500F9FF24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B37F234D2A0E191500F9FF24 /* Assets.xcassets */; };
+		B37F23512A0E191500F9FF24 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B37F23502A0E191500F9FF24 /* Preview Assets.xcassets */; };
+		B37F235B2A0E191500F9FF24 /* tikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F235A2A0E191500F9FF24 /* tikTests.swift */; };
+		B37F23652A0E191500F9FF24 /* tikUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F23642A0E191500F9FF24 /* tikUITests.swift */; };
+		B37F23672A0E191500F9FF24 /* tikUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F23662A0E191500F9FF24 /* tikUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B37F23572A0E191500F9FF24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B37F233E2A0E191400F9FF24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B37F23452A0E191400F9FF24;
+			remoteInfo = tik;
+		};
+		B37F23612A0E191500F9FF24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B37F233E2A0E191400F9FF24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B37F23452A0E191400F9FF24;
+			remoteInfo = tik;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B37F23462A0E191400F9FF24 /* tik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B37F23492A0E191400F9FF24 /* tikApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikApp.swift; sourceTree = "<group>"; };
+		B37F234B2A0E191400F9FF24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B37F234D2A0E191500F9FF24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B37F23502A0E191500F9FF24 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B37F23562A0E191500F9FF24 /* tikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B37F235A2A0E191500F9FF24 /* tikTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikTests.swift; sourceTree = "<group>"; };
+		B37F23602A0E191500F9FF24 /* tikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B37F23642A0E191500F9FF24 /* tikUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikUITests.swift; sourceTree = "<group>"; };
+		B37F23662A0E191500F9FF24 /* tikUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B37F23432A0E191400F9FF24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F23532A0E191500F9FF24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F235D2A0E191500F9FF24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B37F233D2A0E191400F9FF24 = {
+			isa = PBXGroup;
+			children = (
+				B37F23482A0E191400F9FF24 /* tik */,
+				B37F23592A0E191500F9FF24 /* tikTests */,
+				B37F23632A0E191500F9FF24 /* tikUITests */,
+				B37F23472A0E191400F9FF24 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B37F23472A0E191400F9FF24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B37F23462A0E191400F9FF24 /* tik.app */,
+				B37F23562A0E191500F9FF24 /* tikTests.xctest */,
+				B37F23602A0E191500F9FF24 /* tikUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B37F23482A0E191400F9FF24 /* tik */ = {
+			isa = PBXGroup;
+			children = (
+				B37F23492A0E191400F9FF24 /* tikApp.swift */,
+				B37F234B2A0E191400F9FF24 /* ContentView.swift */,
+				B37F234D2A0E191500F9FF24 /* Assets.xcassets */,
+				B37F234F2A0E191500F9FF24 /* Preview Content */,
+			);
+			path = tik;
+			sourceTree = "<group>";
+		};
+		B37F234F2A0E191500F9FF24 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B37F23502A0E191500F9FF24 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B37F23592A0E191500F9FF24 /* tikTests */ = {
+			isa = PBXGroup;
+			children = (
+				B37F235A2A0E191500F9FF24 /* tikTests.swift */,
+			);
+			path = tikTests;
+			sourceTree = "<group>";
+		};
+		B37F23632A0E191500F9FF24 /* tikUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B37F23642A0E191500F9FF24 /* tikUITests.swift */,
+				B37F23662A0E191500F9FF24 /* tikUITestsLaunchTests.swift */,
+			);
+			path = tikUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B37F23452A0E191400F9FF24 /* tik */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B37F236A2A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tik" */;
+			buildPhases = (
+				B37F23422A0E191400F9FF24 /* Sources */,
+				B37F23432A0E191400F9FF24 /* Frameworks */,
+				B37F23442A0E191400F9FF24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tik;
+			productName = tik;
+			productReference = B37F23462A0E191400F9FF24 /* tik.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B37F23552A0E191500F9FF24 /* tikTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B37F236D2A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tikTests" */;
+			buildPhases = (
+				B37F23522A0E191500F9FF24 /* Sources */,
+				B37F23532A0E191500F9FF24 /* Frameworks */,
+				B37F23542A0E191500F9FF24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B37F23582A0E191500F9FF24 /* PBXTargetDependency */,
+			);
+			name = tikTests;
+			productName = tikTests;
+			productReference = B37F23562A0E191500F9FF24 /* tikTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B37F235F2A0E191500F9FF24 /* tikUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B37F23702A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tikUITests" */;
+			buildPhases = (
+				B37F235C2A0E191500F9FF24 /* Sources */,
+				B37F235D2A0E191500F9FF24 /* Frameworks */,
+				B37F235E2A0E191500F9FF24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B37F23622A0E191500F9FF24 /* PBXTargetDependency */,
+			);
+			name = tikUITests;
+			productName = tikUITests;
+			productReference = B37F23602A0E191500F9FF24 /* tikUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B37F233E2A0E191400F9FF24 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					B37F23452A0E191400F9FF24 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					B37F23552A0E191500F9FF24 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = B37F23452A0E191400F9FF24;
+					};
+					B37F235F2A0E191500F9FF24 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = B37F23452A0E191400F9FF24;
+					};
+				};
+			};
+			buildConfigurationList = B37F23412A0E191400F9FF24 /* Build configuration list for PBXProject "tik" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B37F233D2A0E191400F9FF24;
+			productRefGroup = B37F23472A0E191400F9FF24 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B37F23452A0E191400F9FF24 /* tik */,
+				B37F23552A0E191500F9FF24 /* tikTests */,
+				B37F235F2A0E191500F9FF24 /* tikUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B37F23442A0E191400F9FF24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B37F23512A0E191500F9FF24 /* Preview Assets.xcassets in Resources */,
+				B37F234E2A0E191500F9FF24 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F23542A0E191500F9FF24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F235E2A0E191500F9FF24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B37F23422A0E191400F9FF24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */,
+				B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F23522A0E191500F9FF24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B37F235B2A0E191500F9FF24 /* tikTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B37F235C2A0E191500F9FF24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B37F23652A0E191500F9FF24 /* tikUITests.swift in Sources */,
+				B37F23672A0E191500F9FF24 /* tikUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B37F23582A0E191500F9FF24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B37F23452A0E191400F9FF24 /* tik */;
+			targetProxy = B37F23572A0E191500F9FF24 /* PBXContainerItemProxy */;
+		};
+		B37F23622A0E191500F9FF24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B37F23452A0E191400F9FF24 /* tik */;
+			targetProxy = B37F23612A0E191500F9FF24 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B37F23682A0E191500F9FF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B37F23692A0E191500F9FF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B37F236B2A0E191500F9FF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tik/Preview Content\"";
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B37F236C2A0E191500F9FF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tik/Preview Content\"";
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B37F236E2A0E191500F9FF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tikTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tik";
+			};
+			name = Debug;
+		};
+		B37F236F2A0E191500F9FF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tikTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tik";
+			};
+			name = Release;
+		};
+		B37F23712A0E191500F9FF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tikUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = tik;
+			};
+			name = Debug;
+		};
+		B37F23722A0E191500F9FF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7X5WKUZN3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exampel.tikUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = tik;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B37F23412A0E191400F9FF24 /* Build configuration list for PBXProject "tik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37F23682A0E191500F9FF24 /* Debug */,
+				B37F23692A0E191500F9FF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B37F236A2A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37F236B2A0E191500F9FF24 /* Debug */,
+				B37F236C2A0E191500F9FF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B37F236D2A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tikTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37F236E2A0E191500F9FF24 /* Debug */,
+				B37F236F2A0E191500F9FF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B37F23702A0E191500F9FF24 /* Build configuration list for PBXNativeTarget "tikUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37F23712A0E191500F9FF24 /* Debug */,
+				B37F23722A0E191500F9FF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B37F233E2A0E191400F9FF24 /* Project object */;
+}
