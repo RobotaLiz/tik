@@ -8,9 +8,10 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Task {
+struct Task : Identifiable { 
     
     @DocumentID var docId : String?
+    var id = UUID()
     var name : String
     var notes : String?
     var location : String?
