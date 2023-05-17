@@ -1,4 +1,9 @@
 
+// lägga till en knapp i form av text där du ska kunna adda en ny användare.
+// ändra signin knappen färg till samma som iconens.
+// när du skapa en användare ska samma layout användas där du kan skriva i ditt namn du vill ha
+// och sedan lösenordet du väljer.
+
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -26,12 +31,12 @@ struct UserLogInView: View {
                 .shadow(radius: 7)
                 .padding()
             Label("My Tik Account", systemImage: "home")
+                .padding(-50)
                 .bold()
                 .font(.title3)
             
-            
-        }.padding(20)
-        
+                .padding(70)
+        }
         Form {
             TextField("Username:", text: $username)
             
@@ -42,7 +47,7 @@ struct UserLogInView: View {
                 .shadow(color: .purple, radius: 10)
             
                 .focused($focusedField, equals: .usernameField)
-                .font(.title2)
+                .font(.title3)
             
             SecureField("Password:", text: $password)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
@@ -51,20 +56,19 @@ struct UserLogInView: View {
                 .shadow(color: .purple, radius: 10)
             
             
+            
                 .focused($focusedField, equals: .passwordField)
-                .font(.title2)
+                .font(.title3)
             
         }
-        
-        Button("Sign In") {
-            if username.isEmpty {
-                focusedField = .usernameField
-            }else if password.isEmpty {
-                focusedField = .passwordField
+        HStack{
+            Button("Add account", action: {})
+            Image(systemName: "person.fill.badge.plus")
+                .foregroundColor(.gray)
                 
-            }else{
-                // handleLogin(username, password)
-            }
+        }
+        Button("Sign In") {
+            signIn()
             
         }
         
@@ -74,17 +78,26 @@ struct UserLogInView: View {
         .clipShape(Capsule())
         .padding(50)
     }
-    
-}
-
-
-
-
-
-
-struct UserLogInView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserLogInView()
+    func signIn () {
+        
+        Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            } else {
+                print("success")
+            }
+        }
+        
+        
+        
+        
+        
+        
+        struct UserLogInView_Previews: PreviewProvider {
+            static var previews: some View {
+                UserLogInView()
+            }
+        }
+        
     }
 }
-

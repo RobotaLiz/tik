@@ -14,6 +14,7 @@
 		A9CA3E392A125C9000DE7FE9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E382A125C9000DE7FE9 /* User.swift */; };
 		A9CA3E3B2A125C9C00DE7FE9 /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E3A2A125C9C00DE7FE9 /* Household.swift */; };
 		A9CA3E3D2A125CB400DE7FE9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E3C2A125CB400DE7FE9 /* Task.swift */; };
+		B31167172A1274B000EC9256 /* UserLogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31167162A1274B000EC9256 /* UserLogInView.swift */; };
 		B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F23492A0E191400F9FF24 /* tikApp.swift */; };
 		B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F234B2A0E191400F9FF24 /* ContentView.swift */; };
 		B37F234E2A0E191500F9FF24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B37F234D2A0E191500F9FF24 /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		A9CA3E382A125C9000DE7FE9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A9CA3E3A2A125C9C00DE7FE9 /* Household.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
 		A9CA3E3C2A125CB400DE7FE9 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		B31167162A1274B000EC9256 /* UserLogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogInView.swift; sourceTree = "<group>"; };
 		B37F23462A0E191400F9FF24 /* tik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37F23492A0E191400F9FF24 /* tikApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikApp.swift; sourceTree = "<group>"; };
 		B37F234B2A0E191400F9FF24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				A9CA3DE82A0E42EE00DE7FE9 /* GoogleService-Info.plist */,
 				B37F23492A0E191400F9FF24 /* tikApp.swift */,
 				B37F234B2A0E191400F9FF24 /* ContentView.swift */,
+				B31167162A1274B000EC9256 /* UserLogInView.swift */,
 				B37F234D2A0E191500F9FF24 /* Assets.xcassets */,
 				B37F234F2A0E191500F9FF24 /* Preview Content */,
 			);
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */,
+				B31167172A1274B000EC9256 /* UserLogInView.swift in Sources */,
 				A9CA3E3B2A125C9C00DE7FE9 /* Household.swift in Sources */,
 				A9CA3E3D2A125CB400DE7FE9 /* Task.swift in Sources */,
 				B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */,
