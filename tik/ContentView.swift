@@ -1,26 +1,23 @@
-//
-//  ContentView.swift
-//  tik
-//
-//  Created by Liza Hjortling on 2023-05-12.
-//  Test Commit by Antonio
+
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        UserLogInView()
+        
+           
         }
-        .padding()
+        
     }
-}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        
     }
 }
