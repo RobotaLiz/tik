@@ -1,18 +1,24 @@
 
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
     
     
     
     var body: some View {
-        UserLogInView()
+        //if Auth.auth().currentUser != nil {
         
-           
-        }
+        //  }else{
+        UserLogInView()
+        //}
+        
+        
         
     }
+    
+}
 
 
 struct ContentView_Previews: PreviewProvider {

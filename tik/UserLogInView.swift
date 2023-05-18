@@ -1,9 +1,4 @@
 
-// lägga till en knapp i form av text där du ska kunna adda en ny användare.
-// ändra signin knappen färg till samma som iconens.
-// när du skapa en användare ska samma layout användas där du kan skriva i ditt namn du vill ha
-// och sedan lösenordet du väljer.
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -40,16 +35,18 @@ struct UserLogInView: View {
         Form {
             TextField("Username:", text: $username)
             
-            
+                .foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
                 .shadow(color: .purple, radius: 10)
-            
+                .keyboardType(.emailAddress)
                 .focused($focusedField, equals: .usernameField)
                 .font(.title3)
+                .textInputAutocapitalization(.never)
             
             SecureField("Password:", text: $password)
+                .foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
@@ -62,10 +59,12 @@ struct UserLogInView: View {
             
         }
         HStack{
-            Button("Add account", action: {})
+            Button("Add account", action: {
+                addAccount()
+            })
             Image(systemName: "person.fill.badge.plus")
                 .foregroundColor(.gray)
-                
+            
         }
         Button("Sign In") {
             signIn()
@@ -86,18 +85,21 @@ struct UserLogInView: View {
             } else {
                 print("success")
             }
-        }
-        
-        
-        
-        
-        
-        
-        struct UserLogInView_Previews: PreviewProvider {
-            static var previews: some View {
-                UserLogInView()
-            }
+            
         }
         
     }
+    func addAccount() {
+        Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            } else {
+                print("success")
+            }
+            
+        }
+        
+        
+    }
 }
+
