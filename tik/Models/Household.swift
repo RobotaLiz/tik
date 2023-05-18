@@ -7,11 +7,19 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import Firebase
 
-struct Household {
+struct Household : Codable {
     
     @DocumentID var docId : String?
+    var name : String
+    var pinNum : String
     var members : [User] = []
     var tasks : [Task] = []
+    
+    init(name: String, pinNum: String) {
+        self.name = name
+        self.pinNum = pinNum
+    }
     
 }
