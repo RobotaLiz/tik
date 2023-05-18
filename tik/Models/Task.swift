@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Task : Identifiable { 
+struct Task : Identifiable, Codable { 
     
     @DocumentID var docId : String?
     var id = UUID()
