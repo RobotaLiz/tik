@@ -17,6 +17,9 @@
 		A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */; };
 		A9CA3E422A12F68300DE7FE9 /* TaskListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E412A12F68300DE7FE9 /* TaskListRowView.swift */; };
 		A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */; };
+		A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E452A16944800DE7FE9 /* HouseholdSelectionView.swift */; };
+		A9CA3E482A1696C600DE7FE9 /* CreateHouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E472A1696C600DE7FE9 /* CreateHouseholdView.swift */; };
+		A9CA3E4A2A1696DD00DE7FE9 /* JoinHouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA3E492A1696DD00DE7FE9 /* JoinHouseholdView.swift */; };
 		B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F23492A0E191400F9FF24 /* tikApp.swift */; };
 		B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F234B2A0E191400F9FF24 /* ContentView.swift */; };
 		B37F234E2A0E191500F9FF24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B37F234D2A0E191500F9FF24 /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		A9CA3E412A12F68300DE7FE9 /* TaskListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListRowView.swift; sourceTree = "<group>"; };
 		A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinHouseholdViewModel.swift; sourceTree = "<group>"; };
+		A9CA3E452A16944800DE7FE9 /* HouseholdSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdSelectionView.swift; sourceTree = "<group>"; };
+		A9CA3E472A1696C600DE7FE9 /* CreateHouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHouseholdView.swift; sourceTree = "<group>"; };
+		A9CA3E492A1696DD00DE7FE9 /* JoinHouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinHouseholdView.swift; sourceTree = "<group>"; };
 		B37F23462A0E191400F9FF24 /* tik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37F23492A0E191400F9FF24 /* tikApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tikApp.swift; sourceTree = "<group>"; };
 		B37F234B2A0E191400F9FF24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				A9CA3E412A12F68300DE7FE9 /* TaskListRowView.swift */,
+				A9CA3E472A1696C600DE7FE9 /* CreateHouseholdView.swift */,
+				A9CA3E492A1696DD00DE7FE9 /* JoinHouseholdView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -141,6 +149,7 @@
 				B37F234F2A0E191500F9FF24 /* Preview Content */,
 				A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */,
 				A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */,
+				A9CA3E452A16944800DE7FE9 /* HouseholdSelectionView.swift */,
 			);
 			path = tik;
 			sourceTree = "<group>";
@@ -314,7 +323,10 @@
 				A9CA3E3B2A125C9C00DE7FE9 /* Household.swift in Sources */,
 				A9CA3E3D2A125CB400DE7FE9 /* Task.swift in Sources */,
 				B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */,
+				A9CA3E4A2A1696DD00DE7FE9 /* JoinHouseholdView.swift in Sources */,
 				A9CA3E392A125C9000DE7FE9 /* User.swift in Sources */,
+				A9CA3E482A1696C600DE7FE9 /* CreateHouseholdView.swift in Sources */,
+				A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */,
 				A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */,
 				A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */,
 			);
