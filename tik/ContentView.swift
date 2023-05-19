@@ -8,6 +8,7 @@ struct ContentView: View {
     
     
     var body: some View {
+       
         //if Auth.auth().currentUser != nil {
         
         //  }else{
@@ -15,6 +16,11 @@ struct ContentView: View {
         //}
         
         
+
+  
+        
+        
+
         
     }
     
