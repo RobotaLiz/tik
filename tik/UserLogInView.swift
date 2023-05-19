@@ -26,45 +26,48 @@ struct UserLogInView: View {
                 .shadow(radius: 7)
                 .padding()
             Label("My Tik Account", systemImage: "home")
+                .padding(-50)
                 .bold()
                 .font(.title3)
             
-            
-        }.padding(20)
-        
+                .padding(70)
+        }
         Form {
             TextField("Username:", text: $username)
             
-            
+                .foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
                 .shadow(color: .purple, radius: 10)
-            
+                .keyboardType(.emailAddress)
                 .focused($focusedField, equals: .usernameField)
-                .font(.title2)
+                .font(.title3)
+                .textInputAutocapitalization(.never)
             
             SecureField("Password:", text: $password)
+                .foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
                 .shadow(color: .purple, radius: 10)
+            
             
             
                 .focused($focusedField, equals: .passwordField)
-                .font(.title2)
+                .font(.title3)
             
         }
-        
+        HStack{
+            Button("Add account", action: {
+                addAccount()
+            })
+            Image(systemName: "person.fill.badge.plus")
+                .foregroundColor(.gray)
+            
+        }
         Button("Sign In") {
-            if username.isEmpty {
-                focusedField = .usernameField
-            }else if password.isEmpty {
-                focusedField = .passwordField
-                
-            }else{
-                // handleLogin(username, password)
-            }
+            signIn()
             
         }
         
@@ -74,17 +77,29 @@ struct UserLogInView: View {
         .clipShape(Capsule())
         .padding(50)
     }
-    
-}
-
-
-
-
-
-
-struct UserLogInView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserLogInView()
+    func signIn () {
+        
+        Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            } else {
+                print("success")
+            }
+            
+        }
+        
+    }
+    func addAccount() {
+        Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            } else {
+                print("success")
+            }
+            
+        }
+        
+        
     }
 }
 
