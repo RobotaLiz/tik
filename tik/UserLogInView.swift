@@ -11,6 +11,9 @@ struct UserLogInView: View {
     @State private var username =  ""
     @State private var password = ""
     @FocusState private var focusedField: Field?
+    // Tobbe added this to navigate to the list view on log in: (Also, see content view)
+    // loggedIn is changed in signIn function.
+    @Binding var loggedIn: Bool
     
     
     var body: some View {
@@ -84,6 +87,8 @@ struct UserLogInView: View {
                 print(error?.localizedDescription ?? "")
             } else {
                 print("success")
+                // Tobbe added this:
+                loggedIn = true
             }
             
         }
@@ -95,6 +100,8 @@ struct UserLogInView: View {
                 print(error?.localizedDescription ?? "")
             } else {
                 print("success")
+                // Tobbe added this to automatically sign in on account added
+                signIn()
             }
             
         }

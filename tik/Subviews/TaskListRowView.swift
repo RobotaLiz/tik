@@ -14,7 +14,7 @@ struct TaskListRowView: View {
     
     var body: some View {
         HStack {
-            Text(task.name)
+            Text(task.title)
             Spacer()
             Button(action: {
                 //TODO: Toggle - Task completed logic
@@ -32,6 +32,6 @@ struct TaskListRowView: View {
 
 struct TaskListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListRowView(task: Task(name: "Test Task"), isDone: true)
+        TaskListRowView(task: Task(title: "Test Task", setDate: Date()), isDone: true)
     }
 }

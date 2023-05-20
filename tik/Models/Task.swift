@@ -8,16 +8,18 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Task : Identifiable, Codable { 
+struct Task : Identifiable, Codable {
     
-    @DocumentID var docId : String?
-    var id = UUID()
-    var name : String
+    @DocumentID var id : String?
+    //var id = UUID() //Do we need this? Couldn't we rename docId to id instead?
+    var title : String
     var notes : String?
     var location : String?
     var assignedTo : [User] = []
     var isCompleted : Bool = false
     var dateAdded : Date = Date()
-    var compledDates : [Date] = []
+    var setDate: Date
+    var completedDates : [Date] = []
+    
     
 }

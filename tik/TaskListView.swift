@@ -8,24 +8,41 @@
 import SwiftUI
 
 struct TaskListView: View {
+    // Tobbe's dirty fingers are everywhere...
+    @State var addTaskIsPresented = false
     
-    @State var mockData = [Task(name: "Clean kitchen floor"), Task(name: "Dust living room"), Task(name: "Fix stereo"), Task(name: "Buy ice cream")]
+    @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()), Task(title: "Dust living room", setDate: Date()), Task(title: "Fix stereo", setDate: Date()), Task(title: "Buy ice cream", setDate: Date())]
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack {
                 List {
                     ForEach(mockData) { task in
                         TaskListRowView(task: task, isDone: true)
                     }
                     .onDelete() { indexSet in
-                        for index in indexSet {
+                        for _ in indexSet {
                             mockData.remove(atOffsets: indexSet)
                         }
                     }
                 }
                 .scrollContentBackground(.hidden)
                 .cornerRadius(10)
+                
+                // Navigation to AddTaskView added.
+                Button(action: {
+                    addTaskIsPresented = true
+                    print("!")
+                }) {
+                    Image(systemName: "plus.circle")
+                        .imageScale(.large)
+                }
+                .buttonStyle(.borderless)
+                .padding([.trailing], 20)
+            }
+            // AddTaskView is presented as a sheet.
+            .sheet(isPresented: $addTaskIsPresented) {
+                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
             }
         }
     }
