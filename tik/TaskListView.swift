@@ -11,7 +11,10 @@ struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
     
-    @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()), Task(title: "Dust living room", setDate: Date()), Task(title: "Fix stereo", setDate: Date()), Task(title: "Buy ice cream", setDate: Date())]
+    @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()),
+                           Task(title: "Dust living room", setDate: Date()),
+                           Task(title: "Fix stereo", setDate: Date()),
+                           Task(title: "Buy ice cream", setDate: Date())]
     
     var body: some View {
         NavigationView {
