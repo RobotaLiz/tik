@@ -50,7 +50,7 @@ struct JoinHouseholdView: View {
                             
                             householdDocId = document.documentID
                             print("Household ID: \(householdDocId)")
-
+                            
                         }
                     }
                     presentationMode.wrappedValue.dismiss()

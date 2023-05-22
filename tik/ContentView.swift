@@ -25,7 +25,7 @@ struct ContentView: View {
         let user = Auth.auth().currentUser
         
         if user != nil {
-            loggedIn = true
+            //loggedIn = true
         }
     }
 }
