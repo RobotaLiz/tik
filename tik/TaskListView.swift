@@ -11,6 +11,20 @@ struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
     
+    // Antonio's side bar stuff
+    @State var isSidebarOpen = false
+    @State var selectedTag: String? = nil
+    
+    var selectedTagBinding: Binding<String?> {
+        Binding<String?>(
+            get: { selectedTag },
+            set: { tag in
+                selectedTag = tag
+                isSidebarOpen = tag != nil
+            }
+        )
+    }
+    
     @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()),
                            Task(title: "Dust living room", setDate: Date()),
                            Task(title: "Fix stereo", setDate: Date()),
@@ -46,6 +60,24 @@ struct TaskListView: View {
             // AddTaskView is presented as a sheet.
             .sheet(isPresented: $addTaskIsPresented) {
                 AddTaskView(addTaskIsPresented: $addTaskIsPresented)
+            }
+            .navigationViewStyle(.stack)
+            .navigationBarTitle("Tasks")
+            .listStyle(.plain)
+            .onAppear {
+                if !isSidebarOpen {
+                    isSidebarOpen = false
+                }
+            }
+            .navigationBarItems(trailing:
+                NavigationLink(destination: SidebarView(isSidebarOpen: $isSidebarOpen), tag: "sidebar", selection: selectedTagBinding) {
+                    Image(systemName: "gearshape.fill")
+                        .imageScale(.large)
+                }
+            )
+            if isSidebarOpen {
+                SidebarView(isSidebarOpen: $isSidebarOpen)
+
             }
         }
     }
