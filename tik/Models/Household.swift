@@ -16,6 +16,7 @@ struct Household : Codable {
     var pinNum : String
     var members : [User] = []
     var tasks : [Task] = []
+    var admin : User? // Only one user can be admin right now (more admins in the future?)
     
     init(name: String, pinNum: String) {
         self.name = name
