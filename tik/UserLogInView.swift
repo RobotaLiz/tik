@@ -12,7 +12,7 @@ struct UserLogInView: View {
     
     let db = Firestore.firestore()
     @State private var name = ""
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
     @FocusState private var focusedField: Field?
     // Tobbe added this to navigate to the list view on log in: (Also, see content view)
@@ -55,7 +55,7 @@ struct UserLogInView: View {
                 .font(.title3)
                 .textInputAutocapitalization(.never)
             
-            TextField("Username:", text: $username)
+            TextField("Email:", text: $email)
             
                 .foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
@@ -98,7 +98,7 @@ struct UserLogInView: View {
     }
     
     func signIn() { 
-        Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
             } else {
@@ -110,7 +110,7 @@ struct UserLogInView: View {
     }
     
     func addAccount() {
-        Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
+        Auth.auth().createUser(withEmail:email, password: password) { (result, error) in
             guard let user = result?.user, error == nil else {
                 print("Error creating user: \(error!.localizedDescription)")
                 return
@@ -122,7 +122,7 @@ struct UserLogInView: View {
                 print("Error creating user: \(error.localizedDescription)")
             } else if result != nil {
                 // Creates both new auth user and firestore document with auth uid as docID
-                let newUser = User(name: self.name, email: self.username)
+                let newUser = User(name: self.name, email: self.email)
                 let usersRef = self.db.collection("users").document(user.uid)
                 
                 
