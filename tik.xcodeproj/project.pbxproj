@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6CDE2CF22A1A59F2007C59AC /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDE2CF12A1A59F2007C59AC /* CalendarViewModel.swift */; };
-		6CDE2CF42A1A5A06007C59AC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDE2CF32A1A5A06007C59AC /* CalendarView.swift */; };
+		9C0DE5032A18DC9000B9C1F5 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */; };
+		9C0DE5052A18DF6200B9C1F5 /* AddTaskVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */; };
 		A9CA3DE32A0E421800DE7FE9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA3DE22A0E421800DE7FE9 /* FirebaseAuth */; };
 		A9CA3DE52A0E421800DE7FE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA3DE42A0E421800DE7FE9 /* FirebaseFirestore */; };
 		A9CA3DE72A0E421800DE7FE9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA3DE62A0E421800DE7FE9 /* FirebaseFirestoreSwift */; };
@@ -50,8 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6CDE2CF12A1A59F2007C59AC /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		6CDE2CF32A1A5A06007C59AC /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
+		9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskVM.swift; sourceTree = "<group>"; };
 		A9CA3DE82A0E42EE00DE7FE9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9CA3E382A125C9000DE7FE9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A9CA3E3A2A125C9C00DE7FE9 /* Household.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
@@ -119,6 +119,7 @@
 				A9CA3E412A12F68300DE7FE9 /* TaskListRowView.swift */,
 				A9CA3E472A1696C600DE7FE9 /* CreateHouseholdView.swift */,
 				A9CA3E492A1696DD00DE7FE9 /* JoinHouseholdView.swift */,
+				9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -157,8 +158,7 @@
 				A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */,
 				A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */,
 				A9CA3E452A16944800DE7FE9 /* HouseholdSelectionView.swift */,
-				6CDE2CF12A1A59F2007C59AC /* CalendarViewModel.swift */,
-				6CDE2CF32A1A5A06007C59AC /* CalendarView.swift */,
+				9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */,
 			);
 			path = tik;
 			sourceTree = "<group>";
@@ -330,17 +330,17 @@
 				B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */,
 				B31167172A1274B000EC9256 /* UserLogInView.swift in Sources */,
 				A9CA3E422A12F68300DE7FE9 /* TaskListRowView.swift in Sources */,
-				6CDE2CF22A1A59F2007C59AC /* CalendarViewModel.swift in Sources */,
+				9C0DE5052A18DF6200B9C1F5 /* AddTaskVM.swift in Sources */,
 				A9CA3E3B2A125C9C00DE7FE9 /* Household.swift in Sources */,
 				A9CA3E3D2A125CB400DE7FE9 /* Task.swift in Sources */,
 				B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */,
 				A9CA3E4A2A1696DD00DE7FE9 /* JoinHouseholdView.swift in Sources */,
-				6CDE2CF42A1A5A06007C59AC /* CalendarView.swift in Sources */,
 				A9CA3E392A125C9000DE7FE9 /* User.swift in Sources */,
 				A9CA3E482A1696C600DE7FE9 /* CreateHouseholdView.swift in Sources */,
 				A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */,
 				A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */,
 				A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */,
+				9C0DE5032A18DC9000B9C1F5 /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
