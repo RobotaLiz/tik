@@ -2,13 +2,17 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 struct UserLogInView: View {
     enum Field: Hashable {
         case usernameField
         case passwordField
     }
-    @State private var username =  ""
+    
+    let db = Firestore.firestore()
+    @State private var name = ""
+    @State private var username = ""
     @State private var password = ""
     @FocusState private var focusedField: Field?
     // Tobbe added this to navigate to the list view on log in: (Also, see content view)
@@ -34,8 +38,23 @@ struct UserLogInView: View {
                 .font(.title3)
             
                 .padding(70)
+            
+            
         }
+        
+        
         Form {
+            TextField("Name", text: $name)
+                .foregroundColor(.black)
+                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+                .foregroundColor(.yellow)
+                .padding(10)
+                .shadow(color: .purple, radius: 10)
+                .keyboardType(.emailAddress)
+                .focused($focusedField, equals: .usernameField)
+                .font(.title3)
+                .textInputAutocapitalization(.never)
+            
             TextField("Username:", text: $username)
             
                 .foregroundColor(.black)
@@ -96,11 +115,34 @@ struct UserLogInView: View {
     }
     func addAccount() {
         Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
+            guard let user = result?.user, error == nil else {
+                print("Error creating user: \(error!.localizedDescription)")
+                return
+            }
             if error != nil {
                 print(error?.localizedDescription ?? "")
-            } else {
-                print("success")
-                // Tobbe added this to automatically sign in on account added
+            }
+            if let error = error {
+                print("Error creating user: \(error.localizedDescription)")
+            } else if result != nil {
+                // Creates both new auth user and firestore document with auth uid as docID
+                let newUser = User(name: self.name, email: self.username)
+                let usersRef = self.db.collection("users").document(user.uid)
+                
+                
+                if let name = newUser.name, let email = newUser.email {
+                    usersRef.setData([
+                        "name": name,
+                        "email": email]) { error in
+                            if let error = error {
+                                print("Error adding document: \(error.localizedDescription)")
+                            } else {
+                                print("Document added with ID: \(usersRef.documentID)")
+                                //self.onUserCreationSuccess?()
+                            }
+                        }
+                }
+                
                 signIn()
             }
             
@@ -109,4 +151,3 @@ struct UserLogInView: View {
         
     }
 }
-
