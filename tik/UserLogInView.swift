@@ -73,9 +73,6 @@ struct UserLogInView: View {
                 .foregroundColor(.yellow)
                 .padding(10)
                 .shadow(color: .purple, radius: 10)
-            
-            
-            
                 .focused($focusedField, equals: .passwordField)
                 .font(.title3)
             
@@ -99,8 +96,8 @@ struct UserLogInView: View {
         .clipShape(Capsule())
         .padding(50)
     }
-    func signIn () {
-        
+    
+    func signIn() { 
         Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
@@ -108,11 +105,10 @@ struct UserLogInView: View {
                 print("success")
                 // Tobbe added this:
                 loggedIn = true
-            }
-            
+            } 
         }
-        
     }
+    
     func addAccount() {
         Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
             guard let user = result?.user, error == nil else {
@@ -145,9 +141,6 @@ struct UserLogInView: View {
                 
                 signIn()
             }
-            
         }
-        
-        
     }
 }
