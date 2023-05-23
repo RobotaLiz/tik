@@ -17,10 +17,10 @@ struct UserLogInView: View {
     @FocusState private var focusedField: Field?
     // Tobbe added this to navigate to the list view on log in: (Also, see content view)
     // loggedIn is changed in signIn function.
-    @Binding var loggedIn: Bool
+    //@Binding var loggedIn: Bool
     
     // Antonio's view model stuff
-    @StateObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : AuthViewModel
     
     
     var body: some View {
@@ -45,44 +45,47 @@ struct UserLogInView: View {
             
         }
         
-        
+        // I moved the style stuff to theyr own file called TextFieldStyles. Commented out stuff can be safely deleted. /Antonio
         Form {
             TextField("Name", text: $name)
-                .foregroundColor(.black)
+                .textFieldStyle(AuthTextFieldStyle())
+                /*.foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
-                .shadow(color: .purple, radius: 10)
+                .font(.title3)
+                .shadow(color: .purple, radius: 10)*/
                 .keyboardType(.emailAddress)
                 .focused($focusedField, equals: .usernameField)
-                .font(.title3)
                 .textInputAutocapitalization(.never)
             
             TextField("Email:", text: $email)
+                .textFieldStyle(AuthTextFieldStyle())
             
-                .foregroundColor(.black)
+                /*.foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
-                .shadow(color: .purple, radius: 10)
-                .keyboardType(.emailAddress)
-                .focused($focusedField, equals: .usernameField)
-                .font(.title3)
+                .shadow(color: .purple, radius: 10)*/
+            
+                .keyboardType(.emailAddress).font(.title3)
+                .focused($focusedField, equals: .usernameField) // Username or Email?
                 .textInputAutocapitalization(.never)
             
             SecureField("Password:", text: $password)
-                .foregroundColor(.black)
+                .textFieldStyle(AuthTextFieldStyle())
+                /*.foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
-                .shadow(color: .purple, radius: 10)
-                .focused($focusedField, equals: .passwordField)
                 .font(.title3)
+                .shadow(color: .purple, radius: 10)*/
+                .focused($focusedField, equals: .passwordField)
+                
             
         }
         HStack{
             Button("Add account", action: {
-                //addAccount()
                 authViewModel.addAccount(name: name, email: email, password: password)
             })
             Image(systemName: "person.fill.badge.plus")
@@ -90,9 +93,7 @@ struct UserLogInView: View {
             
         }
         Button("Sign In") {
-            //signIn()
             authViewModel.signIn(email: email, password: password)
-            
         }
         
         .padding(9)
@@ -101,51 +102,6 @@ struct UserLogInView: View {
         .clipShape(Capsule())
         .padding(50)
     }
-    
-    func signIn() { 
-        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-            } else {
-                print("success")
-                // Tobbe added this:
-                loggedIn = true
-            } 
-        }
-    }
-    
-    func addAccount() {
-        Auth.auth().createUser(withEmail:email, password: password) { (result, error) in
-            guard let user = result?.user, error == nil else {
-                print("Error creating user: \(error!.localizedDescription)")
-                return
-            }
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-            }
-            if let error = error {
-                print("Error creating user: \(error.localizedDescription)")
-            } else if result != nil {
-                // Creates both new auth user and firestore document with auth uid as docID
-                let newUser = User(name: self.name, email: self.email)
-                let usersRef = self.db.collection("users").document(user.uid)
-                
-                
-                if let name = newUser.name, let email = newUser.email {
-                    usersRef.setData([
-                        "name": name,
-                        "email": email]) { error in
-                            if let error = error {
-                                print("Error adding document: \(error.localizedDescription)")
-                            } else {
-                                print("Document added with ID: \(usersRef.documentID)")
-                                //self.onUserCreationSuccess?()
-                            }
-                        }
-                }
-                
-                signIn()
-            }
-        }
-    }
+
+
 }

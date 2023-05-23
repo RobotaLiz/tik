@@ -11,9 +11,12 @@ struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
     
-    // Antonio's side bar stuff
+    // Antonio's side bar stuff - Work in progress
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
+    @ObservedObject var authViewModel : AuthViewModel
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var selectedTagBinding: Binding<String?> {
         Binding<String?>(
@@ -69,14 +72,30 @@ struct TaskListView: View {
                     isSidebarOpen = false
                 }
             }
-            .navigationBarItems(trailing:
-                NavigationLink(destination: SidebarView(isSidebarOpen: $isSidebarOpen), tag: "sidebar", selection: selectedTagBinding) {
+            .navigationBarItems(leading: {
+                Menu {
+                    Button(action: {
+                        authViewModel.signOut()
+                        authViewModel.loggedIn = false
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")
+                    }
+                } label: {
                     Image(systemName: "gearshape.fill")
                         .imageScale(.large)
                 }
-            )
+            }())
+            
+            // Side bar work in progress
+            /*.navigationBarItems(trailing:
+                                    NavigationLink(destination: SidebarView(isSidebarOpen: $isSidebarOpen, authViewModel: authViewModel), tag: "sidebar", selection: selectedTagBinding) {
+                    Image(systemName: "gearshape.fill")
+                        .imageScale(.large)
+                }
+            )*/
             if isSidebarOpen {
-                SidebarView(isSidebarOpen: $isSidebarOpen)
+                SidebarView(isSidebarOpen: $isSidebarOpen, authViewModel: authViewModel)
 
             }
         }
@@ -85,7 +104,8 @@ struct TaskListView: View {
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListView()
+        let authViewModel = AuthViewModel()
+        TaskListView(authViewModel: authViewModel)
     }
 }
 

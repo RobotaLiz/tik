@@ -17,6 +17,8 @@ class AuthViewModel : ObservableObject {
     
     @Published var loggedIn: Bool = false
     
+    var didSignOut: (() -> Void)?
+    
     func signIn(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
@@ -78,6 +80,13 @@ class AuthViewModel : ObservableObject {
           try auth.signOut()
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    func checkLoggedInStatus() {
+        let user = Auth.auth().currentUser
+        if user != nil {
+            self.loggedIn = true
         }
     }
 }

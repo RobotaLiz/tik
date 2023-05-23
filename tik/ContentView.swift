@@ -5,27 +5,23 @@ import FirebaseAuth
 
 struct ContentView: View {
     
-    @State var loggedIn = false
+    @StateObject var authViewModel = AuthViewModel()
     
     var body: some View {
         Group {
-            if loggedIn {
-                TaskListView()
-            }else{
-                UserLogInView(loggedIn: $loggedIn, authViewModel: AuthViewModel())
+            if authViewModel.loggedIn {
+                TaskListView(authViewModel: authViewModel)
+                    .onAppear {
+                        authViewModel.didSignOut = {
+                            authViewModel.loggedIn = false
+                        }
+                    }
+            } else {
+                UserLogInView(authViewModel: authViewModel)
             }
         }
-        .onAppear() {
-            checkLoggedInStatus()
-        }
-    }
-    
-    func checkLoggedInStatus() {
-        
-        let user = Auth.auth().currentUser
-        
-        if user != nil {
-            loggedIn = true
+        .onAppear {
+            authViewModel.checkLoggedInStatus()
         }
     }
 }
