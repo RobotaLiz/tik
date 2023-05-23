@@ -19,6 +19,9 @@ struct UserLogInView: View {
     // loggedIn is changed in signIn function.
     @Binding var loggedIn: Bool
     
+    // Antonio's view model stuff
+    @StateObject var authViewModel : AuthViewModel
+    
     
     var body: some View {
         
@@ -79,14 +82,16 @@ struct UserLogInView: View {
         }
         HStack{
             Button("Add account", action: {
-                addAccount()
+                //addAccount()
+                authViewModel.addAccount(name: name, email: email, password: password)
             })
             Image(systemName: "person.fill.badge.plus")
                 .foregroundColor(.gray)
             
         }
         Button("Sign In") {
-            signIn()
+            //signIn()
+            authViewModel.signIn(email: email, password: password)
             
         }
         

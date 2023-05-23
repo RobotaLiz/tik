@@ -12,7 +12,7 @@ struct ContentView: View {
             if loggedIn {
                 TaskListView()
             }else{
-                UserLogInView(loggedIn: $loggedIn)
+                UserLogInView(loggedIn: $loggedIn, authViewModel: AuthViewModel())
             }
         }
         .onAppear() {
@@ -25,7 +25,7 @@ struct ContentView: View {
         let user = Auth.auth().currentUser
         
         if user != nil {
-            //loggedIn = true
+            loggedIn = true
         }
     }
 }
