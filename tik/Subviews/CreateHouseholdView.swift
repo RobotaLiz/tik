@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateHouseholdView: View {
     
-    @ObservedObject var viewModel : JoinHouseViewModel
+    @ObservedObject var householdViewModel : JoinHouseViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var householdName : String
     @State var householdPin : String
@@ -26,7 +26,7 @@ struct CreateHouseholdView: View {
             }
             .padding(20)
             Button(action: {
-                householdPin = viewModel.generatePin()
+                householdPin = householdViewModel.generatePin()
             }) {
                 Text("Generate PIN")
             }
@@ -40,7 +40,7 @@ struct CreateHouseholdView: View {
             }
             .frame(width: 300, height: 200)
             Button(action: {
-                viewModel.createHousehold(name: householdName)
+                householdViewModel.createHousehold(name: householdName)
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Create")
@@ -52,7 +52,7 @@ struct CreateHouseholdView: View {
 
 struct CreateHouseholdView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = JoinHouseViewModel(household: Household(name: "Test name", pinNum: "666"))
-        CreateHouseholdView(viewModel: vm, householdName: "Test House", householdPin: "666")
+        let vm = JoinHouseViewModel()
+        CreateHouseholdView(householdViewModel: vm, householdName: "Test House", householdPin: "666")
     }
 }

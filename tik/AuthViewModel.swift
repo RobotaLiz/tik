@@ -43,7 +43,9 @@ class AuthViewModel : ObservableObject {
             if let name = newUser.name, let email = newUser.email {
                 usersRef.setData([
                     "name": name,
-                    "email": email
+                    "email": email,
+                    "isMember": newUser.isMember,
+                    "isAdmin": newUser.isAdmin
                 ]) { error in
                     if let error = error {
                         print("Error adding document: \(error.localizedDescription)")

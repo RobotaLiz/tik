@@ -10,13 +10,13 @@ import Firebase
 
 class JoinHouseViewModel : ObservableObject {
     
-    @Published var household : Household
+    @Published var household : Household?
     @Published var currentUser : User?
     let db = Firestore.firestore()
     let auth = Auth.auth()
 
     
-    init(household : Household) {
+    init() {
         self.household = household
         self.currentUser = currentUser
         getCurrentUser()
@@ -25,6 +25,28 @@ class JoinHouseViewModel : ObservableObject {
     func printCurrentUser() {
         print(currentUser as Any)
     }
+    
+    func userListener() {
+        guard auth.currentUser != nil else {return}
+        let usersRef = db.collection("Users")
+        
+        usersRef.addSnapshotListener() { snapshot, error in
+            guard let snapshot = snapshot else {return}
+            if let error = error {
+                print("Error listening to database: \(error)")
+            } else {
+                for document in snapshot.documents {
+                    do {
+                        let user = try document.data(as: User.self)
+                        self.currentUser = user
+                    } catch {
+                        print("Error getting docs")
+                    }
+                }
+            }
+        }
+    }
+    
     
     func getCurrentUser() {
         guard let currentUserUID = auth.currentUser?.uid else {
@@ -59,7 +81,9 @@ class JoinHouseViewModel : ObservableObject {
     
     // Appends current user to household member list
     func addCurrentUserToHousehold(householdId: String) {
+        guard let household = household else {return}
         let householdRef = db.collection("Households").document(householdId)
+        
         var updatedHousehold = Household(name: household.name, pinNum: household.pinNum)
         
         updatedHousehold.members.append(currentUser!)
