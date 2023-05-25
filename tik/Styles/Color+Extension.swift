@@ -1,8 +1,7 @@
-//
-//  Color+Extension.swift
-//  tik
-//
-//  Created by JOSE MIGUEL FERRAZ GUEDES on 25/05/2023.
-//
+import SwiftUI
 
-import Foundation
+extension Color {
+    static let appBlack = Color.black
+    static let appGray = Color.gray
+    static let appYellow = Color.yellow
+}
