@@ -68,7 +68,8 @@ struct JoinHouseholdView: View {
                         .font(.title)
                     Button(action: {
                         householdViewModel.addCurrentUserToHousehold(householdId: householdDocId)
-                        householdViewModel.currentUser?.isMember = true
+                        //householdViewModel.currentUser?.isMember = true
+                        householdViewModel.makeCurrentUserMember()
                         joinSuccessful = true
                         presentationMode.wrappedValue.dismiss()
                     }) {

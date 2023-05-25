@@ -39,10 +39,7 @@ struct UserLogInView: View {
                 .padding(-50)
                 .bold()
                 .font(.title3)
-            
                 .padding(70)
-            
-            
         }
         
         // I moved the style stuff to theyr own file called TextFieldStyles. Commented out stuff can be safely deleted. /Antonio
@@ -61,17 +58,14 @@ struct UserLogInView: View {
             
             TextField("Email:", text: $email)
                 .textFieldStyle(AuthTextFieldStyle())
-            
                 /*.foregroundColor(.black)
                 .overlay(Rectangle().frame(height: 2).padding(.top, 35))
                 .foregroundColor(.yellow)
                 .padding(10)
                 .shadow(color: .purple, radius: 10)*/
-            
                 .keyboardType(.emailAddress).font(.title3)
                 .focused($focusedField, equals: .usernameField) // Username or Email?
                 .textInputAutocapitalization(.never)
-            
             SecureField("Password:", text: $password)
                 .textFieldStyle(AuthTextFieldStyle())
                 /*.foregroundColor(.black)
@@ -81,8 +75,6 @@ struct UserLogInView: View {
                 .font(.title3)
                 .shadow(color: .purple, radius: 10)*/
                 .focused($focusedField, equals: .passwordField)
-                
-            
         }
         HStack{
             Button("Add account", action: {
@@ -90,18 +82,14 @@ struct UserLogInView: View {
             })
             Image(systemName: "person.fill.badge.plus")
                 .foregroundColor(.gray)
-            
         }
         Button("Sign In") {
             authViewModel.signIn(email: email, password: password)
         }
-        
         .padding(9)
         .background(.yellow)
         .foregroundColor(.black)
         .clipShape(Capsule())
         .padding(50)
     }
-
-
 }

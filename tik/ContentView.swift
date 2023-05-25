@@ -12,6 +12,7 @@ struct ContentView: View {
         Group {
             if authViewModel.loggedIn {
                 if householdViewModel.currentUser?.isMember == true {
+                    //Text("Current user is member!")                       - Debugging /Antonio
                     TaskListView(authViewModel: authViewModel)
                         .onAppear {
                             authViewModel.didSignOut = {
@@ -20,16 +21,15 @@ struct ContentView: View {
                         }
                 } else if householdViewModel.currentUser?.isMember == false {
                     HouseholdSelectionView(householdViewModel: householdViewModel)
-                } else {
+                } /*else {
                     Text("Loading...")
-                }
-
+                }*/
             } else {
                 UserLogInView(authViewModel: authViewModel)
             }
         }
         .onAppear {
-            authViewModel.checkLoggedInStatus()
+            //authViewModel.checkLoggedInStatus()
             householdViewModel.userListener()
         }
     }

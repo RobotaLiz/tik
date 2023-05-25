@@ -41,11 +41,16 @@ struct CreateHouseholdView: View {
             .frame(width: 300, height: 200)
             Button(action: {
                 householdViewModel.createHousehold(name: householdName)
+                //householdViewModel.currentUser?.isMember = true
+                householdViewModel.makeCurrentUserMember()
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Create")
             }
             .buttonStyle(.borderedProminent)
+        }
+        .onAppear {
+            householdViewModel.householdFirestoreListener()
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 
 class JoinHouseViewModel : ObservableObject {
     
@@ -14,7 +15,6 @@ class JoinHouseViewModel : ObservableObject {
     @Published var currentUser : User?
     let db = Firestore.firestore()
     let auth = Auth.auth()
-
     
     init() {
         self.household = household
@@ -81,18 +81,52 @@ class JoinHouseViewModel : ObservableObject {
     
     // Appends current user to household member list
     func addCurrentUserToHousehold(householdId: String) {
-        guard let household = household else {return}
+        guard let currentUser = currentUser else {return}
         let householdRef = db.collection("Households").document(householdId)
         
-        var updatedHousehold = Household(name: household.name, pinNum: household.pinNum)
-        
-        updatedHousehold.members.append(currentUser!)
-        
-        do {
+        //var updatedHousehold = Household(name: household.name, pinNum: household.pinNum)
+        //updatedHousehold.members.append(currentUser)
+                
+        /*do {
             try householdRef.setData(from: updatedHousehold)
         } catch {
             print("Error updating household: \(error.localizedDescription)")
+        }*/
+        
+        /*let data: [String: Any] = [
+            "members": updatedHousehold.members
+        ]
+        
+        print("Members: \(updatedHousehold.members)")*/
+        
+        /*householdRef.updateData(data) { error in
+            print("Updating firestore data")
+            if let error = error {
+                print("Error updating household: \(error.localizedDescription)")
+            } else {
+                print("Current user added to household")
+            }
+        }*/
+        
+        let currentUserData: [String: Any] = [
+            "docId": auth.currentUser!.uid,
+            "name": currentUser.name!,
+            "email": currentUser.email!,
+            "isMember": true,
+            "isAdmin": false
+        ]
+        
+        
+        householdRef.updateData([
+            "members": FieldValue.arrayUnion([currentUserData])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document updated successfully")
+            }
         }
+
     }
     
     // Search collection for households matching inputted PIN
@@ -137,17 +171,47 @@ class JoinHouseViewModel : ObservableObject {
         }
     }
     
-    func createHousehold(name: String) {
-        guard auth.currentUser != nil else {return}
-        let householdRef = db.collection("Households")
-        let household = Household(name: name, pinNum: generatePin())
-                
-        do {
-            print("Adding household \(name) to firebase")
-            try householdRef.addDocument(from: household)
-        } catch {
-            print("Error saving to database")
+    func makeCurrentUserMember() {
+        guard let currentUserUID = auth.currentUser?.uid else {
+            self.currentUser = nil
+            return
         }
+        
+        let currentUserRef = db.collection("Users").document(currentUserUID)
+        
+        currentUserRef.updateData(["isMember" : true]) { error in
+            if let error = error {
+                print("Cannot make current user a member: \(error.localizedDescription)")
+            } else {
+                print("User \(String(describing: self.currentUser?.name)) has joined the house!")
+            }
+        }
+    }
+    
+    func createHousehold(name: String) {
+        guard let currentUser = currentUser else { return }
+        let householdRef = db.collection("Households")
+        
+        var household = Household(name: name, pinNum: generatePin())
+        
+        household.members.append(currentUser)
+        
+        do {
+            print("Adding household \(name) to Firestore")
+            try householdRef.addDocument(from: household) { [weak self] error in
+                if let error = error {
+                    print("Error saving household to database: \(error.localizedDescription)")
+                } else {
+                    print("Household created successfully.")
+                    if let docId = household.docId {
+                        self?.addCurrentUserToHousehold(householdId: docId)
+                    }
+                }
+            }
+        } catch {
+            print("Error saving to database: \(error.localizedDescription)")
+        }
+        
     }
     
     func generatePin() -> String {

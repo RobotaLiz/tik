@@ -47,7 +47,7 @@ struct HouseholdSelectionView: View {
 
 struct HouseholdSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = JoinHouseViewModel()
-        HouseholdSelectionView(householdViewModel: vm)
+        let jhvm = JoinHouseViewModel()
+        HouseholdSelectionView(householdViewModel: jhvm)
     }
 }
