@@ -81,8 +81,7 @@ struct CalendarView: View {
                 CalendarSettingsView()
             }
             .onAppear() {
-                //calendarVM.getTasks(fromDate: Date(), toDate: Date())
-                //calendarVM.getAllTasks()
+
             }
             .navigationTitle("Calendar")
             .toolbar {
@@ -154,7 +153,7 @@ struct AllView: View {
                             Spacer()
                             ForEach(row, id: \.self) {element in
                                 Spacer()
-                                calendarDateItem(date: element, calendarVM: calendarVM)
+                                CalendarDateItem(date: element, calendarVM: calendarVM)
                                 Spacer()
                             }
                         }
@@ -172,43 +171,62 @@ struct AllView: View {
                 }
             }
             .onAppear {
-                    createMonth(date: Date())
+                //createMonth(date: calendarVM.currentMonth)
+                createMonth()
             }
+            
+        }
+        .onReceive(calendarVM.$currentMonth) { month in
+            createMonth()
         }
     }
     
-    func createMonth(date: Date) {
-        let daysInMonth = rangeOfDaysMonth(date: date)
-        let weekday = getWeekday(date: date)
+    //TODO: add dates for last and next month (and move functionality out of this funciton
+    func createMonth() {
+        let calendar = Calendar.current
+        let daysInMonth = rangeOfDaysMonth(date: calendarVM.currentMonth)//rangeOfDaysMonth(date: date)
+        let weekday = getWeekday(date: calendarVM.currentMonth)//getWeekday(date: date)
         
+        var weekArray = [Date]()
         var monthArray : [[Date]] = []
-        //Change to last days in last month
+        
         //Also don't know if this will crash when weekday < 2
         //Thinks first day of the week is sunday
-        var weekArray = [Date](repeating: Date.now, count: weekday-2)
-        var counter = weekArray.count < 1 ? 1 : weekArray.count
-        
-        //Maybe guard
-        for day in daysInMonth {
-            weekArray.append(day)
-            if counter % 7 == 0 {
-                monthArray.append(weekArray)
-                weekArray = [Date]()
-                counter = 1
-            }
-            else {
-                counter += 1
+        //Change to last days in last month
+        if let lastMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarVM.currentMonth) {
+            let daysInLastMonth = rangeOfDaysMonth(date: lastMonth)
+            if (weekday - 2) > 0 {
+                for dateNumber in (1...(weekday - 2)).reversed() {
+                    weekArray.append(daysInLastMonth[daysInLastMonth.count - dateNumber])
+                }
             }
         }
-        //weekArray.append(contentsOf: 1...(7-weekArray.count))
-        weekArray.append(contentsOf: [Date](repeating: Date.now, count: 7-weekArray.count))
+
+        for day in daysInMonth {
+            weekArray.append(day)
+            if weekArray.count == 7 {
+                monthArray.append(weekArray)
+                weekArray = [Date]()
+            }
+        }
+                
+        if let nextMonth = calendar.date(byAdding: DateComponents(month: 1), to: calendarVM.currentMonth) {
+            let daysInNextMonth = rangeOfDaysMonth(date: nextMonth)
+            if (7-weekArray.count) > 0 {
+                for dateNumber in 0...(6-weekArray.count) {
+                    weekArray.append(daysInNextMonth[dateNumber])
+                }
+            }
+        }
         monthArray.append(weekArray)
         test = monthArray
     }
     
     //Get all dates for a month
+    //TODO: Fix. For may it starts with april 30. Change components.day to 2?
+    //works for firstDay but returns the wrong one
     func rangeOfDaysMonth(date: Date) -> [Date] {
-        let calendar = Calendar.current
+        /*let calendar = Calendar.current
         
         var components = calendar.dateComponents(
             [
@@ -216,14 +234,14 @@ struct AllView: View {
                 .month,
             ],
             from: date)
-        components.day = 1
+        components.day = 2
         
         guard let firstDay = calendar.date(from: components) else {
             test = []
             return []
         }
         
-        let range = calendar.range(of: .day, in: .month, for: firstDay)
+        let range = calendar.range(of: .day, in: .month, for: Date.now) //firstDay)
         var days = [Date]()
         if let range {
             days = range.compactMap { day -> Date? in
@@ -231,14 +249,27 @@ struct AllView: View {
                 return calendar.date(from: components)
             }
         }
-        /*if let range {
-            for d in range {
-                components.day = d
-                days.append(calendar.date(from: components))
-            }
-        }*/
+
+        return days*/
         
-        return days//.compactMap {$0}
+        
+        //this seem to work with setting hour to 12 to account for locale and similar not working
+        //so works in sweden
+        let now = date
+        let calendar = Calendar.current
+
+        guard let dayRange = calendar.range(of: .day, in: .month, for: now) else { return [] }
+        var components = calendar.dateComponents([.day, .month, .year, .era], from: now)
+
+        let componentsForWholeMonth = dayRange.compactMap { day -> DateComponents? in
+            components.day = day
+            components.hour = 12
+            return calendar.date(from: components).flatMap {
+                calendar.dateComponents([.weekday, .day, .month, .year, .hour], from: $0)
+            }
+        }
+        
+        return componentsForWholeMonth.compactMap {calendar.date(from: $0)}
     }
     
     //Get the number of the the weekday a ceratin month start on
@@ -268,8 +299,8 @@ struct AllView: View {
     }
 }
 
-enum itemSate {
-    case selected, available, notAvailable
+enum ItemState {
+    case selected, available, notAvailable, lastMonth, nextMonth
 }
 
 struct dateItem: View {
@@ -286,25 +317,102 @@ struct dateItem: View {
     }
 }
 
-struct calendarDateItem: View {
+struct CalendarDateItem: View {
     let date: Date
     let calendarVM: CalendarViewModel
+    @State var itemState : ItemState = .notAvailable
     
     var body: some View {
-        let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
+        let calendar = Calendar.current
+        let day = calendar.dateComponents([.day], from: date).day ?? 0
         
         ZStack {
             if day < 10 {
-                Circle().fill(.clear)
+                circle
                 Text("\(day)")
             }
             else {
-                Circle().fill(.yellow)
+                circle
                 Text("\(day)")
             }
         }
-            .onTapGesture {
+        .onTapGesture {
+            pressed()
+        }
+        .onAppear {
+            setState()
+        }
+        .onReceive(calendarVM.$currentMonth) { month in
+            setState()
+        }
+    }
+    
+    func setState() {
+        let calendar = Calendar.current
+        
+        if let nextMonth = calendar.date(byAdding: DateComponents(month: 1), to: calendarVM.currentMonth),
+           let lastMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarVM.currentMonth) {
+            if calendar.isDate(date, equalTo: nextMonth, toGranularity: .month) {
+                itemState = .nextMonth
+            }
+            else if calendar.isDate(date, equalTo: lastMonth, toGranularity: .month) {
+                itemState = .lastMonth
+            }
+            else if calendarVM.dateIsSelected(date: date) {
+                itemState = .selected
+            }
+            else if calendarVM.dateIsInTaskList(date: date) {
+                itemState = .available
+            }
+            else {
+                itemState = .notAvailable
+            }
+        }
+    }
+    
+    func pressed() {
+        let calendar = Calendar.current
+        
+        if let nextMonth = calendar.date(byAdding: DateComponents(month: 1), to: calendarVM.currentMonth),
+           let lastMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarVM.currentMonth) {
+            print(calendar.isDate(date, equalTo: nextMonth, toGranularity: .month))
+            print(date)
+            print(calendarVM.currentMonth)
+            if calendar.isDate(date, equalTo: nextMonth, toGranularity: .month) {
+                itemState = .nextMonth
+                calendarVM.currentMonth = nextMonth
+            }
+            else if calendar.isDate(date, equalTo: lastMonth, toGranularity: .month) {
+                itemState = .lastMonth
+                calendarVM.currentMonth = lastMonth
+            }
+            else if calendarVM.dateIsSelected(date: date) {
+                itemState = .selected
                 calendarVM.toggleTask(date: date)
             }
+            else if calendarVM.dateIsInTaskList(date: date) {
+                itemState = .available
+                calendarVM.toggleTask(date: date)
+
+            }
+            else {
+                itemState = .notAvailable
+            }
+        }
+    }
+    
+    var circle: some View {
+        switch itemState {
+        case .available:
+            return Circle().fill(.yellow)
+        case .notAvailable:
+            return Circle().fill(.pink)
+        case .selected:
+            return Circle().fill(.blue)
+        case .lastMonth:
+            return Circle().fill(.gray)
+        case .nextMonth:
+            return Circle().fill(.gray)
+        }
     }
 }

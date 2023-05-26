@@ -18,6 +18,7 @@ class  CalendarViewModel: ObservableObject {
     // @Published var household: Household
     @Published var tasks = [Task]()
     @Published var allTasks = [Task]()
+    @Published var currentMonth = Date.now
     
     var dateList = [Date]() //TODO: sorted set?
     
@@ -37,6 +38,17 @@ class  CalendarViewModel: ObservableObject {
         }
         
         upateTaskList()
+    }
+    
+    func dateIsInTaskList(date: Date) -> Bool {
+        return allTasks.contains(where: {Calendar.current.isDate(date, equalTo: $0.setDate, toGranularity: .day)})
+    }
+    
+    func dateIsSelected(date: Date) -> Bool {
+        if let index = dateList.firstIndex(where: {Calendar.current.isDate(date, equalTo: $0, toGranularity: .day)}) {
+            return true
+        }
+        return false
     }
     
     func upateTaskList() {
@@ -134,10 +146,10 @@ class  CalendarViewModel: ObservableObject {
         var datesToReturn = [Date]()
         
         datesToReturn = allTasks.sorted {$0.setDate > $1.setDate}
-                                .compactMap{
-                                    let components = Calendar.current.dateComponents([.year, .month, .day], from: $0.setDate)
-                                    return Calendar.current.date(from: components) ?? $0.setDate
-                                    }
+            .compactMap{
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: $0.setDate)
+                return Calendar.current.date(from: components) ?? $0.setDate
+            }
         
         return datesToReturn
     }
