@@ -102,7 +102,7 @@ struct CalendarView: View {
 struct AllView: View {
     
     let days = ["  ", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    @State var test: [[Int]] = []
+    @State var test: [[Date]] = []
     @State var toggle = true
     @StateObject var calendarVM : CalendarViewModel
     
@@ -154,7 +154,7 @@ struct AllView: View {
                             Spacer()
                             ForEach(row, id: \.self) {element in
                                 Spacer()
-                                calendarDateItem(date: Date.now, calendarVM: calendarVM)
+                                calendarDateItem(date: element, calendarVM: calendarVM)
                                 Spacer()
                             }
                         }
@@ -178,35 +178,36 @@ struct AllView: View {
     }
     
     func createMonth(date: Date) {
-        let daysInMonth = rangeOfDaysMonth(date: date).count
+        let daysInMonth = rangeOfDaysMonth(date: date)
         let weekday = getWeekday(date: date)
         
-        var monthArray : [[Int]] = []
+        var monthArray : [[Date]] = []
         //Change to last days in last month
         //Also don't know if this will crash when weekday < 2
         //Thinks first day of the week is sunday
-        var weekArray = [Int](repeating: 0, count: weekday-2)
+        var weekArray = [Date](repeating: Date.now, count: weekday-2)
         var counter = weekArray.count < 1 ? 1 : weekArray.count
         
         //Maybe guard
-        for val in 1...daysInMonth {
-            weekArray.append(val)
+        for day in daysInMonth {
+            weekArray.append(day)
             if counter % 7 == 0 {
                 monthArray.append(weekArray)
-                weekArray = [Int]()
+                weekArray = [Date]()
                 counter = 1
             }
             else {
                 counter += 1
             }
         }
-        weekArray.append(contentsOf: 1...(7-weekArray.count))
+        //weekArray.append(contentsOf: 1...(7-weekArray.count))
+        weekArray.append(contentsOf: [Date](repeating: Date.now, count: 7-weekArray.count))
         monthArray.append(weekArray)
         test = monthArray
     }
     
-    //gets number of days in a month
-    func rangeOfDaysMonth(date: Date) -> Range<Int> {
+    //Get all dates for a month
+    func rangeOfDaysMonth(date: Date) -> [Date] {
         let calendar = Calendar.current
         
         var components = calendar.dateComponents(
@@ -219,19 +220,25 @@ struct AllView: View {
         
         guard let firstDay = calendar.date(from: components) else {
             test = []
-            return 1..<2
+            return []
         }
         
         let range = calendar.range(of: .day, in: .month, for: firstDay)
-        var days = [Date?]()
+        var days = [Date]()
         if let range {
+            days = range.compactMap { day -> Date? in
+                components.day = day
+                return calendar.date(from: components)
+            }
+        }
+        /*if let range {
             for d in range {
                 components.day = d
                 days.append(calendar.date(from: components))
             }
-        }
+        }*/
         
-        return range ?? 1..<2
+        return days//.compactMap {$0}
     }
     
     //Get the number of the the weekday a ceratin month start on
