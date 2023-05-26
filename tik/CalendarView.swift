@@ -28,11 +28,6 @@ struct CalendarView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                /*List {
-                 ForEach(calendarVM.tasks) { task in
-                 TaskListRowView(task: task, isDone: true)
-                 }
-                 }*/
                 let now = Date()
                 switch selectedInterval {
                 case .day:
@@ -79,7 +74,7 @@ struct CalendarView: View {
                     }
                     
                 case .custom:
-                    Text("Wip")
+                    AllView(calendarVM: calendarVM)
                 }
             }
             .sheet(isPresented: $calendarSettingsViewPresented) {
@@ -87,6 +82,7 @@ struct CalendarView: View {
             }
             .onAppear() {
                 //calendarVM.getTasks(fromDate: Date(), toDate: Date())
+                //calendarVM.getAllTasks()
             }
             .navigationTitle("Calendar")
             .toolbar {
@@ -100,5 +96,208 @@ struct CalendarView: View {
                 }
             }
         }
+    }
+}
+
+struct AllView: View {
+    
+    let days = ["  ", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    @State var test: [[Int]] = []
+    @State var toggle = true
+    @StateObject var calendarVM : CalendarViewModel
+    
+    var body: some View {
+        VStack {
+            if toggle {
+                VStack {
+                    Text("2023")
+                    ScrollViewReader { value in
+                        ScrollView(.horizontal) {
+                            LazyHStack {
+                                ForEach(calendarVM.getAllDates(), id: \.self) { date in
+                                    dateItem(date: date, calendarVM: calendarVM)
+                                        .padding(.horizontal)
+                                        .background(.yellow)
+                                        .cornerRadius(10)
+                                }
+                            }
+                            
+                            .padding(.bottom)
+                        }
+                        .onAppear {
+                            //Scroll to closet date in the future
+                            var index = 0
+                            if let date = calendarVM.getClosestDate() {
+                                index = calendarVM.getAllDates().firstIndex(of: date) ?? 0
+                            }
+                            value.scrollTo(index, anchor: .center)
+                        }
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            else {
+                Text("May")
+                VStack {
+                    HStack {
+                        ForEach(days, id: \.self) {day in
+                            Spacer()
+                            Text("\(day)")
+                            Spacer()
+                        }
+                    }
+                    Divider()
+                    ForEach(test, id: \.self) { row in
+                        HStack {
+                            Spacer()
+                            Text("   ")
+                            Spacer()
+                            ForEach(row, id: \.self) {element in
+                                Spacer()
+                                calendarDateItem(date: Date.now, calendarVM: calendarVM)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+            }
+            Button("v") {
+                withAnimation {
+                    toggle.toggle()
+                }
+            }
+            List {
+                ForEach(calendarVM.tasks) { task in
+                    Text("\(task.title)")
+                }
+            }
+            .onAppear {
+                    createMonth(date: Date())
+            }
+        }
+    }
+    
+    func createMonth(date: Date) {
+        let daysInMonth = rangeOfDaysMonth(date: date).count
+        let weekday = getWeekday(date: date)
+        
+        var monthArray : [[Int]] = []
+        //Change to last days in last month
+        //Also don't know if this will crash when weekday < 2
+        //Thinks first day of the week is sunday
+        var weekArray = [Int](repeating: 0, count: weekday-2)
+        var counter = weekArray.count < 1 ? 1 : weekArray.count
+        
+        //Maybe guard
+        for val in 1...daysInMonth {
+            weekArray.append(val)
+            if counter % 7 == 0 {
+                monthArray.append(weekArray)
+                weekArray = [Int]()
+                counter = 1
+            }
+            else {
+                counter += 1
+            }
+        }
+        weekArray.append(contentsOf: 1...(7-weekArray.count))
+        monthArray.append(weekArray)
+        test = monthArray
+    }
+    
+    //gets number of days in a month
+    func rangeOfDaysMonth(date: Date) -> Range<Int> {
+        let calendar = Calendar.current
+        
+        var components = calendar.dateComponents(
+            [
+                .year,
+                .month,
+            ],
+            from: date)
+        components.day = 1
+        
+        guard let firstDay = calendar.date(from: components) else {
+            test = []
+            return 1..<2
+        }
+        
+        let range = calendar.range(of: .day, in: .month, for: firstDay)
+        var days = [Date?]()
+        if let range {
+            for d in range {
+                components.day = d
+                days.append(calendar.date(from: components))
+            }
+        }
+        
+        return range ?? 1..<2
+    }
+    
+    //Get the number of the the weekday a ceratin month start on
+    //Starting from sunday
+    func getWeekday(date: Date) -> Int {
+        let calendar = Calendar.current
+        
+        //These do not work to set first day to monday
+        //calendar.firstWeekday = 2
+        //calendar.locale = Locale(identifier: "sv_SE")
+        
+        
+        var components = calendar.dateComponents(
+            [
+                .year,
+                .month,
+            ],
+            from: date)
+        components.day = 1
+        
+        guard let firstDay = calendar.date(from: components) else {
+            test = []
+            return 0
+        }
+        
+        return calendar.component(.weekday, from: firstDay)
+    }
+}
+
+enum itemSate {
+    case selected, available, notAvailable
+}
+
+struct dateItem: View {
+    let date: Date
+    let calendarVM: CalendarViewModel
+    
+    var body: some View {
+        VStack {
+            Text(date.formatted(.dateTime.day().month()))
+                .onTapGesture {
+                    calendarVM.toggleTask(date: date)
+                }
+        }
+    }
+}
+
+struct calendarDateItem: View {
+    let date: Date
+    let calendarVM: CalendarViewModel
+    
+    var body: some View {
+        let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
+        
+        ZStack {
+            if day < 10 {
+                Circle().fill(.clear)
+                Text("\(day)")
+            }
+            else {
+                Circle().fill(.yellow)
+                Text("\(day)")
+            }
+        }
+            .onTapGesture {
+                calendarVM.toggleTask(date: date)
+            }
     }
 }
