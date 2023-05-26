@@ -40,7 +40,7 @@ struct CreateHouseholdView: View {
             }
             .frame(width: 300, height: 200)
             Button(action: {
-                householdViewModel.createHousehold(name: householdName)
+                householdViewModel.createHousehold(name: householdName, pinCode: householdPin)
                 //householdViewModel.currentUser?.isMember = true
                 householdViewModel.makeCurrentUserMember()
                 presentationMode.wrappedValue.dismiss()

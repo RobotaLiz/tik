@@ -188,11 +188,12 @@ class JoinHouseViewModel : ObservableObject {
         }
     }
     
-    func createHousehold(name: String) {
+    func createHousehold(name: String, pinCode: String) {
         guard let currentUser = currentUser else { return }
         let householdRef = db.collection("Households")
         
-        var household = Household(name: name, pinNum: generatePin())
+        
+        var household = Household(name: name, pinNum: pinCode)
         
         household.members.append(currentUser)
         
