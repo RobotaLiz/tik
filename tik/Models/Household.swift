@@ -14,7 +14,8 @@ struct Household : Codable {
     @DocumentID var docId : String?
     var name : String
     var pinNum : String
-    var members : [User] = []
+    // Changed this! (from [User])
+    var members : [Member] = []
     var tasks : [Task] = []
     var admin : User? // Only one user can be admin right now (more admins in the future?)
     

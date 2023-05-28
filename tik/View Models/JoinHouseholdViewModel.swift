@@ -11,13 +11,13 @@ import FirebaseFirestore
 
 class JoinHouseViewModel : ObservableObject {
     
-    @Published var household : Household?
+    @Published var currentHousehold : Household?
     @Published var currentUser : User?
     let db = Firestore.firestore()
     let auth = Auth.auth()
     
     init() {
-        self.household = household
+        self.currentHousehold = currentHousehold
         self.currentUser = currentUser
         getCurrentUser()
     }
@@ -26,6 +26,7 @@ class JoinHouseViewModel : ObservableObject {
         print(currentUser as Any)
     }
     
+    // ?
     func userListener() {
         guard auth.currentUser != nil else {return}
         let usersRef = db.collection("Users")
@@ -162,7 +163,7 @@ class JoinHouseViewModel : ObservableObject {
                 for document in snapshot.documents {
                     do {
                         let household = try document.data(as: Household.self)
-                        self.household = household
+                        self.currentHousehold = household
                     } catch {
                         print("Error getting docs")
                     }
@@ -195,7 +196,7 @@ class JoinHouseViewModel : ObservableObject {
         
         var household = Household(name: name, pinNum: pinCode)
         
-        household.members.append(currentUser)
+        //household.members.append(currentUser)
         
         do {
             print("Adding household \(name) to Firestore")

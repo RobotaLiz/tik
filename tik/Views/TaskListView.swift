@@ -83,7 +83,7 @@ struct TaskListView: View {
                 Menu {
                     Button(action: {
                         authViewModel.signOut()
-                        authViewModel.loggedIn = false
+                        //authViewModel.loggedIn = false
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")

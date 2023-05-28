@@ -25,11 +25,11 @@ struct SidebarView: View {
             }
 
         }
-        .onAppear {
-            authViewModel.adminCheck { isAdmin in
-                self.isAdmin = isAdmin
-            }
-        }
+//        .onAppear {
+//            authViewModel.adminCheck { isAdmin in
+//                self.isAdmin = isAdmin
+//            }
+//        }
     }
 }
 
