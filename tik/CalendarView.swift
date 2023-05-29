@@ -4,7 +4,7 @@
 //
 //  Created by Hakan Johansson on 2023-05-21.
 //
-//  TODO: Split code. Use extensions
+//  TODO: Split code. Use extensions. Fix accurate times
 
 import SwiftUI
 
