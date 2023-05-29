@@ -8,6 +8,7 @@ struct UserLogInView: View {
     enum Field: Hashable {
         case usernameField
         case passwordField
+        case emailField
     }
     
     let db = Firestore.firestore()
@@ -46,34 +47,17 @@ struct UserLogInView: View {
         Form {
             TextField("Name", text: $name)
                 .textFieldStyle(AuthTextFieldStyle())
-                /*.foregroundColor(.black)
-                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
-                .foregroundColor(.yellow)
-                .padding(10)
-                .font(.title3)
-                .shadow(color: .purple, radius: 10)*/
                 .keyboardType(.emailAddress)
                 .focused($focusedField, equals: .usernameField)
                 .textInputAutocapitalization(.never)
             
             TextField("Email:", text: $email)
                 .textFieldStyle(AuthTextFieldStyle())
-                /*.foregroundColor(.black)
-                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
-                .foregroundColor(.yellow)
-                .padding(10)
-                .shadow(color: .purple, radius: 10)*/
                 .keyboardType(.emailAddress).font(.title3)
-                .focused($focusedField, equals: .usernameField) // Username or Email?
+                .focused($focusedField, equals: .emailField) // Username or Email?
                 .textInputAutocapitalization(.never)
             SecureField("Password:", text: $password)
                 .textFieldStyle(AuthTextFieldStyle())
-                /*.foregroundColor(.black)
-                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
-                .foregroundColor(.yellow)
-                .padding(10)
-                .font(.title3)
-                .shadow(color: .purple, radius: 10)*/
                 .focused($focusedField, equals: .passwordField)
         }
         HStack{
