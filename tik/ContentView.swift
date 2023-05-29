@@ -9,7 +9,7 @@ struct ContentView: View {
     @StateObject var householdViewModel = JoinHouseViewModel()
     
     var body: some View {
-        Group {
+        /*Group {
             if authViewModel.loggedIn {
                 if householdViewModel.currentUser?.isMember == true {
                     //Text("Current user is member!")                       - Debugging /Antonio
@@ -31,7 +31,8 @@ struct ContentView: View {
         .onAppear {
             //authViewModel.checkLoggedInStatus()
             householdViewModel.userListener()
-        }
+        }*/
+        CalendarView()
     }
         
 }

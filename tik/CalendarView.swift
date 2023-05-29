@@ -14,7 +14,7 @@ enum DateInterval {
 
 struct CalendarView: View {
     
-    @StateObject var calendarVM : CalendarViewModel
+    @StateObject var calendarVM = CalendarViewModel()
     @State var calendarSettingsViewPresented = false
     @State var selectedInterval: DateInterval = .day
     
