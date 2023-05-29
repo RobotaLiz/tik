@@ -17,8 +17,8 @@ class JoinHouseViewModel : ObservableObject {
     let auth = Auth.auth()
     
     init() {
-        self.currentHousehold = currentHousehold
-        self.currentUser = currentUser
+        //self.currentHousehold = currentHousehold
+        //self.currentUser = currentUser
         getCurrentUser()
     }
     
@@ -189,32 +189,32 @@ class JoinHouseViewModel : ObservableObject {
         }
     }
     
-    func createHousehold(name: String, pinCode: String) {
-        guard let currentUser = currentUser else { return }
-        let householdRef = db.collection("Households")
-        
-        
-        var household = Household(name: name, pinNum: pinCode)
-        
-        //household.members.append(currentUser)
-        
-        do {
-            print("Adding household \(name) to Firestore")
-            try householdRef.addDocument(from: household) { [weak self] error in
-                if let error = error {
-                    print("Error saving household to database: \(error.localizedDescription)")
-                } else {
-                    print("Household created successfully.")
-                    if let docId = household.docId {
-                        self?.addCurrentUserToHousehold(householdId: docId)
-                    }
-                }
-            }
-        } catch {
-            print("Error saving to database: \(error.localizedDescription)")
-        }
-        
-    }
+//    func createHousehold(name: String, pinCode: String) {
+//        guard let currentUser = currentUser else { return }
+//        let householdRef = db.collection("Households")
+//        
+//        
+//        var household = Household(name: name, pinNum: pinCode)
+//        
+//        //household.members.append(currentUser)
+//        
+//        do {
+//            print("Adding household \(name) to Firestore")
+//            try householdRef.addDocument(from: household) { [weak self] error in
+//                if let error = error {
+//                    print("Error saving household to database: \(error.localizedDescription)")
+//                } else {
+//                    print("Household created successfully.")
+//                    if let docId = household.docId {
+//                        self?.addCurrentUserToHousehold(householdId: docId)
+//                    }
+//                }
+//            }
+//        } catch {
+//            print("Error saving to database: \(error.localizedDescription)")
+//        }
+//        
+//    }
     
     func generatePin() -> String {
         let lowest = 100_000

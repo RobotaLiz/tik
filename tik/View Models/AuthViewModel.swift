@@ -14,9 +14,85 @@ class AuthViewModel : ObservableObject {
     
     let db = Firestore.firestore()
     let auth = Auth.auth()
+    
     let userRef = "Test_users"
+    let householdRef = "Test_households"
+    
     
     @Published var currentTikUser: User?
+    @Published var currentHousehold: Household?
+    
+    
+    func addHousehold(name: String, pin: String) {
+        
+        guard let currentTikUser = currentTikUser else { return }
+        guard let userId = currentTikUser.docId else {return}
+        
+        let householdRef = db.collection(householdRef)
+        
+        let newMember = Member(userID: userId, admin: true)
+        let newHousehold = Household(name: name, pin: pin, members: [newMember])
+        
+        //household.members.append(currentUser)
+        
+        do {
+            print("Adding household \(name) to Firestore")
+            try householdRef.addDocument(from: newHousehold) { error in
+                if let error = error {
+                    print("Error saving household to database: \(error.localizedDescription)")
+                } else {
+                    print("Household created successfully.")
+                }
+            }
+        } catch {
+            print("Error saving to database: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    func searchFirebase(inputText: String, completion: @escaping ([DocumentSnapshot]?, Error?) -> Void) {
+        let searchRef = db.collection(householdRef)
+        
+        searchRef.whereField("pin", isEqualTo: inputText).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error searching Firestore: \(error.localizedDescription)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                print("No matching documents")
+                completion(nil, nil)
+                return
+            }
+            
+            completion(documents, nil)
+        }
+    }
+    
+    
+    func joinHousehold(household: Household) {
+        
+    }
+    
+    
+    func checkInHousehold(docID: String) {
+        
+    }
+    
+    func checkOutHousehold() {
+        currentHousehold = nil
+    }
+    
+    
+    func getLatestHousehold() {
+        
+    }
+    
+    
+    func generatePin() -> String {
+        return "000000"
+    }
     
     
     func addAccount(name: String, email: String, password: String) {
@@ -27,10 +103,11 @@ class AuthViewModel : ObservableObject {
             }
 
             let newUser = User(name: name, email: email)
-            let usersRef = self.db.collection(self.userRef).document(user.uid)
+            let newUserRef = self.db.collection(self.userRef).document(user.uid)
 
+            // This is weird. Why not save the User?
             if let name = newUser.name, let email = newUser.email {
-                usersRef.setData([
+                newUserRef.setData([
                     "name": name,
                     "email": email,
 //                    "isMember": newUser.isMember,
@@ -39,7 +116,7 @@ class AuthViewModel : ObservableObject {
                     if let error = error {
                         print("Error adding document: \(error.localizedDescription)")
                     } else {
-                        print("Document added with ID: \(usersRef.documentID)")
+                        print("Document added with ID: \(newUserRef.documentID)")
                     }
                 }
             }
@@ -55,29 +132,27 @@ class AuthViewModel : ObservableObject {
                 print(error?.localizedDescription ?? "")
             } else {
                 print("Success")
-                // Let's try using this
-                if let currentUser = self.auth.currentUser {
-                    // Let's remove any old logged in user, if we encounter any error
-                    self.currentTikUser = nil
-                    let docRef = self.db.collection(self.userRef).document(currentUser.uid)
-
-                    docRef.getDocument(as: User.self) { result in
-                        
-                        switch result {
-                            case .success(let user) : self.currentTikUser = user
-                            case .failure(let error) : print("Error getting user \(error)")
-                        }
-//                        guard let result = result else {return}
-//                        if error != nil {
-//                            print("Error getting user")
-//                        } else {
-//                            do {
-//                                self.currentTikUser = try result
-//                            } catch {
-//                                print("Error")
-//                            }
-//                        }
-                    }
+                // If we successfully logged in, we need to get the currentTikUser from Firestore too
+                self.getCurrentTikUser()
+            }
+        }
+    }
+    
+    
+    func getCurrentTikUser() {
+        if let currentUser = self.auth.currentUser {
+            // Let's remove any old logged in user, if we should encounter any error.
+            self.currentTikUser = nil
+            let docRef = self.db.collection(self.userRef).document(currentUser.uid)
+            
+            docRef.getDocument(as: User.self) { result in
+                
+                switch result {
+                case .success(let user) :
+                    self.currentTikUser = user
+                    // Here we should try to get the User's currentHousehold somehow.
+                    
+                case .failure(let error) : print("Error getting user \(error)")
                 }
             }
         }
@@ -94,16 +169,7 @@ class AuthViewModel : ObservableObject {
     }
 }
     
-//    func signIn(email: String, password: String) {
-        
-//    }
-//
-//    func addAccount(name: String, email: String, password: String) {
-//        // Seems alright
-       
-//    }
-//
-//
+
 //    // Do we need this here?
 //    func adminCheck(completion: @escaping (Bool) -> Void) {
 //        guard let currentUserUID = auth.currentUser?.uid else {
@@ -123,9 +189,7 @@ class AuthViewModel : ObservableObject {
 //        }
 //    }
 //
-//    func signOut() {
-        
-//    }
+//
 //
 //
 //    // Do we need this?

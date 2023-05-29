@@ -9,10 +9,10 @@ import SwiftUI
 
 struct JoinHouseholdView: View {
     
-    @ObservedObject var householdViewModel : JoinHouseViewModel
+    @ObservedObject var authViewModel : AuthViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var joinSuccessful = false
-    @State var inputPin : String
+    @State var inputPin : String = ""
     @State var searchResult = ""
     @State var householdDocId = ""
     
@@ -31,7 +31,7 @@ struct JoinHouseholdView: View {
                     .border(.black)
                 Spacer(minLength: 20)
                 Button(action: {
-                    householdViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
+                    authViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
                         if let error = error {
                             print("Error searching Firestore: \(error.localizedDescription)")
                             return
@@ -44,7 +44,7 @@ struct JoinHouseholdView: View {
                         
                         for document in documents {
                             let data = document.data()
-                            if let pinNum = data!["pinNum"] as? String {
+                            if let pinNum = data!["pin"] as? String {
                                 print("Matching document with pinNum: \(pinNum)")
                                 searchResult = "Household found! Pin number: \(pinNum)"
                             }
@@ -67,9 +67,9 @@ struct JoinHouseholdView: View {
                     Text(searchResult)
                         .font(.title)
                     Button(action: {
-                        householdViewModel.addCurrentUserToHousehold(householdId: householdDocId)
+                        authViewModel.joinHousehold(pin: inputPin)
                         //householdViewModel.currentUser?.isMember = true
-                        householdViewModel.makeCurrentUserMember()
+                        //householdViewModel.makeCurrentUserMember()
                         joinSuccessful = true
                         presentationMode.wrappedValue.dismiss()
                     }) {
@@ -88,15 +88,15 @@ struct JoinHouseholdView: View {
                 .font(.footnote)
             }
         }
-        .onAppear {
-            householdViewModel.householdFirestoreListener()
-        }
+//        .onAppear {
+//            householdViewModel.householdFirestoreListener()
+//        }
     }
 }
 
 struct JoinHouseholdView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = JoinHouseViewModel()
-        JoinHouseholdView(householdViewModel: vm, inputPin: "inputPin")
+        let vm = AuthViewModel()
+        JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
     }
 }

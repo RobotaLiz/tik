@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HouseholdSelectionView: View {
     
-    @ObservedObject var householdViewModel : JoinHouseViewModel
+    @ObservedObject var authViewModel : AuthViewModel
+    //@ObservedObject var householdViewModel : JoinHouseViewModel
     @State var createHouseholdViewPresented = false
     @State var joinHouseholdViewPresented = false
     
@@ -37,17 +38,17 @@ struct HouseholdSelectionView: View {
 
         }
         .sheet(isPresented: $createHouseholdViewPresented) {
-            CreateHouseholdView(householdViewModel: JoinHouseViewModel(), householdName: "name", householdPin: "pin")
+            CreateHouseholdView(authViewModel: authViewModel)
         }
         .sheet(isPresented: $joinHouseholdViewPresented) {
-            JoinHouseholdView(householdViewModel: JoinHouseViewModel(), inputPin: "666")
+            JoinHouseholdView(authViewModel: authViewModel)
         }
     }
 }
 
 struct HouseholdSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        let jhvm = JoinHouseViewModel()
-        HouseholdSelectionView(householdViewModel: jhvm)
+        let authVM = AuthViewModel()
+        HouseholdSelectionView(authViewModel: authVM)
     }
 }

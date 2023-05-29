@@ -11,33 +11,20 @@ struct ContentView: View {
     var body: some View {
         // Trying to rebuild this.
         Group {
-            if authViewModel.currentTikUser != nil {
-                TaskListView(authViewModel: authViewModel)
-            } else {
+            if authViewModel.currentTikUser == nil {
                 UserLogInView(authViewModel: authViewModel)
+            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold != nil {
+                TaskListView(authViewModel: authViewModel)
+            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold == nil {
+                HouseholdSelectionView(authViewModel: authViewModel)
             }
+                
+                
+            
         }
     }
         
-//        Group {
-//            if authViewModel.loggedIn {
-//                if householdViewModel.currentUser?.isMember == true {
-//                    //Text("Current user is member!")                       - Debugging /Antonio
-//                    TaskListView(authViewModel: authViewModel)
-//                        .onAppear {
-//                            authViewModel.didSignOut = {
-//                                authViewModel.loggedIn = false
-//                            }
-//                        }
-//                } else if householdViewModel.currentUser?.isMember == false {
-//                    HouseholdSelectionView(householdViewModel: householdViewModel)
-//                } /*else {
-//                    Text("Loading...")
-//                }*/
-//            } else {
-//                UserLogInView(authViewModel: authViewModel)
-//            }
-//        }
+
 //        .onAppear {
 //            //authViewModel.checkLoggedInStatus()
 //            householdViewModel.userListener()
