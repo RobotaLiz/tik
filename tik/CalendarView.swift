@@ -4,6 +4,7 @@
 //
 //  Created by Hakan Johansson on 2023-05-21.
 //
+//  TODO: Split code. Use extensions
 
 import SwiftUI
 
@@ -193,6 +194,7 @@ struct AllView: View {
         //Also don't know if this will crash when weekday < 2
         //Thinks first day of the week is sunday
         //Change to last days in last month
+        //switch to subarry
         if let lastMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarVM.currentMonth) {
             let daysInLastMonth = rangeOfDaysMonth(date: lastMonth)
             if (weekday - 2) > 0 {
@@ -226,33 +228,6 @@ struct AllView: View {
     //TODO: Fix. For may it starts with april 30. Change components.day to 2?
     //works for firstDay but returns the wrong one
     func rangeOfDaysMonth(date: Date) -> [Date] {
-        /*let calendar = Calendar.current
-        
-        var components = calendar.dateComponents(
-            [
-                .year,
-                .month,
-            ],
-            from: date)
-        components.day = 2
-        
-        guard let firstDay = calendar.date(from: components) else {
-            test = []
-            return []
-        }
-        
-        let range = calendar.range(of: .day, in: .month, for: Date.now) //firstDay)
-        var days = [Date]()
-        if let range {
-            days = range.compactMap { day -> Date? in
-                components.day = day
-                return calendar.date(from: components)
-            }
-        }
-
-        return days*/
-        
-        
         //this seem to work with setting hour to 12 to account for locale and similar not working
         //so works in sweden
         let now = date
