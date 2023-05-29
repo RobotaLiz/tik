@@ -13,7 +13,7 @@ struct JoinHouseholdView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var joinSuccessful = false
     @State var inputPin : String = ""
-    @State var searchResult = ""
+    @State var searchResult : [Household?]?
     @State var householdDocId = ""
     
     var body: some View {
@@ -30,30 +30,42 @@ struct JoinHouseholdView: View {
                     .padding(10)
                     .border(.black)
                 Spacer(minLength: 20)
-                Button(action: {
-                    authViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
-                        if let error = error {
-                            print("Error searching Firestore: \(error.localizedDescription)")
-                            return
-                        }
-                        
-                        guard let documents = documents else {
-                            print("No matching documents")
-                            return
-                        }
-                        
-                        for document in documents {
-                            let data = document.data()
-                            if let pinNum = data!["pin"] as? String {
-                                print("Matching document with pinNum: \(pinNum)")
-                                searchResult = "Household found! Pin number: \(pinNum)"
-                            }
-                            
-                            householdDocId = document.documentID
-                            print("Household ID: \(householdDocId)")
-                            
-                        }
+                Button(action: {authViewModel.getHouseholds(pin: inputPin) { households, error in
+                    if let error = error {
+                        // Handle the error
+                        print("Error: \(error.localizedDescription)")
+                    } else if let households = households {
+                        searchResult = households
+                        print(searchResult)
+                        // Use the resulting households array
+                        //                            for household in households {
+                        //                                print("Household: \(household)")
+                        //                            }
                     }
+                }
+                    //                    authViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
+                    //                        if let error = error {
+                    //                            print("Error searching Firestore: \(error.localizedDescription)")
+                    //                            return
+                    //                        }
+                    //
+                    //                        guard let documents = documents else {
+                    //                            print("No matching documents")
+                    //                            return
+                    //                        }
+                    //
+                    //                        for document in documents {
+                    //                            let data = document.data()
+                    //                            if let pinNum = data!["pin"] as? String {
+                    //                                print("Matching document with pinNum: \(pinNum)")
+                    //                                searchResult = "Household found! Pin number: \(pinNum)"
+                    //                            }
+                    //
+                    //                            householdDocId = document.documentID
+                    //                            print("Household ID: \(householdDocId)")
+                    //
+                    //                        }
+                    //                    }
                     //presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "magnifyingglass")
@@ -62,12 +74,12 @@ struct JoinHouseholdView: View {
                 Spacer(minLength: 40)
             }
             
-            if !searchResult.isEmpty {
+            if let searchResult = searchResult, let foundHousehold = searchResult[0] {
                 VStack {
-                    Text(searchResult)
+                    Text(foundHousehold.name)
                         .font(.title)
                     Button(action: {
-                        authViewModel.joinHousehold(pin: inputPin)
+                        authViewModel.joinHousehold(household: foundHousehold)
                         //householdViewModel.currentUser?.isMember = true
                         //householdViewModel.makeCurrentUserMember()
                         joinSuccessful = true
@@ -79,7 +91,7 @@ struct JoinHouseholdView: View {
                     .sheet(isPresented: $joinSuccessful) {
                         ContentView()
                     }
-
+                    
                 }
                 .frame(width: 200, height: 150)
                 .background(Color.gray)
@@ -88,15 +100,16 @@ struct JoinHouseholdView: View {
                 .font(.footnote)
             }
         }
-//        .onAppear {
-//            householdViewModel.householdFirestoreListener()
-//        }
+        //        .onAppear {
+        //            householdViewModel.householdFirestoreListener()
+        //        }
+        
     }
-}
-
-struct JoinHouseholdView_Previews: PreviewProvider {
-    static var previews: some View {
-        let vm = AuthViewModel()
-        JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
+    
+    struct JoinHouseholdView_Previews: PreviewProvider {
+        static var previews: some View {
+            let vm = AuthViewModel()
+            JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
+        }
     }
 }
