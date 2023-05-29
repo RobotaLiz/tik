@@ -5,29 +5,35 @@ import FirebaseAuth
 
 struct ContentView: View {
     
-    @State var loggedIn = false
+    @StateObject var authViewModel = AuthViewModel()
+    @StateObject var householdViewModel = JoinHouseViewModel()
     
     var body: some View {
         Group {
-            if loggedIn {
-                TaskListView()
-            }else{
-                UserLogInView(loggedIn: $loggedIn)
+            if authViewModel.loggedIn {
+                if householdViewModel.currentUser?.isMember == true {
+                    //Text("Current user is member!")                       - Debugging /Antonio
+                    TaskListView(authViewModel: authViewModel)
+                        .onAppear {
+                            authViewModel.didSignOut = {
+                                authViewModel.loggedIn = false
+                            }
+                        }
+                } else if householdViewModel.currentUser?.isMember == false {
+                    HouseholdSelectionView(householdViewModel: householdViewModel)
+                } /*else {
+                    Text("Loading...")
+                }*/
+            } else {
+                UserLogInView(authViewModel: authViewModel)
             }
         }
-        .onAppear() {
-            checkLoggedInStatus()
+        .onAppear {
+            //authViewModel.checkLoggedInStatus()
+            householdViewModel.userListener()
         }
     }
-    
-    func checkLoggedInStatus() {
         
-        let user = Auth.auth().currentUser
-        
-        if user != nil {
-            loggedIn = true
-        }
-    }
 }
 
 

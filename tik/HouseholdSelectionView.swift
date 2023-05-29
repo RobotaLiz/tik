@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HouseholdSelectionView: View {
     
-    @StateObject var selectHouseViewModel : JoinHouseViewModel
+    @ObservedObject var householdViewModel : JoinHouseViewModel
     @State var createHouseholdViewPresented = false
     @State var joinHouseholdViewPresented = false
     
@@ -22,14 +22,14 @@ struct HouseholdSelectionView: View {
                 Spacer()
             }
             Button(action: {
-                // Nav to create household view
+                createHouseholdViewPresented.toggle()
             }) {
                 Text("Create")
             }
             .padding(30)
             .buttonStyle(.borderedProminent)
             Button(action: {
-                // Nav to join household view
+                joinHouseholdViewPresented.toggle()
             }) {
                 Text("Join")
             }
@@ -37,18 +37,17 @@ struct HouseholdSelectionView: View {
 
         }
         .sheet(isPresented: $createHouseholdViewPresented) {
-            CreateHouseholdView(viewModel: JoinHouseViewModel(household: Household(name: "name", pinNum: "456")), householdName: "name", householdPin: "pin")
+            CreateHouseholdView(householdViewModel: JoinHouseViewModel(), householdName: "name", householdPin: "pin")
         }
         .sheet(isPresented: $joinHouseholdViewPresented) {
-            JoinHouseholdView(viewModel: JoinHouseViewModel(household: Household(name: "name", pinNum: "456")), inputPin: "666")
+            JoinHouseholdView(householdViewModel: JoinHouseViewModel(), inputPin: "666")
         }
     }
 }
 
 struct HouseholdSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        let household = Household(name: "Test Name", pinNum: "666")
-        let vm = JoinHouseViewModel(household: household)
-        HouseholdSelectionView(selectHouseViewModel: vm)
+        let jhvm = JoinHouseViewModel()
+        HouseholdSelectionView(householdViewModel: jhvm)
     }
 }

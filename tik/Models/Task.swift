@@ -10,8 +10,8 @@ import FirebaseFirestoreSwift
 
 struct Task : Identifiable, Codable {
     
-    @DocumentID var id : String?
-    //var id = UUID() //Do we need this? Couldn't we rename docId to id instead?
+    @DocumentID var docId : String?
+    var id = UUID() //Do we need this? Couldn't we rename docId to id instead? // We need both docId for Firestore and UUID for the task to be Identifiable, and to be usable in a list. /Antonio
     var title : String
     var notes : String?
     var location : String?

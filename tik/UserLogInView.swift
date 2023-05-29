@@ -2,18 +2,26 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 struct UserLogInView: View {
     enum Field: Hashable {
         case usernameField
         case passwordField
+        case emailField
     }
-    @State private var username =  ""
+    
+    let db = Firestore.firestore()
+    @State private var name = ""
+    @State private var email = ""
     @State private var password = ""
     @FocusState private var focusedField: Field?
     // Tobbe added this to navigate to the list view on log in: (Also, see content view)
     // loggedIn is changed in signIn function.
-    @Binding var loggedIn: Bool
+    //@Binding var loggedIn: Bool
+    
+    // Antonio's view model stuff
+    @ObservedObject var authViewModel : AuthViewModel
     
     
     var body: some View {
@@ -32,81 +40,40 @@ struct UserLogInView: View {
                 .padding(-50)
                 .bold()
                 .font(.title3)
-            
                 .padding(70)
         }
+        
+        // I moved the style stuff to theyr own file called TextFieldStyles. Commented out stuff can be safely deleted. /Antonio
         Form {
-            TextField("Username:", text: $username)
-            
-                .foregroundColor(.black)
-                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
-                .foregroundColor(.yellow)
-                .padding(10)
-                .shadow(color: .purple, radius: 10)
+            TextField("Name", text: $name)
+                .textFieldStyle(AuthTextFieldStyle())
                 .keyboardType(.emailAddress)
                 .focused($focusedField, equals: .usernameField)
-                .font(.title3)
                 .textInputAutocapitalization(.never)
             
+            TextField("Email:", text: $email)
+                .textFieldStyle(AuthTextFieldStyle())
+                .keyboardType(.emailAddress).font(.title3)
+                .focused($focusedField, equals: .emailField) // Username or Email?
+                .textInputAutocapitalization(.never)
             SecureField("Password:", text: $password)
-                .foregroundColor(.black)
-                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
-                .foregroundColor(.yellow)
-                .padding(10)
-                .shadow(color: .purple, radius: 10)
-            
-            
-            
+                .textFieldStyle(AuthTextFieldStyle())
                 .focused($focusedField, equals: .passwordField)
-                .font(.title3)
-            
         }
         HStack{
             Button("Add account", action: {
-                addAccount()
+                authViewModel.addAccount(name: name, email: email, password: password)
             })
             Image(systemName: "person.fill.badge.plus")
                 .foregroundColor(.gray)
-            
         }
         Button("Sign In") {
-            signIn()
-            
+            authViewModel.signIn(email: email, password: password)
         }
-        
         .padding(9)
         .background(.yellow)
         .foregroundColor(.black)
         .clipShape(Capsule())
         .padding(50)
     }
-    func signIn () {
-        
-        Auth.auth().signIn(withEmail: username, password: password) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-            } else {
-                print("success")
-                // Tobbe added this:
-                loggedIn = true
-            }
-            
-        }
-        
-    }
-    func addAccount() {
-        Auth.auth().createUser(withEmail:username, password: password) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "")
-            } else {
-                print("success")
-                // Tobbe added this to automatically sign in on account added
-                signIn()
-            }
-            
-        }
-        
-        
-    }
 }
-
