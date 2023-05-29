@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
@@ -15,6 +16,7 @@ struct TaskListView: View {
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
     @ObservedObject var authViewModel : AuthViewModel
+    let auth = Auth.auth()
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -36,6 +38,11 @@ struct TaskListView: View {
     var body: some View {
         NavigationView {
             VStack {
+                if let uid = auth.currentUser?.uid {
+                    Text("UID: \(uid)")
+                } else {
+                    Text("UID: N/A")
+                }
                 List {
                     ForEach(mockData) { task in
                         TaskListRowView(task: task, isDone: true)

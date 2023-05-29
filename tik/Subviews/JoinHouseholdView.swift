@@ -9,8 +9,9 @@ import SwiftUI
 
 struct JoinHouseholdView: View {
     
-    @ObservedObject var viewModel : JoinHouseViewModel
+    @ObservedObject var householdViewModel : JoinHouseViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State var joinSuccessful = false
     @State var inputPin : String
     @State var searchResult = ""
     @State var householdDocId = ""
@@ -30,7 +31,7 @@ struct JoinHouseholdView: View {
                     .border(.black)
                 Spacer(minLength: 20)
                 Button(action: {
-                    viewModel.searchFirebase(inputText: inputPin) { (documents, error) in
+                    householdViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
                         if let error = error {
                             print("Error searching Firestore: \(error.localizedDescription)")
                             return
@@ -53,7 +54,7 @@ struct JoinHouseholdView: View {
                             
                         }
                     }
-                    presentationMode.wrappedValue.dismiss()
+                    //presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "magnifyingglass")
                 }
@@ -66,27 +67,36 @@ struct JoinHouseholdView: View {
                     Text(searchResult)
                         .font(.title)
                     Button(action: {
-                        viewModel.addCurrentUserToHousehold(householdId: householdDocId)
+                        householdViewModel.addCurrentUserToHousehold(householdId: householdDocId)
+                        //householdViewModel.currentUser?.isMember = true
+                        householdViewModel.makeCurrentUserMember()
+                        joinSuccessful = true
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Join")
                     }
                     .buttonStyle(.borderedProminent)
+                    .sheet(isPresented: $joinSuccessful) {
+                        ContentView()
+                    }
+
                 }
                 .frame(width: 200, height: 150)
                 .background(Color.gray)
                 .cornerRadius(10)
                 .padding()
+                .font(.footnote)
             }
         }
         .onAppear {
-            viewModel.householdFirestoreListener()
+            householdViewModel.householdFirestoreListener()
         }
     }
 }
 
 struct JoinHouseholdView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = JoinHouseViewModel(household: Household(name: "Test name", pinNum: "666"))
-        JoinHouseholdView(viewModel: vm, inputPin: "inputPin")
+        let vm = JoinHouseViewModel()
+        JoinHouseholdView(householdViewModel: vm, inputPin: "inputPin")
     }
 }
