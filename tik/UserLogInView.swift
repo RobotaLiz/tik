@@ -25,55 +25,77 @@ struct UserLogInView: View {
     
     
     var body: some View {
-        
-        VStack{
-            Image("tik")
+        ZStack {
+            // Add your image here
+            Image("Two Phone Mockup Download App Instagram Post(10) copy 2")
                 .resizable()
-                .frame(width: 100, height: 100)
-                .clipShape(Circle())
-                .overlay {
-                    Circle().stroke(.white, lineWidth: 2)
-                }
-                .shadow(radius: 7)
-                .padding()
-            Label("My Tik Account", systemImage: "home")
-                .padding(-50)
-                .bold()
-                .font(.title3)
-                .padding(70)
-        }
-        
-        // I moved the style stuff to theyr own file called TextFieldStyles. Commented out stuff can be safely deleted. /Antonio
-        Form {
-            TextField("Name", text: $name)
-                .textFieldStyle(AuthTextFieldStyle())
-                .keyboardType(.emailAddress)
-                .focused($focusedField, equals: .usernameField)
-                .textInputAutocapitalization(.never)
+                .aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
             
-            TextField("Email:", text: $email)
-                .textFieldStyle(AuthTextFieldStyle())
-                .keyboardType(.emailAddress).font(.title3)
-                .focused($focusedField, equals: .emailField) // Username or Email?
-                .textInputAutocapitalization(.never)
-            SecureField("Password:", text: $password)
-                .textFieldStyle(AuthTextFieldStyle())
-                .focused($focusedField, equals: .passwordField)
+            // Logo in the bottom center
+            VStack {
+                Spacer()
+                Image("Two Phone Mockup Download App Instagram Post(14)")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .padding(.bottom)
+            }
+            .edgesIgnoringSafeArea(.all)
+
+                
+                
+               
+            // Form and Buttons in a semi-transparent box
+            VStack {
+                Form {
+                    TextField("Name", text: $name)
+                        .textFieldStyle(AuthTextFieldStyle())
+                        .keyboardType(.emailAddress)
+                        .focused($focusedField, equals: .usernameField)
+                        .textInputAutocapitalization(.never)
+                    
+                    TextField("Email:", text: $email)
+                        .textFieldStyle(AuthTextFieldStyle())
+                        .keyboardType(.emailAddress).font(.title3)
+                        .focused($focusedField, equals: .usernameField)
+                        .textInputAutocapitalization(.never)
+                    
+                    SecureField("Password:", text: $password)
+                        .textFieldStyle(AuthTextFieldStyle())
+                        .focused($focusedField, equals: .passwordField)
+                }
+                .padding()
+
+                HStack {
+                    Button("Add account", action: {
+                        authViewModel.addAccount(name: name, email: email, password: password)
+                        
+                    }
+                           
+                    )
+                    .font(.custom("Roboto-Bold", size: 20))
+                    .foregroundColor(.appBlack)
+                    Image(systemName: "person.fill.badge.plus")
+                        .foregroundColor(.appBlack)
+                        
+                }
+                .padding(.top)
+
+                Button("Sign In") {
+                    authViewModel.signIn(email: email, password: password)
+                }
+                .font(.custom("Roboto-Bold", size: 18))
+                .padding(9)
+                .background(.yellow)
+                .foregroundColor(.black)
+                .clipShape(Capsule())
+                .padding(.top, 20)
+            }
+            .frame(width: 300, height: 400)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+
+            .padding()
+            
         }
-        HStack{
-            Button("Add account", action: {
-                authViewModel.addAccount(name: name, email: email, password: password)
-            })
-            Image(systemName: "person.fill.badge.plus")
-                .foregroundColor(.gray)
-        }
-        Button("Sign In") {
-            authViewModel.signIn(email: email, password: password)
-        }
-        .padding(9)
-        .background(.yellow)
-        .foregroundColor(.black)
-        .clipShape(Capsule())
-        .padding(50)
     }
 }

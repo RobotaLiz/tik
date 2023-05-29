@@ -11,12 +11,17 @@ import SwiftUI
 struct AuthTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
+            .font(.custom("Roboto-Regular", size: 16))
             .foregroundColor(.black)
-            .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+            .overlay(RoundedRectangle(cornerRadius: 20)
+                .frame(height: 2)
+            .padding(.top, 35)
+            )
             .foregroundColor(.yellow)
             .padding(10)
-            .shadow(color: .purple, radius: 10)
-            .font(.title3)
+        
+//            .shadow(color: .purple, radius: 10)
+//            .font(.title3)
     }
 }
 
