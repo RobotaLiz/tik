@@ -17,6 +17,6 @@ struct User : Codable {
     //var isAdmin : Bool = false
     
     // Tobbe added this:
-    var currentHousehold : String?
+    var latestHousehold : String?
   
 }

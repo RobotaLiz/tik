@@ -36,36 +36,11 @@ struct JoinHouseholdView: View {
                         print("Error: \(error.localizedDescription)")
                     } else if let households = households {
                         searchResult = households
-                        print(searchResult)
-                        // Use the resulting households array
-                        //                            for household in households {
-                        //                                print("Household: \(household)")
-                        //                            }
+                        print(searchResult ?? "No household found")
+                       
                     }
                 }
-                    //                    authViewModel.searchFirebase(inputText: inputPin) { (documents, error) in
-                    //                        if let error = error {
-                    //                            print("Error searching Firestore: \(error.localizedDescription)")
-                    //                            return
-                    //                        }
-                    //
-                    //                        guard let documents = documents else {
-                    //                            print("No matching documents")
-                    //                            return
-                    //                        }
-                    //
-                    //                        for document in documents {
-                    //                            let data = document.data()
-                    //                            if let pinNum = data!["pin"] as? String {
-                    //                                print("Matching document with pinNum: \(pinNum)")
-                    //                                searchResult = "Household found! Pin number: \(pinNum)"
-                    //                            }
-                    //
-                    //                            householdDocId = document.documentID
-                    //                            print("Household ID: \(householdDocId)")
-                    //
-                    //                        }
-                    //                    }
+                    
                     //presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "magnifyingglass")

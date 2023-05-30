@@ -16,6 +16,34 @@ struct HouseholdSelectionView: View {
     
     var body: some View {
         VStack {
+            
+            if let uid = authViewModel.auth.currentUser?.uid {
+                
+                Text("Firestore UID: \(uid)")
+            } else {
+                Text("UID: N/A")
+            }
+            
+            if let currentTikUser = authViewModel.currentTikUser {
+                HStack {
+                    if let email = currentTikUser.email {
+                        Text("Tik user: \(email)")
+                    }
+                    if let docID = currentTikUser.docId {
+                        Text(("ID: \(docID)"))
+                    }
+                }
+            }
+            
+            if let currentHousehold = authViewModel.currentHousehold {
+                HStack {
+                    Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
+                    if let docID = currentHousehold.docId {
+                        Text("ID: \(docID)")
+                    }
+                }
+            }
+            
             HStack {
                 Spacer()
                 Text("In order to use this app, you need to be a member of a household.")

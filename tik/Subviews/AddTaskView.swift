@@ -15,9 +15,10 @@ struct AddTaskView: View {
     @State var title = ""
     @State var notes = ""
     @State var location = ""
-    @State var user = Auth.auth().currentUser
     @State var setDate = Date()
-    @StateObject var addTaskVM = AddTaskVM()
+    
+    @ObservedObject var authViewModel : AuthViewModel
+    //let addTaskVM = AddTaskVM()
     
     var body: some View {
         NavigationView {
@@ -38,18 +39,19 @@ struct AddTaskView: View {
                 Spacer()
                 Button("Add", action: {
                     
-                    // TO DO: Save notification!
-                    
-                    
-                    
-                    // save to firestore.
-                    let newTask = Task(title: title,
-                                       notes: notes,
-                                       location: location,
-                                       setDate: setDate)
-                    
-                    addTaskVM.saveToFirestore(task: newTask)
-                    addTaskIsPresented = false
+                    if let currentTikUser = authViewModel.currentTikUser {
+                        
+                        
+                        // save to firestore.
+                        let newTask = Task(title: title,
+                                           notes: notes,
+                                           location: location,
+                                           assignedTo: [currentTikUser],
+                                           setDate: setDate)
+                        
+                        authViewModel.saveTaskToFirestore(task: newTask)
+                        addTaskIsPresented = false
+                    }
                     
                 })
                 .navigationBarItems(trailing: Button {
@@ -62,8 +64,8 @@ struct AddTaskView: View {
     }
 }
 
-struct AddTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTaskView(addTaskIsPresented: .constant(true))
-    }
-}
+//struct AddTaskView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddTaskView(addTaskIsPresented: .constant(true), authViewModel: AuthViewModel())
+//    }
+//}

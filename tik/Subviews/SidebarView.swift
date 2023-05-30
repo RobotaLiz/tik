@@ -23,6 +23,9 @@ struct SidebarView: View {
             Button("Log out") {
                 authViewModel.signOut()
             }
+            Button("Sign out household") {
+                authViewModel.checkOutHousehold()
+            }
 
         }
 //        .onAppear {
