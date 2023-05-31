@@ -5,34 +5,31 @@ import FirebaseAuth
 
 struct ContentView: View {
     
-    @StateObject var authViewModel = AuthViewModel()
-    @StateObject var householdViewModel = JoinHouseViewModel()
+    @StateObject var authViewModel = FirestoreManagerVM()
+    
     
     var body: some View {
+        // Trying to rebuild this.
         Group {
-            if authViewModel.loggedIn {
-                if householdViewModel.currentUser?.isMember == true {
-                    //Text("Current user is member!")                       - Debugging /Antonio
-                    TaskListView(authViewModel: authViewModel)
-                        .onAppear {
-                            authViewModel.didSignOut = {
-                                authViewModel.loggedIn = false
-                            }
-                        }
-                } else if householdViewModel.currentUser?.isMember == false {
-                    HouseholdSelectionView(householdViewModel: householdViewModel)
-                } /*else {
-                    Text("Loading...")
-                }*/
-            } else {
+            if authViewModel.currentTikUser == nil {
                 UserLogInView(authViewModel: authViewModel)
+            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold != nil {
+                TaskListView(authViewModel: authViewModel)
+            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold == nil {
+                HouseholdSelectionView(authViewModel: authViewModel)
             }
-        }
-        .onAppear {
-            //authViewModel.checkLoggedInStatus()
-            householdViewModel.userListener()
+                
+                
+            
         }
     }
+        
+
+//        .onAppear {
+//            //authViewModel.checkLoggedInStatus()
+//            householdViewModel.userListener()
+//        }
+//    }
         
 }
 

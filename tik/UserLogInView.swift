@@ -21,7 +21,7 @@ struct UserLogInView: View {
     //@Binding var loggedIn: Bool
     
     // Antonio's view model stuff
-    @ObservedObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : FirestoreManagerVM
     
     
     var body: some View {
