@@ -17,7 +17,7 @@ struct AddTaskView: View {
     @State var location = ""
     @State var setDate = Date()
     
-    @ObservedObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : FirestoreManagerVM
     //let addTaskVM = AddTaskVM()
     
     var body: some View {
