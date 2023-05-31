@@ -9,12 +9,10 @@ import SwiftUI
 
 struct CreateHouseholdView: View {
     
-    //@ObservedObject var householdViewModel : JoinHouseViewModel
+    @ObservedObject var householdViewModel : JoinHouseViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State var householdName : String = ""
-    @State var householdPin : String = ""
-    
-    @ObservedObject var authViewModel : AuthViewModel
+    @State var householdName : String
+    @State var householdPin : String
     
     var body: some View {
         VStack {
@@ -28,7 +26,7 @@ struct CreateHouseholdView: View {
             }
             .padding(20)
             Button(action: {
-                householdPin = authViewModel.generatePin()
+                householdPin = householdViewModel.generatePin()
             }) {
                 Text("Generate PIN")
             }
@@ -42,24 +40,24 @@ struct CreateHouseholdView: View {
             }
             .frame(width: 300, height: 200)
             Button(action: {
-                authViewModel.addHousehold(name: householdName, pin: householdPin)
+                householdViewModel.createHousehold(name: householdName, pinCode: householdPin)
                 //householdViewModel.currentUser?.isMember = true
-                //authViewModel.makeCurrentUserMember()
+                householdViewModel.makeCurrentUserMember()
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Create")
             }
             .buttonStyle(.borderedProminent)
         }
-//        .onAppear {
-//            authViewModel.householdFirestoreListener()
-//        }
+        .onAppear {
+            householdViewModel.householdFirestoreListener()
+        }
     }
 }
 
-//struct CreateHouseholdView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let vm = JoinHouseViewModel()
-//        CreateHouseholdView(authViewModel: authViewModel, householdName: "Test House", householdPin: "666")
-//    }
-//}
+struct CreateHouseholdView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = JoinHouseViewModel()
+        CreateHouseholdView(householdViewModel: vm, householdName: "Test House", householdPin: "666")
+    }
+}
