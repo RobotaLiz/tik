@@ -13,14 +13,15 @@ struct Household : Codable {
     
     @DocumentID var docId : String?
     var name : String
-    var pinNum : String
-    var members : [User] = []
-    var tasks : [Task] = []
+    var pin : String
+    // Changed this! (from [User])
+    var members : [Member]
+    //var tasks : [Task] = [] //Added as sub collection instead
     var admin : User? // Only one user can be admin right now (more admins in the future?)
     
-    init(name: String, pinNum: String) {
-        self.name = name
-        self.pinNum = pinNum
-    }
+//    init(name: String, pinNum: String) {
+//        self.name = name
+//        self.pin = pinNum
+//    }
     
 }
