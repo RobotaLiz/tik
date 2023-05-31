@@ -10,7 +10,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestoreSwift
 
-class AuthViewModel : ObservableObject {
+class FirestoreManagerVM : ObservableObject {
     
     let db = Firestore.firestore()
     let auth = Auth.auth()

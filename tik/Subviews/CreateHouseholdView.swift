@@ -14,7 +14,7 @@ struct CreateHouseholdView: View {
     @State var householdName : String = ""
     @State var householdPin : String = ""
     
-    @ObservedObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : FirestoreManagerVM
     
     var body: some View {
         VStack {
