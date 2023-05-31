@@ -15,7 +15,7 @@ struct TaskListView: View {
     // Antonio's side bar stuff - Work in progress
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
-    @ObservedObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : FirestoreManagerVM
     let auth = Auth.auth()
     
     @Environment(\.presentationMode) var presentationMode
@@ -69,7 +69,7 @@ struct TaskListView: View {
             }
             // AddTaskView is presented as a sheet.
             .sheet(isPresented: $addTaskIsPresented) {
-                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
+                AddTaskView(addTaskIsPresented: $addTaskIsPresented, authViewModel: authViewModel)
             }
             .navigationViewStyle(.stack)
             .navigationBarTitle("Tasks")
