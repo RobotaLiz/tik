@@ -11,14 +11,14 @@ import FirebaseFirestore
 
 class JoinHouseViewModel : ObservableObject {
     
-    @Published var household : Household?
+    @Published var currentHousehold : Household?
     @Published var currentUser : User?
     let db = Firestore.firestore()
     let auth = Auth.auth()
     
     init() {
-        self.household = household
-        self.currentUser = currentUser
+        //self.currentHousehold = currentHousehold
+        //self.currentUser = currentUser
         getCurrentUser()
     }
     
@@ -26,6 +26,7 @@ class JoinHouseViewModel : ObservableObject {
         print(currentUser as Any)
     }
     
+    // ?
     func userListener() {
         guard auth.currentUser != nil else {return}
         let usersRef = db.collection("Users")
@@ -162,7 +163,7 @@ class JoinHouseViewModel : ObservableObject {
                 for document in snapshot.documents {
                     do {
                         let household = try document.data(as: Household.self)
-                        self.household = household
+                        self.currentHousehold = household
                     } catch {
                         print("Error getting docs")
                     }
@@ -188,32 +189,32 @@ class JoinHouseViewModel : ObservableObject {
         }
     }
     
-    func createHousehold(name: String, pinCode: String) {
-        guard let currentUser = currentUser else { return }
-        let householdRef = db.collection("Households")
-        
-        
-        var household = Household(name: name, pinNum: pinCode)
-        
-        household.members.append(currentUser)
-        
-        do {
-            print("Adding household \(name) to Firestore")
-            try householdRef.addDocument(from: household) { [weak self] error in
-                if let error = error {
-                    print("Error saving household to database: \(error.localizedDescription)")
-                } else {
-                    print("Household created successfully.")
-                    if let docId = household.docId {
-                        self?.addCurrentUserToHousehold(householdId: docId)
-                    }
-                }
-            }
-        } catch {
-            print("Error saving to database: \(error.localizedDescription)")
-        }
-        
-    }
+//    func createHousehold(name: String, pinCode: String) {
+//        guard let currentUser = currentUser else { return }
+//        let householdRef = db.collection("Households")
+//        
+//        
+//        var household = Household(name: name, pinNum: pinCode)
+//        
+//        //household.members.append(currentUser)
+//        
+//        do {
+//            print("Adding household \(name) to Firestore")
+//            try householdRef.addDocument(from: household) { [weak self] error in
+//                if let error = error {
+//                    print("Error saving household to database: \(error.localizedDescription)")
+//                } else {
+//                    print("Household created successfully.")
+//                    if let docId = household.docId {
+//                        self?.addCurrentUserToHousehold(householdId: docId)
+//                    }
+//                }
+//            }
+//        } catch {
+//            print("Error saving to database: \(error.localizedDescription)")
+//        }
+//        
+//    }
     
     func generatePin() -> String {
         let lowest = 100_000
