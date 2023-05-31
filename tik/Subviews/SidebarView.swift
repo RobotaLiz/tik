@@ -23,16 +23,13 @@ struct SidebarView: View {
             Button("Log out") {
                 authViewModel.signOut()
             }
-            Button("Sign out household") {
-                authViewModel.checkOutHousehold()
-            }
 
         }
-//        .onAppear {
-//            authViewModel.adminCheck { isAdmin in
-//                self.isAdmin = isAdmin
-//            }
-//        }
+        .onAppear {
+            authViewModel.adminCheck { isAdmin in
+                self.isAdmin = isAdmin
+            }
+        }
     }
 }
 

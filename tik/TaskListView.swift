@@ -11,12 +11,11 @@ import FirebaseAuth
 struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
-    @ObservedObject var authViewModel : AuthViewModel
     
     // Antonio's side bar stuff - Work in progress
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
-    
+    @ObservedObject var authViewModel : AuthViewModel
     let auth = Auth.auth()
     
     @Environment(\.presentationMode) var presentationMode
@@ -40,33 +39,12 @@ struct TaskListView: View {
         NavigationView {
             VStack {
                 if let uid = auth.currentUser?.uid {
-                    
-                    Text("Firestore UID: \(uid)")
+                    Text("UID: \(uid)")
                 } else {
                     Text("UID: N/A")
                 }
-                
-                if let currentTikUser = authViewModel.currentTikUser {
-                    HStack {
-                        if let email = currentTikUser.email {
-                            Text("Tik user: \(email)")
-                        }
-                        if let docID = currentTikUser.docId {
-                            Text(("ID: \(docID)"))
-                        }
-                    }
-                }
-                
-                if let currentHousehold = authViewModel.currentHousehold {
-                    HStack {
-                        Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
-                        if let docID = currentHousehold.docId {
-                            Text("ID: \(docID)")
-                        }
-                    }
-                }
                 List {
-                    ForEach(authViewModel.tasks) { task in
+                    ForEach(mockData) { task in
                         TaskListRowView(task: task, isDone: true)
                     }
                     .onDelete() { indexSet in
@@ -80,8 +58,6 @@ struct TaskListView: View {
                 
                 // Navigation to AddTaskView added.
                 Button(action: {
-                    
-                    
                     addTaskIsPresented = true
                     print("!")
                 }) {
@@ -93,7 +69,7 @@ struct TaskListView: View {
             }
             // AddTaskView is presented as a sheet.
             .sheet(isPresented: $addTaskIsPresented) {
-                AddTaskView(addTaskIsPresented: $addTaskIsPresented, authViewModel: authViewModel)
+                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
             }
             .navigationViewStyle(.stack)
             .navigationBarTitle("Tasks")
@@ -106,15 +82,8 @@ struct TaskListView: View {
             .navigationBarItems(leading: {
                 Menu {
                     Button(action: {
-                        authViewModel.checkOutHousehold()
-                        //authViewModel.loggedIn = false
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Label("Sign out from household", systemImage: "figure.walk.departure")
-                    }
-                    Button(action: {
                         authViewModel.signOut()
-                        //authViewModel.loggedIn = false
+                        authViewModel.loggedIn = false
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")

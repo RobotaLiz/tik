@@ -50,7 +50,6 @@
 		8AC9A8B22A1F59F900DEDE5A /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AC9A88B2A1F59F800DEDE5A /* Roboto-Black.ttf */; };
 		9C0DE5032A18DC9000B9C1F5 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */; };
 		9C0DE5052A18DF6200B9C1F5 /* AddTaskVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */; };
-		9CC5CE3E2A2103F400A153B7 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC5CE3D2A2103F400A153B7 /* Member.swift */; };
 		A930D33A2A1D431300637BD4 /* TextFieldStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930D3392A1D431300637BD4 /* TextFieldStyles.swift */; };
 		A99293662A1B67B7000C3892 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99293652A1B67B7000C3892 /* SidebarView.swift */; };
 		A992936A2A1C4F0C000C3892 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99293692A1C4F0C000C3892 /* AuthViewModel.swift */; };
@@ -114,7 +113,6 @@
 		8AC9A88B2A1F59F800DEDE5A /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskVM.swift; sourceTree = "<group>"; };
-		9CC5CE3D2A2103F400A153B7 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		A930D3392A1D431300637BD4 /* TextFieldStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyles.swift; sourceTree = "<group>"; };
 		A99293652A1B67B7000C3892 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		A99293692A1C4F0C000C3892 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 				A9CA3E382A125C9000DE7FE9 /* User.swift */,
 				A9CA3E3A2A125C9C00DE7FE9 /* Household.swift */,
 				A9CA3E3C2A125CB400DE7FE9 /* Task.swift */,
-				9CC5CE3D2A2103F400A153B7 /* Member.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,11 +247,11 @@
 				8AC9A87E2A1F59F800DEDE5A /* Roboto */,
 				A930D3382A1D42FB00637BD4 /* Styles */,
 				A9CA3E402A12F64700DE7FE9 /* Subviews */,
-				9CC5CE3B2A20FF0300A153B7 /* View Models */,
 				A9CA3E372A125C7F00DE7FE9 /* Models */,
-				A930D3382A1D42FB00637BD4 /* Styles */,
 				A9CA3DE82A0E42EE00DE7FE9 /* GoogleService-Info.plist */,
 				B37F23492A0E191400F9FF24 /* tikApp.swift */,
+				B37F234B2A0E191400F9FF24 /* ContentView.swift */,
+				B31167162A1274B000EC9256 /* UserLogInView.swift */,
 				B37F234D2A0E191500F9FF24 /* Assets.xcassets */,
 				B37F234F2A0E191500F9FF24 /* Preview Content */,
 				A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */,
@@ -491,7 +488,6 @@
 				A9CA3E392A125C9000DE7FE9 /* User.swift in Sources */,
 				A9CA3E482A1696C600DE7FE9 /* CreateHouseholdView.swift in Sources */,
 				A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */,
-				9CC5CE3E2A2103F400A153B7 /* Member.swift in Sources */,
 				A992936A2A1C4F0C000C3892 /* AuthViewModel.swift in Sources */,
 				A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */,
 				A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */,
