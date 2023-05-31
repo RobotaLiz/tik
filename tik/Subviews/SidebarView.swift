@@ -11,7 +11,7 @@ import FirebaseAuth
 struct SidebarView: View {
     @Binding var isSidebarOpen : Bool
     @State var isAdmin = false
-    @ObservedObject var authViewModel : AuthViewModel
+    @ObservedObject var authViewModel : FirestoreManagerVM
     
     var body: some View {
         VStack {
@@ -23,20 +23,23 @@ struct SidebarView: View {
             Button("Log out") {
                 authViewModel.signOut()
             }
+            Button("Sign out household") {
+                authViewModel.checkOutHousehold()
+            }
 
         }
-        .onAppear {
-            authViewModel.adminCheck { isAdmin in
-                self.isAdmin = isAdmin
-            }
-        }
+//        .onAppear {
+//            authViewModel.adminCheck { isAdmin in
+//                self.isAdmin = isAdmin
+//            }
+//        }
     }
 }
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isSidebarOpen = true
-        let authViewModel = AuthViewModel()
+        let authViewModel = FirestoreManagerVM()
         SidebarView(isSidebarOpen: $isSidebarOpen, authViewModel: authViewModel)
     }
 }
