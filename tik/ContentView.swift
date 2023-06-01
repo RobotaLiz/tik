@@ -14,7 +14,9 @@ struct ContentView: View {
             if authViewModel.currentTikUser == nil {
                 UserLogInView(authViewModel: authViewModel)
             } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold != nil {
-                TaskListView(authViewModel: authViewModel)
+                //TaskListView(authViewModel: authViewModel)
+                BottomTabBar(authViewModel: authViewModel)
+
             } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold == nil {
                 HouseholdSelectionView(authViewModel: authViewModel)
             }

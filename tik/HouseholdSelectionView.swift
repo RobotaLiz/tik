@@ -15,61 +15,68 @@ struct HouseholdSelectionView: View {
     @State var joinHouseholdViewPresented = false
     
     var body: some View {
-        VStack {
-            
-            if let uid = authViewModel.auth.currentUser?.uid {
+        NavigationView {
+            VStack {
+                if let uid = authViewModel.auth.currentUser?.uid {
+                    
+                    Text("Firestore UID: \(uid)")
+                } else {
+                    Text("UID: N/A")
+                }
                 
-                Text("Firestore UID: \(uid)")
-            } else {
-                Text("UID: N/A")
-            }
-            
-            if let currentTikUser = authViewModel.currentTikUser {
-                HStack {
-                    if let email = currentTikUser.email {
-                        Text("Tik user: \(email)")
-                    }
-                    if let docID = currentTikUser.docId {
-                        Text(("ID: \(docID)"))
+                if let currentTikUser = authViewModel.currentTikUser {
+                    HStack {
+                        if let email = currentTikUser.email {
+                            Text("Tik user: \(email)")
+                        }
+                        if let docID = currentTikUser.docId {
+                            Text(("ID: \(docID)"))
+                        }
                     }
                 }
-            }
-            
-            if let currentHousehold = authViewModel.currentHousehold {
-                HStack {
-                    Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
-                    if let docID = currentHousehold.docId {
-                        Text("ID: \(docID)")
+                
+                if let currentHousehold = authViewModel.currentHousehold {
+                    HStack {
+                        Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
+                        if let docID = currentHousehold.docId {
+                            Text("ID: \(docID)")
+                        }
                     }
                 }
-            }
-            
-            HStack {
-                Spacer()
-                Text("In order to use this app, you need to be a member of a household.")
-                    .padding(40)
-                Spacer()
-            }
-            Button(action: {
-                createHouseholdViewPresented.toggle()
-            }) {
-                Text("Create")
-            }
-            .padding(30)
-            .buttonStyle(.borderedProminent)
-            Button(action: {
-                joinHouseholdViewPresented.toggle()
-            }) {
-                Text("Join")
-            }
-            .buttonStyle(.borderedProminent)
+                
+                HStack {
+                    Spacer()
+                    Text("In order to use this app, you need to be a member of a household.")
+                        .padding(40)
+                    Spacer()
+                }
+                Button(action: {
+                    createHouseholdViewPresented.toggle()
+                }) {
+                    Text("Create")
+                }
+                .padding(30)
+                .buttonStyle(.borderedProminent)
+                Button(action: {
+                    joinHouseholdViewPresented.toggle()
+                }) {
+                    Text("Join")
+                }
+                .buttonStyle(.borderedProminent)
 
-        }
-        .sheet(isPresented: $createHouseholdViewPresented) {
-            CreateHouseholdView(authViewModel: authViewModel)
-        }
-        .sheet(isPresented: $joinHouseholdViewPresented) {
-            JoinHouseholdView(authViewModel: authViewModel)
+            }
+            .sheet(isPresented: $createHouseholdViewPresented) {
+                CreateHouseholdView(authViewModel: authViewModel)
+            }
+            .sheet(isPresented: $joinHouseholdViewPresented) {
+                JoinHouseholdView(authViewModel: authViewModel)
+            }
+            .navigationTitle("Activity List")
+            .navigationBarItems(
+                leading: NavigationLink(destination: UserLogInView(authViewModel: authViewModel)
+                    .navigationBarHidden(true)) {
+                Text("Back")
+            })
         }
     }
 }
