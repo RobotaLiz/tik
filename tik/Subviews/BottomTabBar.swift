@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BottomTabBar: View {
-    @ObservedObject var authViewModel : FirestoreManagerVM
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
 
     var body: some View {
         TabView {
@@ -17,7 +17,7 @@ struct BottomTabBar: View {
                     Image(systemName: "cart")
                     Text("Shopping List")
                 }
-            TaskListView(authViewModel: authViewModel)
+            TaskListView()
                 .tabItem() {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
@@ -29,6 +29,6 @@ struct BottomTabBar: View {
 struct BottomTabBar_Previews: PreviewProvider {
     static var previews: some View {
         let vm = FirestoreManagerVM()
-        BottomTabBar(authViewModel: vm)
+        BottomTabBar().environmentObject(vm)
     }
 }

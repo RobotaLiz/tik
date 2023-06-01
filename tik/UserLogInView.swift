@@ -21,7 +21,7 @@ struct UserLogInView: View {
     //@Binding var loggedIn: Bool
     
     // Antonio's view model stuff
-    @ObservedObject var authViewModel : FirestoreManagerVM
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     
     var body: some View {
@@ -31,7 +31,6 @@ struct UserLogInView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
-            
             // Logo in the bottom center
             VStack {
                 Spacer()
@@ -42,9 +41,6 @@ struct UserLogInView: View {
             }
             .edgesIgnoringSafeArea(.all)
 
-                
-                
-               
             // Form and Buttons in a semi-transparent box
             VStack {
                 Form {
@@ -68,7 +64,7 @@ struct UserLogInView: View {
 
                 HStack {
                     Button("Add account", action: {
-                        authViewModel.addAccount(name: name, email: email, password: password)
+                        firestoreManagerViewModel.addAccount(name: name, email: email, password: password)
                         
                     }
                            
@@ -82,7 +78,7 @@ struct UserLogInView: View {
                 .padding(.top)
 
                 Button("Sign In") {
-                    authViewModel.signIn(email: email, password: password)
+                    firestoreManagerViewModel.signIn(email: email, password: password)
                 }
                 .font(.custom("Roboto-Bold", size: 18))
                 .padding(9)
@@ -97,5 +93,12 @@ struct UserLogInView: View {
             .padding()
             
         }
+    }
+}
+
+struct UserLoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = FirestoreManagerVM()
+        UserLogInView().environmentObject(vm)
     }
 }

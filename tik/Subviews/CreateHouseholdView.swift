@@ -9,12 +9,11 @@ import SwiftUI
 
 struct CreateHouseholdView: View {
     
-    //@ObservedObject var householdViewModel : JoinHouseViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var householdName : String = ""
     @State var householdPin : String = ""
     
-    @ObservedObject var authViewModel : FirestoreManagerVM
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
         VStack {
@@ -28,7 +27,7 @@ struct CreateHouseholdView: View {
             }
             .padding(20)
             Button(action: {
-                householdPin = authViewModel.generatePin()
+                householdPin = firestoreManagerViewModel.generatePin()
             }) {
                 Text("Generate PIN")
             }
@@ -42,7 +41,7 @@ struct CreateHouseholdView: View {
             }
             .frame(width: 300, height: 200)
             Button(action: {
-                authViewModel.addHousehold(name: householdName, pin: householdPin)
+                firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
                 //householdViewModel.currentUser?.isMember = true
                 //authViewModel.makeCurrentUserMember()
                 presentationMode.wrappedValue.dismiss()
@@ -57,9 +56,8 @@ struct CreateHouseholdView: View {
     }
 }
 
-//struct CreateHouseholdView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let vm = JoinHouseViewModel()
-//        CreateHouseholdView(authViewModel: authViewModel, householdName: "Test House", householdPin: "666")
-//    }
-//}
+struct CreateHouseholdView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateHouseholdView()
+    }
+}

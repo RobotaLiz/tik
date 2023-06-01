@@ -9,7 +9,7 @@ import SwiftUI
 
 struct JoinHouseholdView: View {
     
-    @ObservedObject var authViewModel : FirestoreManagerVM
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     @Environment(\.presentationMode) var presentationMode
     @State var joinSuccessful = false
     @State var inputPin : String = ""
@@ -37,7 +37,7 @@ struct JoinHouseholdView: View {
                     Spacer(minLength: 20)
                     Button(action: {
                         if pinIsValid {
-                            authViewModel.getHouseholds(pin: inputPin) { households, error in
+                            firestoreManagerViewModel.getHouseholds(pin: inputPin) { households, error in
                                 if let error = error {
                                     // Handle the error
                                     print("Error: \(error.localizedDescription)")
@@ -61,7 +61,7 @@ struct JoinHouseholdView: View {
                         Text(foundHousehold.name)
                             .font(.title)
                         Button(action: {
-                            authViewModel.joinHousehold(household: foundHousehold)
+                            firestoreManagerViewModel.joinHousehold(household: foundHousehold)
                             //householdViewModel.currentUser?.isMember = true
                             //householdViewModel.makeCurrentUserMember()
                             joinSuccessful = true
@@ -100,7 +100,6 @@ struct JoinHouseholdView: View {
 
 struct JoinHouseholdView_Previews: PreviewProvider {
     static var previews: some View {
-        let vm = FirestoreManagerVM()
-        JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
+        JoinHouseholdView()
     }
 }
