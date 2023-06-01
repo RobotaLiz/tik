@@ -15,6 +15,7 @@ struct TaskListView: View {
     // Antonio's side bar stuff - Work in progress
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
+    @State var selectedTab : Int? = 0
     
     let auth = Auth.auth()
     
@@ -102,7 +103,7 @@ struct TaskListView: View {
                     isSidebarOpen = false
                 }
             }
-            .navigationBarItems(leading: {
+            .navigationBarItems(trailing: {
                 Menu {
                     Button(action: {
                         authViewModel.checkOutHousehold()
