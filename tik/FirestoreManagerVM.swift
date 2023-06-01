@@ -76,16 +76,21 @@ class FirestoreManagerVM : ObservableObject {
                 return
             }
             
+            guard let snapshot = snapshot, !snapshot.isEmpty else {
+                let noResultsError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No households found"])
+                print(noResultsError.localizedDescription)
+                completion([], noResultsError)
+                return
+            }
+            
             var households: [Household] = []
             
-            // Parse each document into a Household object
-            for document in snapshot?.documents ?? [] {
+            for document in snapshot.documents {
                 if let household = try? document.data(as: Household.self) {
                     households.append(household)
                 }
             }
             
-            // Call the completion handler with the resulting households
             completion(households, nil)
         }
     }

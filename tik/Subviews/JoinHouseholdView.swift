@@ -13,6 +13,8 @@ struct JoinHouseholdView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var joinSuccessful = false
     @State var inputPin : String = ""
+    @State var pinIsValid = false
+    @State var pinAlert = false
     @State var searchResult : [Household?]?
     @State var householdDocId = ""
     
@@ -26,22 +28,26 @@ struct JoinHouseholdView: View {
             }
             HStack {
                 Spacer(minLength: 40)
-                TextField("PIN", text: $inputPin)
+                TextField("PIN", text: $inputPin, onEditingChanged: { _ in
+                    pinIsValid = inputPin.count == 6
+                })
                     .padding(10)
-                    .border(.black)
+                    .border(pinIsValid ? .black : .red)
                 Spacer(minLength: 20)
-                Button(action: {authViewModel.getHouseholds(pin: inputPin) { households, error in
-                    if let error = error {
-                        // Handle the error
-                        print("Error: \(error.localizedDescription)")
-                    } else if let households = households {
-                        searchResult = households
-                        print(searchResult ?? "No household found")
-                       
+                Button(action: {
+                    if pinIsValid {
+                        authViewModel.getHouseholds(pin: inputPin) { households, error in
+                            if let error = error {
+                                // Handle the error
+                                print("Error: \(error.localizedDescription)")
+                            } else if let households = households {
+                                searchResult = households
+                                print(searchResult ?? "No household found")
+                            }
+                        }
+                    } else {
+                        pinAlert = true
                     }
-                }
-                    
-                    //presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "magnifyingglass")
                 }
@@ -63,6 +69,7 @@ struct JoinHouseholdView: View {
                         Text("Join")
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(!pinIsValid)
                     .sheet(isPresented: $joinSuccessful) {
                         ContentView()
                     }
@@ -78,13 +85,18 @@ struct JoinHouseholdView: View {
         //        .onAppear {
         //            householdViewModel.householdFirestoreListener()
         //        }
+        .alert(isPresented: $pinAlert) {
+            Alert(title: Text("Invalid PIN"), message: Text("Please enter a valid 6-digit PIN."), dismissButton: .default(Text("OK")))
+        }
         
     }
     
-    struct JoinHouseholdView_Previews: PreviewProvider {
-        static var previews: some View {
-            let vm = FirestoreManagerVM()
-            JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
-        }
+
+}
+
+struct JoinHouseholdView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = FirestoreManagerVM()
+        JoinHouseholdView(authViewModel: vm, inputPin: "inputPin")
     }
 }
