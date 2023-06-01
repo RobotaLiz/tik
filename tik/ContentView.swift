@@ -5,20 +5,20 @@ import FirebaseAuth
 
 struct ContentView: View {
     
-    @StateObject var authViewModel = FirestoreManagerVM()
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     
     var body: some View {
         // Trying to rebuild this.
         Group {
-            if authViewModel.currentTikUser == nil {
-                UserLogInView(authViewModel: authViewModel)
-            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold != nil {
+            if firestoreManagerViewModel.currentTikUser == nil {
+                UserLogInView()
+            } else if firestoreManagerViewModel.currentTikUser != nil && firestoreManagerViewModel.currentHousehold != nil {
                 //TaskListView(authViewModel: authViewModel)
-                BottomTabBar(authViewModel: authViewModel)
+                BottomTabBar()
 
-            } else if authViewModel.currentTikUser != nil && authViewModel.currentHousehold == nil {
-                HouseholdSelectionView(authViewModel: authViewModel)
+            } else if firestoreManagerViewModel.currentTikUser != nil && firestoreManagerViewModel.currentHousehold == nil {
+                HouseholdSelectionView()
             }
                 
                 
@@ -38,6 +38,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let vm = FirestoreManagerVM()
+        ContentView().environmentObject(vm)
     }
 }

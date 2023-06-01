@@ -11,7 +11,8 @@ import FirebaseAuth
 struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
-    @ObservedObject var authViewModel : FirestoreManagerVM
+    //@ObservedObject var authViewModel : FirestoreManagerVM
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     // Antonio's side bar stuff - Work in progress
     @State var isSidebarOpen = false
     @State var selectedTag: String? = nil
@@ -46,7 +47,7 @@ struct TaskListView: View {
                     Text("UID: N/A")
                 }
                 
-                if let currentTikUser = authViewModel.currentTikUser {
+                if let currentTikUser = firestoreManagerViewModel.currentTikUser {
                     HStack {
                         if let email = currentTikUser.email {
                             Text("Tik user: \(email)")
@@ -57,7 +58,7 @@ struct TaskListView: View {
                     }
                 }
                 
-                if let currentHousehold = authViewModel.currentHousehold {
+                if let currentHousehold = firestoreManagerViewModel.currentHousehold {
                     HStack {
                         Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
                         if let docID = currentHousehold.docId {
@@ -66,7 +67,7 @@ struct TaskListView: View {
                     }
                 }
                 List {
-                    ForEach(authViewModel.tasks) { task in
+                    ForEach(firestoreManagerViewModel.tasks) { task in
                         TaskListRowView(task: task, isDone: true)
                     }
                     .onDelete() { indexSet in
@@ -93,7 +94,7 @@ struct TaskListView: View {
             }
             // AddTaskView is presented as a sheet.
             .sheet(isPresented: $addTaskIsPresented) {
-                AddTaskView(addTaskIsPresented: $addTaskIsPresented, authViewModel: authViewModel)
+                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
             }
             .navigationViewStyle(.stack)
             .navigationBarTitle("Tasks")
@@ -106,14 +107,14 @@ struct TaskListView: View {
             .navigationBarItems(trailing: {
                 Menu {
                     Button(action: {
-                        authViewModel.checkOutHousehold()
+                        firestoreManagerViewModel.checkOutHousehold()
                         //authViewModel.loggedIn = false
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Label("Sign out from household", systemImage: "figure.walk.departure")
                     }
                     Button(action: {
-                        authViewModel.signOut()
+                        firestoreManagerViewModel.signOut()
                         //authViewModel.loggedIn = false
                         presentationMode.wrappedValue.dismiss()
                     }) {
@@ -124,26 +125,14 @@ struct TaskListView: View {
                         .imageScale(.large)
                 }
             }())
-            
-            // Side bar work in progress
-            /*.navigationBarItems(trailing:
-                                    NavigationLink(destination: SidebarView(isSidebarOpen: $isSidebarOpen, authViewModel: authViewModel), tag: "sidebar", selection: selectedTagBinding) {
-                    Image(systemName: "gearshape.fill")
-                        .imageScale(.large)
-                }
-            )*/
-            if isSidebarOpen {
-                SidebarView(isSidebarOpen: $isSidebarOpen, authViewModel: authViewModel)
-
-            }
         }
     }
 }
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        let authViewModel = FirestoreManagerVM()
-        TaskListView(authViewModel: authViewModel)
+        let vm = FirestoreManagerVM()
+        TaskListView().environmentObject(vm)
     }
 }
 

@@ -9,22 +9,21 @@ import SwiftUI
 
 struct HouseholdSelectionView: View {
     
-    @ObservedObject var authViewModel : FirestoreManagerVM
-    //@ObservedObject var householdViewModel : JoinHouseViewModel
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     @State var createHouseholdViewPresented = false
     @State var joinHouseholdViewPresented = false
     
     var body: some View {
         NavigationView {
             VStack {
-                if let uid = authViewModel.auth.currentUser?.uid {
+                if let uid = firestoreManagerViewModel.auth.currentUser?.uid {
                     
                     Text("Firestore UID: \(uid)")
                 } else {
                     Text("UID: N/A")
                 }
                 
-                if let currentTikUser = authViewModel.currentTikUser {
+                if let currentTikUser = firestoreManagerViewModel.currentTikUser {
                     HStack {
                         if let email = currentTikUser.email {
                             Text("Tik user: \(email)")
@@ -35,7 +34,7 @@ struct HouseholdSelectionView: View {
                     }
                 }
                 
-                if let currentHousehold = authViewModel.currentHousehold {
+                if let currentHousehold = firestoreManagerViewModel.currentHousehold {
                     HStack {
                         Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
                         if let docID = currentHousehold.docId {
@@ -66,14 +65,14 @@ struct HouseholdSelectionView: View {
 
             }
             .sheet(isPresented: $createHouseholdViewPresented) {
-                CreateHouseholdView(authViewModel: authViewModel)
+                CreateHouseholdView()
             }
             .sheet(isPresented: $joinHouseholdViewPresented) {
-                JoinHouseholdView(authViewModel: authViewModel)
+                JoinHouseholdView()
             }
             .navigationTitle("Activity List")
             .navigationBarItems(
-                leading: NavigationLink(destination: UserLogInView(authViewModel: authViewModel)
+                leading: NavigationLink(destination: UserLogInView()
                     .navigationBarHidden(true)) {
                 Text("Back")
             })
@@ -83,7 +82,6 @@ struct HouseholdSelectionView: View {
 
 struct HouseholdSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        let authVM = FirestoreManagerVM()
-        HouseholdSelectionView(authViewModel: authVM)
+        HouseholdSelectionView()
     }
 }

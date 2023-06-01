@@ -20,9 +20,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct tikApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var firestoreManagerViewModel = FirestoreManagerVM()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(firestoreManagerViewModel)
         }
     }
 }

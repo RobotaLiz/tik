@@ -113,7 +113,7 @@ class FirestoreManagerVM : ObservableObject {
             }
         }
         
-        var newMember = Member(userID: userID, admin: false)
+        let newMember = Member(userID: userID, admin: false)
         
         let newMemberData = try? Firestore.Encoder().encode(newMember)
         

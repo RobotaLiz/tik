@@ -263,13 +263,13 @@
 				B37F234D2A0E191500F9FF24 /* Assets.xcassets */,
 				B37F234F2A0E191500F9FF24 /* Preview Content */,
 				A9CA3E3E2A12F43800DE7FE9 /* TaskListView.swift */,
-				A99293692A1C4F0C000C3892 /* AuthViewModel.swift */,
-				A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */,
+				9C3D27A22A2743BC00B720CB /* FirestoreManagerVM.swift */,
 				A9CA3E452A16944800DE7FE9 /* HouseholdSelectionView.swift */,
 				B3B579552A23C8A00031DC2D /* ShoppingListView.swift */,
 				B3B579572A23CADC0031DC2D /* ShoppingItemModel.swift */,
+				A99293692A1C4F0C000C3892 /* AuthViewModel.swift */,
 				9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */,
-				9C3D27A22A2743BC00B720CB /* FirestoreManagerVM.swift */,
+				A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */,
 			);
 			path = tik;
 			sourceTree = "<group>";

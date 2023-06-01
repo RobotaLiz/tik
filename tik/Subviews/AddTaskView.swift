@@ -17,8 +17,7 @@ struct AddTaskView: View {
     @State var location = ""
     @State var setDate = Date()
     
-    @ObservedObject var authViewModel : FirestoreManagerVM
-    //let addTaskVM = AddTaskVM()
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
         NavigationView {
@@ -39,7 +38,7 @@ struct AddTaskView: View {
                 Spacer()
                 Button("Add", action: {
                     
-                    if let currentTikUser = authViewModel.currentTikUser {
+                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
                         
                         
                         // save to firestore.
@@ -49,7 +48,7 @@ struct AddTaskView: View {
                                            assignedTo: [currentTikUser],
                                            setDate: setDate)
                         
-                        authViewModel.saveTaskToFirestore(task: newTask)
+                        firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
                         addTaskIsPresented = false
                     }
                     
@@ -64,8 +63,8 @@ struct AddTaskView: View {
     }
 }
 
-//struct AddTaskView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddTaskView(addTaskIsPresented: .constant(true), authViewModel: AuthViewModel())
-//    }
-//}
+struct AddTaskView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddTaskView(addTaskIsPresented: .constant(true))
+    }
+}
