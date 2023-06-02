@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C70E7AB2A29E1870060A66C /* CalendarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */; };
+		6C70E7AC2A29E1870060A66C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A72A29E1860060A66C /* CalendarView.swift */; };
+		6C70E7AD2A29E1870060A66C /* CalendarDateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */; };
+		6C70E7AE2A29E1870060A66C /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */; };
+		6C70E7AF2A29E1870060A66C /* CalendarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */; };
 		8AC9A87B2A1F4F2700DEDE5A /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9A87A2A1F4F2700DEDE5A /* Color+Extension.swift */; };
 		8AC9A87D2A1F564F00DEDE5A /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9A87C2A1F564F00DEDE5A /* CustomButtonStyle.swift */; };
 		8AC9A88C2A1F59F900DEDE5A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AC9A87F2A1F59F800DEDE5A /* Roboto-Medium.ttf */; };
@@ -99,6 +104,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCustomView.swift; sourceTree = "<group>"; };
+		6C70E7A72A29E1860060A66C /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDateItem.swift; sourceTree = "<group>"; };
+		6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettingsView.swift; sourceTree = "<group>"; };
 		8AC9A87A2A1F4F2700DEDE5A /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		8AC9A87C2A1F564F00DEDE5A /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		8AC9A87F2A1F59F800DEDE5A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -252,6 +262,11 @@
 		B37F23482A0E191400F9FF24 /* tik */ = {
 			isa = PBXGroup;
 			children = (
+				6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */,
+				6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */,
+				6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */,
+				6C70E7A72A29E1860060A66C /* CalendarView.swift */,
+				6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */,
 				8AC9A87E2A1F59F800DEDE5A /* Roboto */,
 				A930D3382A1D42FB00637BD4 /* Styles */,
 				A9CA3E402A12F64700DE7FE9 /* Subviews */,
@@ -478,11 +493,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C3D27A32A2743BC00B720CB /* FirestoreManagerVM.swift in Sources */,
+				6C70E7AF2A29E1870060A66C /* CalendarSettingsView.swift in Sources */,
 				B3B579562A23C8A00031DC2D /* ShoppingListView.swift in Sources */,
 				B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */,
 				B3B579582A23CADC0031DC2D /* ShoppingItemModel.swift in Sources */,
 				8AC9A87B2A1F4F2700DEDE5A /* Color+Extension.swift in Sources */,
 				A99293662A1B67B7000C3892 /* SidebarView.swift in Sources */,
+				6C70E7AC2A29E1870060A66C /* CalendarView.swift in Sources */,
 				A97740312A28ACA60022FC5F /* BottomTabBar.swift in Sources */,
 				A930D33A2A1D431300637BD4 /* TextFieldStyles.swift in Sources */,
 				B31167172A1274B000EC9256 /* UserLogInView.swift in Sources */,
@@ -490,17 +507,20 @@
 				9C0DE5052A18DF6200B9C1F5 /* AddTaskVM.swift in Sources */,
 				8AC9A87D2A1F564F00DEDE5A /* CustomButtonStyle.swift in Sources */,
 				A9CA3E3B2A125C9C00DE7FE9 /* Household.swift in Sources */,
+				6C70E7AB2A29E1870060A66C /* CalendarCustomView.swift in Sources */,
 				A9CA3E3D2A125CB400DE7FE9 /* Task.swift in Sources */,
 				B37F234A2A0E191400F9FF24 /* tikApp.swift in Sources */,
 				9C3D27A52A27447700B720CB /* Member.swift in Sources */,
 				A9CA3E4A2A1696DD00DE7FE9 /* JoinHouseholdView.swift in Sources */,
 				A9CA3E392A125C9000DE7FE9 /* User.swift in Sources */,
+				6C70E7AE2A29E1870060A66C /* CalendarViewModel.swift in Sources */,
 				A9CA3E482A1696C600DE7FE9 /* CreateHouseholdView.swift in Sources */,
 				A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */,
 				A992936A2A1C4F0C000C3892 /* AuthViewModel.swift in Sources */,
 				A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */,
 				A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */,
 				9C0DE5032A18DC9000B9C1F5 /* AddTaskView.swift in Sources */,
+				6C70E7AD2A29E1870060A66C /* CalendarDateItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
