@@ -182,7 +182,6 @@ class FirestoreManagerVM : ObservableObject {
     
     
     func checkInLatestHousehold() {
-        // Not done! Error!
         if let currentTikUser = currentTikUser, let docId = currentTikUser.latestHousehold{
             checkInHousehold(docID: docId)
         }
@@ -223,12 +222,11 @@ class FirestoreManagerVM : ObservableObject {
             let newUserRef = self.db.collection(self.userCollRef).document(user.uid)
             
             // This is weird. Why not save the User? Oh, I get it now. Complicated!
+            // WHyyy???! I just want to add a User!!!11!!!!!
             if let name = newUser.name, let email = newUser.email {
                 newUserRef.setData([
                     "name": name,
                     "email": email,
-                    //                    "isMember": newUser.isMember,
-                    //                    "isAdmin": newUser.isAdmin
                 ]) { error in
                     if let error = error {
                         print("Error adding document: \(error.localizedDescription)")
@@ -266,7 +264,7 @@ class FirestoreManagerVM : ObservableObject {
                 switch result {
                 case .success(let user) :
                     self.currentTikUser = user
-                    // Here we should try to get the User's latestHousehold somehow.
+                    // Now, let's get the latestHousehold too!
                     self.checkInLatestHousehold()
                     
                 case .failure(let error) : print("Error getting user \(error)")
@@ -288,8 +286,6 @@ class FirestoreManagerVM : ObservableObject {
     
     
     func saveTaskToFirestore(task: Task) {
-        // This is preliminary. Saves to the user - should save to the Household.
-        //guard let user = authViewModel.auth.currentUser else {return}
         guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
         let taskRef = db.collection(householdCollRef).document(docID).collection("tasks")
         
