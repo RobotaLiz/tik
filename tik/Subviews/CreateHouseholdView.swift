@@ -41,10 +41,13 @@ struct CreateHouseholdView: View {
             }
             .frame(width: 300, height: 200)
             Button(action: {
-                firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
-                //householdViewModel.currentUser?.isMember = true
-                //authViewModel.makeCurrentUserMember()
-                presentationMode.wrappedValue.dismiss()
+                if householdName != "" && householdPin != "" {
+                    firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
+                    //householdViewModel.currentUser?.isMember = true
+                    //authViewModel.makeCurrentUserMember()
+                    presentationMode.wrappedValue.dismiss()
+                }
+              
             }) {
                 Text("Create")
             }
