@@ -20,9 +20,9 @@ struct ContentView: View {
             } else if firestoreManagerViewModel.currentTikUser != nil && firestoreManagerViewModel.currentHousehold == nil {
                 HouseholdSelectionView()
             }
-                
-                
-            
+        }
+        .onAppear() {
+            firestoreManagerViewModel.getCurrentTikUser()
         }
     }
         

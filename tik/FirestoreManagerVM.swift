@@ -183,7 +183,7 @@ class FirestoreManagerVM : ObservableObject {
     
     func checkInLatestHousehold() {
         // Not done! Error!
-        if let currentTikUser = currentTikUser, let docId = currentTikUser.docId{
+        if let currentTikUser = currentTikUser, let docId = currentTikUser.latestHousehold{
             checkInHousehold(docID: docId)
         }
     }
@@ -193,7 +193,7 @@ class FirestoreManagerVM : ObservableObject {
         if let currentTikUser = currentTikUser, let docID = currentTikUser.docId {
             let userRef = self.db.collection(self.userCollRef).document(docID)
             
-            userRef.updateData(["currentHousehold" : householdID]) { err in
+            userRef.updateData(["latestHousehold" : householdID]) { err in
                 if let err = err {
                     print("Error updating latestHousehold: \(err)")
                 } else {
@@ -266,7 +266,8 @@ class FirestoreManagerVM : ObservableObject {
                 switch result {
                 case .success(let user) :
                     self.currentTikUser = user
-                    // Here we should try to get the User's currentHousehold somehow.
+                    // Here we should try to get the User's latestHousehold somehow.
+                    self.checkInLatestHousehold()
                     
                 case .failure(let error) : print("Error getting user \(error)")
                 }
