@@ -176,6 +176,11 @@ class FirestoreManagerVM : ObservableObject {
     }
     
     
+    func toggleTikBox() {
+        // ToDo
+    }
+    
+    
     func checkOutHousehold() {
         currentHousehold = nil
     }
