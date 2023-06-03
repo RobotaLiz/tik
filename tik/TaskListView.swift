@@ -11,26 +11,11 @@ import FirebaseAuth
 struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
-    //@ObservedObject var authViewModel : FirestoreManagerVM
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
-    // Antonio's side bar stuff - Work in progress
-    @State var isSidebarOpen = false
-    @State var selectedTag: String? = nil
-    @State var selectedTab : Int? = 0
     
     let auth = Auth.auth()
     
     @Environment(\.presentationMode) var presentationMode
-    
-    var selectedTagBinding: Binding<String?> {
-        Binding<String?>(
-            get: { selectedTag },
-            set: { tag in
-                selectedTag = tag
-                isSidebarOpen = tag != nil
-            }
-        )
-    }
     
     @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()),
                            Task(title: "Dust living room", setDate: Date()),
@@ -99,11 +84,6 @@ struct TaskListView: View {
             .navigationViewStyle(.stack)
             .navigationBarTitle("Tasks")
             .listStyle(.plain)
-            .onAppear {
-                if !isSidebarOpen {
-                    isSidebarOpen = false
-                }
-            }
             .navigationBarItems(trailing: {
                 Menu {
                     Button(action: {
