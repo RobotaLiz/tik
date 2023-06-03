@@ -12,7 +12,7 @@ struct BottomTabBar: View {
 
     var body: some View {
         TabView {
-            ShoppingListView()
+            ShoppingListView(firestoreVm: firestoreManagerViewModel)
                 .tabItem() {
                     Image(systemName: "cart")
                     Text("Shopping List")
