@@ -176,6 +176,27 @@ class FirestoreManagerVM : ObservableObject {
     }
     
     
+    func toggleTikBox(task: Task) {
+        guard let taskRef = task.docId else {return}
+        guard let householdRef = currentHousehold?.docId else {return}
+        var isCompleted = task.isCompleted
+        isCompleted = !isCompleted
+        
+        
+        let completedRef = self.db.collection(self.householdCollRef).document(householdRef).collection("tasks").document(taskRef)
+        
+        completedRef.updateData(["isCompleted" : isCompleted]) { err in
+            if let err = err {
+                print("Error toggling isCompleted: \(err)")
+            } else {
+                print("isCompleted succesfully changed")
+            }
+        }
+        
+        
+    }
+    
+    
     func checkOutHousehold() {
         currentHousehold = nil
     }

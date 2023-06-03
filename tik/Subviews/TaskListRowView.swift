@@ -10,16 +10,17 @@ import SwiftUI
 struct TaskListRowView: View {
     
     var task : Task
-    var isDone : Bool
+    //var isDone : Bool
+    @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
         HStack {
             Text(task.title)
             Spacer()
             Button(action: {
-                //TODO: Toggle - Task completed logic
+                firestoreManagerViewModel.toggleTikBox(task: task)
             }) {
-                if isDone {
+                if task.isCompleted {
                     Image(systemName: "checkmark.square")
                 } else {
                     Image(systemName: "square")
@@ -32,6 +33,6 @@ struct TaskListRowView: View {
 
 struct TaskListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListRowView(task: Task(title: "Test Task", setDate: Date()), isDone: true)
+        TaskListRowView(task: Task(title: "Test Task", setDate: Date()))
     }
 }

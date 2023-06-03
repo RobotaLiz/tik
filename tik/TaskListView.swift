@@ -68,7 +68,7 @@ struct TaskListView: View {
                 }
                 List {
                     ForEach(firestoreManagerViewModel.tasks) { task in
-                        TaskListRowView(task: task, isDone: true)
+                        TaskListRowView(task: task)
                     }
                     .onDelete() { indexSet in
                         for _ in indexSet {
