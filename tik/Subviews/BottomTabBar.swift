@@ -9,12 +9,16 @@ import SwiftUI
 
 struct BottomTabBar: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
+    @State var defaultTab : Int = 2
 
     var body: some View {
-        
-        
+
         TabView {
             ShoppingListView()
+
+        TabView(selection: $defaultTab) {
+            ShoppingListView(firestoreVm: firestoreManagerViewModel)
+
                 .tabItem() {
                     Image(systemName: "cart")
                     Text("Shopping List")
@@ -25,7 +29,11 @@ struct BottomTabBar: View {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
                 }
-            
+            CalendarView()
+                .tabItem() {
+                    Image(systemName: "calendar")
+                    Text("Calendar")
+                }
         }
         .accentColor(Color.black)
     }

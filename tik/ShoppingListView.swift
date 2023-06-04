@@ -6,25 +6,28 @@
 //
 
 import SwiftUI
+import Firebase
+
 
 struct ShoppingListView: View {
+    @StateObject var firestoreVm : FirestoreManagerVM
+   
+    
     @State var addingItem = false
     @State var name = ""
-    @State var ShoppList = [ShoppingItemModel(name: "sope", household: "3344")]
+
     
     var body: some View {
         NavigationView {
             VStack{
                 List{
-                    ForEach(ShoppList) { list in
+                    ForEach(firestoreVm.shoppingItems) { list in
                         
                         HStack {
                             Text(list.name)
                             Spacer()
                             Button(action: {
-                                if let index = ShoppList.firstIndex(of : list) {
-                                    ShoppList.remove(at: index)
-                                }
+                                firestoreVm.deletShoppItem(shoppingItem: list)
                             })
                             {
                                 
@@ -66,7 +69,7 @@ struct ShoppingListView: View {
                 
                 Button("Add   ", action: {
                     let item = ShoppingItemModel(name: name, household: "")
-                    ShoppList.append(item)
+                    firestoreVm.saveShoppingItem(shoppingItem: item)
                     addingItem = false
                     name = ""
                     
@@ -85,15 +88,15 @@ struct ShoppingListView: View {
             
             
             .navigationBarTitle("Shopping List")
-        }
+        }.onAppear {firestoreVm.addShoppingItemsSnapshotListener()}
         
         
     }
 }
 
-struct ShoppingListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShoppingListView()
-    }
-}
+//struct ShoppingListView_Previews: PreviewProvider {
+ //   static var previews: some View {
+  //      ShoppingListView()
+    //}
+//}
 

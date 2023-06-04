@@ -14,15 +14,29 @@ class FirestoreManagerVM : ObservableObject {
     
     let db = Firestore.firestore()
     let auth = Auth.auth()
+    @Published var  toast: Toast? = nil
     
-    let userCollRef = "Test_users"
-    let householdCollRef = "Test_households"
+    let userCollRef = "Users"
+    let householdCollRef = "Households"
+    let taskCollRef = "tasks"
     
     
     @Published var currentTikUser: User?
     @Published var currentHousehold: Household?
     @Published var tasks: [Task] = []
+    @Published var shoppingItems: [ShoppingItemModel] = []
     
+    init() {
+        addTasksSnapshotListener()
+    }
+    
+    
+    func assignUserToTask(taskId: String) {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        let taskRef = db.collection(self.householdCollRef).document(currentHouseholdDocID).collection(self.taskCollRef)
+        
+        
+    }
     
     /*
      Takes household name and pin as arguments.
@@ -176,6 +190,27 @@ class FirestoreManagerVM : ObservableObject {
     }
     
     
+    func toggleTikBox(task: Task) {
+        guard let taskRef = task.docId else {return}
+        guard let householdRef = currentHousehold?.docId else {return}
+        var isCompleted = task.isCompleted
+        isCompleted = !isCompleted
+        
+        
+        let completedRef = self.db.collection(self.householdCollRef).document(householdRef).collection("tasks").document(taskRef)
+        
+        completedRef.updateData(["isCompleted" : isCompleted]) { err in
+            if let err = err {
+                print("Error toggling isCompleted: \(err)")
+            } else {
+                print("isCompleted succesfully changed")
+            }
+        }
+        
+        
+    }
+    
+    
     func checkOutHousehold() {
         currentHousehold = nil
     }
@@ -214,7 +249,7 @@ class FirestoreManagerVM : ObservableObject {
     func addAccount(name: String, email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { (result, error) in
             guard let user = result?.user, error == nil else {
-                print("Error creating user: \(error?.localizedDescription ?? "")")
+                self.toast = Toast(style: .error, message: "could not create account")
                 return
             }
             
@@ -229,7 +264,7 @@ class FirestoreManagerVM : ObservableObject {
                     "email": email,
                 ]) { error in
                     if let error = error {
-                        print("Error adding document: \(error.localizedDescription)")
+                        self.toast = Toast(style: .error, message: "could not create account")
                     } else {
                         print("Document added with ID: \(newUserRef.documentID)")
                     }
@@ -243,7 +278,7 @@ class FirestoreManagerVM : ObservableObject {
     func signIn(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "")
+                self.toast = Toast(style: .warning, message:"Wrong Email or PassWord")
             } else {
                 print("Success")
                 // If we successfully logged in, we need to get the currentTikUser from Firestore too
@@ -299,6 +334,50 @@ class FirestoreManagerVM : ObservableObject {
     
     func removeTaskFromFirestore(task: Task) {
         // To do
+    }
+    func saveShoppingItem (shoppingItem : ShoppingItemModel) {
+        
+        guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
+        let Shoppref = db.collection(householdCollRef).document(docID).collection("shoppingItems")
+        
+        do {
+            try Shoppref.addDocument(from: shoppingItem)
+        } catch {
+            print("Error saving to db.\(error)")
+        }
+        
+    }
+    func deletShoppItem (shoppingItem : ShoppingItemModel) {
+        guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
+        let shopRef = self.db.collection(self.householdCollRef).document(docID).collection("shoppingItems")
+        
+        shopRef.document(shoppingItem.docId ?? "").delete() { err in
+            if let err = err {
+                print("Error removing shoppingItem")
+            }else{
+                print("removing successfully")
+            }
+            
+        }
+    }
+    func addShoppingItemsSnapshotListener() {
+        guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
+        let shopRef = self.db.collection(self.householdCollRef).document(docID).collection("shoppingItems")
+        
+        shopRef.addSnapshotListener() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                self.shoppingItems.removeAll()
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    if let shoppingItem = try? document.data(as: ShoppingItemModel.self) {
+                        self.shoppingItems.append(shoppingItem)
+                    }
+                }
+                
+            }
+        }
     }
 }
 

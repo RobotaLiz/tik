@@ -35,7 +35,7 @@ struct CalendarView: View {
                     List {
                         ForEach(calendarVM.tasks) { task in
                             if Calendar.current.isDateInToday(task.setDate) {
-                                TaskListRowView(task: task, isDone: task.isCompleted)
+                                TaskListRowView(task: task)
                             }
                         }
                     }
@@ -49,7 +49,7 @@ struct CalendarView: View {
                             let components1 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: now)
                             let components2 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: task.setDate)
                             if components1.weekOfYear == components2.weekOfYear {
-                                TaskListRowView(task: task, isDone: task.isCompleted)
+                                TaskListRowView(task: task)
                             }
                         }
                     }
@@ -69,7 +69,7 @@ struct CalendarView: View {
                             let components2 = Calendar.current.dateComponents([.month, .year], from: task.setDate)
                             
                             if components1.month == components2.month {
-                                TaskListRowView(task: task, isDone: task.isCompleted)
+                                TaskListRowView(task: task)
                             }
                         }
                     }

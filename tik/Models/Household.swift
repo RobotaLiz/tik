@@ -15,7 +15,7 @@ struct Household : Codable {
     var name : String
     var pin : String
     // Changed this! (from [User])
-    var members : [Member]
+    var members : [User]
     //var tasks : [Task] = [] //Added as sub collection instead
     var admin : User? // Only one user can be admin right now (more admins in the future?)
     
