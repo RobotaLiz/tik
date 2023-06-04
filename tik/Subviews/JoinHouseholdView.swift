@@ -46,7 +46,7 @@ struct JoinHouseholdView: View {
                         Spacer()
                     }
                     HStack {
-                        Spacer(minLength: 40)
+                        Spacer(minLength: 80)
                         TextField("PIN", text: $inputPin, onEditingChanged: { _ in
                             pinIsValid = inputPin.count == 6
                         })
@@ -73,7 +73,7 @@ struct JoinHouseholdView: View {
                             Image(systemName: "magnifyingglass")
                         }
                         .buttonStyle(CustomButtonStyle())
-                        Spacer(minLength: 40)
+                        Spacer(minLength: 60)
                     }
                     
                     if let searchResult = searchResult, let foundHousehold = searchResult[0] {
