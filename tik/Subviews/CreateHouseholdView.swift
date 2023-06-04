@@ -23,6 +23,7 @@ struct CreateHouseholdView: View {
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
             VStack {
+                Spacer().frame(height: 180)
                 HStack {
                     Spacer(minLength: 50)
                     TextField("Enter name", text: $householdName)
@@ -39,13 +40,14 @@ struct CreateHouseholdView: View {
                 }
                 .buttonStyle(CustomButtonStyle())
                 ZStack {
-                    Color(.gray)
+                    Color(.white)
                         .cornerRadius(40)
                     Text(householdPin)
                         
                     
                 }
                 .frame(width: 200, height: 70)
+                Spacer()
                 Button(action: {
                     if householdName != "" && householdPin != "" {
                         firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
@@ -56,6 +58,7 @@ struct CreateHouseholdView: View {
                     
                 }) {
                     VStack{
+                
                         Text("Add Household")
                             .font(.custom("Roboto-Bold", size: 24))
                             .foregroundColor(.black)
@@ -66,6 +69,7 @@ struct CreateHouseholdView: View {
                             .foregroundColor(.black)
                     }
                 }
+                
             }
             //        .onAppear {
             //            authViewModel.householdFirestoreListener()

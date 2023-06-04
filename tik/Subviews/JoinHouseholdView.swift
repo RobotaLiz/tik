@@ -38,8 +38,9 @@ struct JoinHouseholdView: View {
                     HStack {
                         Spacer()
                         Text("Input PIN to search")
-                            .font(.custom("Roboto-Bold", size: 24))
-                            .foregroundColor(.appYellow)
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                            .bold()
+                            .foregroundColor(.white)
                             .padding()
                         
                         Spacer()

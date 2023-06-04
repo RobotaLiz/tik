@@ -102,9 +102,7 @@ struct TaskListView: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .buttonStyle(.borderless)
-                    .padding([.trailing], 20)
-
+                    
                     .buttonStyle(.borderless)
                     .padding([.trailing], 20)
                 }

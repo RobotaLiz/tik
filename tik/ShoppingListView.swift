@@ -42,14 +42,22 @@ struct ShoppingListView: View {
                     addingItem = true
                     print("open ssessamiii")
                 }) {
-                    Image(systemName: "plus.circle")
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 30, height: 30) // Adjust as needed
+                        .foregroundColor(.black)
+                        .background(Color.white)
+                        .clipShape(Circle())
                         .imageScale(.large)
                 }
                 .buttonStyle(.borderless)
                 .padding([.trailing], 20)
+
             }
             
-            .sheet(isPresented: $addingItem) {
+            .sheet(isPresented: $addingItem)
+            
+            {
                 
                 
                 Label("Add item to list", systemImage:"cart")
