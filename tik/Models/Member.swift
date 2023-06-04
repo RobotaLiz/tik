@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Member : Codable, Equatable {
+struct Member : Codable, Equatable, Hashable {
     var userID : String
     var admin : Bool
 }
