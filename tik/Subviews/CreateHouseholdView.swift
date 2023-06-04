@@ -55,14 +55,16 @@ struct CreateHouseholdView: View {
                     }
                     
                 }) {
-                    Text("Add Household")
-                        .font(.custom("Roboto-Bold", size: 24))
-                        .foregroundColor(.black)
+                    VStack{
+                        Text("Add Household")
+                            .font(.custom("Roboto-Bold", size: 24))
+                            .foregroundColor(.black)
                         
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.black)
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.black)
+                    }
                 }
             }
             //        .onAppear {

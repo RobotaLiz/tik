@@ -39,7 +39,7 @@ struct JoinHouseholdView: View {
                         Spacer()
                         Text("Input PIN to search")
                             .font(.custom("Roboto-Bold", size: 24))
-                            .foregroundColor(.white)
+                            .foregroundColor(.appYellow)
                             .padding()
                         
                         Spacer()
