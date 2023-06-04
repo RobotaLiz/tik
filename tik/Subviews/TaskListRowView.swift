@@ -35,9 +35,12 @@ struct TaskListRowView: View {
             HStack {
                 Menu {
                     ForEach(firestoreManagerViewModel.currentHousehold!.members, id: \.self) { member in
-                        Button(member.userID) {
-                            assignSelectedMemberToTask(memberName: member.userID)
+                        if let name = member.name {
+                            Button(name) {
+                                assignSelectedMemberToTask(memberName: name)
+                            }
                         }
+
                     }
                 } label: {
                     Label("", systemImage: "person.fill.badge.plus")

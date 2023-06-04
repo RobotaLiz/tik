@@ -51,7 +51,7 @@ class FirestoreManagerVM : ObservableObject {
         let householdRef = db.collection(householdCollRef).document()
         let docID = householdRef.documentID
         
-        let newMember = Member(userID: userId, admin: true)
+        let newMember = User(docId: currentTikUser.docId, name: currentTikUser.name, email: currentTikUser.email)
         let newHousehold = Household(name: name, pin: pin, members: [newMember])
         
         
@@ -120,7 +120,7 @@ class FirestoreManagerVM : ObservableObject {
         
         //Let's check if the newMember already is enrolled in the houseHold
         for member in household.members {
-            if member.userID == userID {
+            if member.docId == userID {
                 print("Already joined!")
                 self.checkInHousehold(docID: householdID)
                 return
