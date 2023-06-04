@@ -12,17 +12,11 @@ struct BottomTabBar: View {
     @State var defaultTab : Int = 2
 
     var body: some View {
-
-        TabView {
-            ShoppingListView()
-
         TabView(selection: $defaultTab) {
             ShoppingListView(firestoreVm: firestoreManagerViewModel)
-
                 .tabItem() {
                     Image(systemName: "cart")
                     Text("Shopping List")
-            
                 }
             TaskListView()
                 .tabItem() {
@@ -35,7 +29,6 @@ struct BottomTabBar: View {
                     Text("Calendar")
                 }
         }
-        .accentColor(Color.black)
     }
 }
 
