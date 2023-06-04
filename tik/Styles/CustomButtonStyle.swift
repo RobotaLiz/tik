@@ -3,10 +3,10 @@ import SwiftUI
 struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.custom("Roboto-Bold", size: 22))
-            .foregroundColor(.appBlack)
+            .font(.custom("Roboto-Regular", size: 16))
+            .foregroundColor(.white)
             .padding()
-            .background(Color.appYellow)
-            .cornerRadius(15)
+            .background(Color.appBlack)
+            .cornerRadius(5)
     }
 }

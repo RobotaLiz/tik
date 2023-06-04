@@ -31,51 +31,19 @@ struct JoinHouseholdView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                // Add your image here
-                Image("Two Phone Mockup Download App Instagram Post(10) copy")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    VStack {
-                        
-                        Image("Two Phone tik2")
-                            .resizable()
-                            .frame(width: 150, height: 150)
-                            .padding(.bottom)
-                    }
-                    .edgesIgnoringSafeArea(.all)
-                    HStack {
-                        Spacer()
-                        Text("Input PIN to search")
-                            .font(.custom("Roboto-Bold", size: 24))
-                            .foregroundColor(.appYellow)
-                            .padding()
-                        
-                        Spacer()
-                    }
-                    HStack {
-                        Spacer(minLength: 40)
-                        TextField("PIN", text: $inputPin, onEditingChanged: { _ in
-                            pinIsValid = inputPin.count == 6
-                        })
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("Input PIN to search")
+                        .padding()
+                    Spacer()
+                }
+                HStack {
+                    Spacer(minLength: 40)
+                    TextField("PIN", text: $inputPin, onEditingChanged: { _ in
+                        pinIsValid = inputPin.count == 6
+                    })
                         .padding(10)
-                        .font(.custom("Roboto-Bold", size: 24))
-                        .foregroundColor(.white)
-                        .border(pinIsValid ? .black : .appYellow)
-                        Spacer(minLength: 20)
-                        Button(action: {
-                            if pinIsValid {
-                                firestoreManagerViewModel.getHouseholds(pin: inputPin) { households, error in
-                                    if let error = error {
-                                        // Handle the error
-                                        print("Error: \(error.localizedDescription)")
-                                    } else if let households = households {
-                                        searchResult = households
-                                        print(searchResult ?? "No household found")
-                                    }
-
                         .border(pinIsValid ? .black : .red)
                     Spacer(minLength: 20)
                     Button(action: {
@@ -93,24 +61,8 @@ struct JoinHouseholdView: View {
                                     searchResult = households
                                     searchStatus = households.isEmpty ? .notFound : .found
                                     print(searchResult ?? "No household found")
-
                                 }
-                            } else {
-                                pinAlert = true
                             }
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        Spacer(minLength: 40)
-                    }
-                    
-                    if let searchResult = searchResult, let foundHousehold = searchResult[0] {
-                        VStack {
-                            Text(foundHousehold.name)
-                                .font(.title)
-                            Button(action: {
-                                firestoreManagerViewModel.joinHousehold(household: foundHousehold)
                         } else {
                             alertMsg = "PIN is not valid"
                             pinAlert = true
@@ -130,7 +82,6 @@ struct JoinHouseholdView: View {
                     EmptyView()
                 case .searching:
                     ProgressView()
-                  
                 case .found:
                     if let searchResult = searchResult {
                         VStack {
@@ -138,7 +89,6 @@ struct JoinHouseholdView: View {
                                 .font(.title)
                             Button(action: {
                                 firestoreManagerViewModel.joinHousehold(household: searchResult[0])
-
                                 joinSuccessful = true
                                 presentationMode.wrappedValue.dismiss()
                             }) {
@@ -156,7 +106,6 @@ struct JoinHouseholdView: View {
                         .padding()
                         .font(.footnote)
                     }
-                  
                 case .notFound:
                     Text("No household found")
                         .font(.title)
@@ -166,10 +115,10 @@ struct JoinHouseholdView: View {
                         .padding()
                         .font(.footnote)
                 }
-                .alert(isPresented: $pinAlert) {
-                    Alert(title: Text("Invalid PIN"), message: Text("Please enter a valid 6-digit PIN."), dismissButton: .default(Text("OK")))
-                }
-                
+            }
+
+            .alert(isPresented: $pinAlert) {
+                Alert(title: Text("Test"), message: Text(alertMsg!), dismissButton: .default(Text("OK")))
             }
         }
     }

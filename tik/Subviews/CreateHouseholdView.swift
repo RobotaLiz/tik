@@ -16,66 +16,51 @@ struct CreateHouseholdView: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
-        ZStack {
-            // Add your image here
-            Image("Two Phone Mockup Download App Instagram Post(10)")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                HStack {
-                    Spacer(minLength: 50)
-                    TextField("Enter name", text: $householdName)
-                        .padding(10)
-                        .cornerRadius(10)
-                        .border(Color(.black))
-                    Spacer(minLength: 50)
-                }
-                .padding(20)
-                Button(action: {
-                    householdPin = firestoreManagerViewModel.generatePin()
-                }) {
-                    Text("Generate PIN")
-                }
-                .buttonStyle(CustomButtonStyle())
-                ZStack {
-                    Color(.gray)
-                        .cornerRadius(40)
-                    Text(householdPin)
-                        
-                    
-                }
-                .frame(width: 200, height: 70)
-                Button(action: {
-                    if householdName != "" && householdPin != "" {
-                        firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
-                        //householdViewModel.currentUser?.isMember = true
-                        //authViewModel.makeCurrentUserMember()
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                    
-                }) {
-                    VStack{
-                        Text("Add Household")
-                            .font(.custom("Roboto-Bold", size: 24))
-                            .foregroundColor(.black)
-                        
-                        Image(systemName: "plus.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.black)
-                    }
-                }
+        VStack {
+            HStack {
+                Spacer(minLength: 50)
+                TextField("Enter name", text: $householdName)
+                    .padding(10)
+                    .cornerRadius(10)
+                    .border(Color(.black))
+                Spacer(minLength: 50)
             }
-            //        .onAppear {
-            //            authViewModel.householdFirestoreListener()
-            //        }
+            .padding(20)
+            Button(action: {
+                householdPin = firestoreManagerViewModel.generatePin()
+            }) {
+                Text("Generate PIN")
+            }
+            .buttonStyle(.borderedProminent)
+            ZStack {
+                Color(.gray)
+                    .cornerRadius(40)
+                Text(householdPin)
+                    .font(.system(size: 52))
+
+            }
+            .frame(width: 300, height: 200)
+            Button(action: {
+                if householdName != "" && householdPin != "" {
+                    firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
+                    //householdViewModel.currentUser?.isMember = true
+                    //authViewModel.makeCurrentUserMember()
+                    presentationMode.wrappedValue.dismiss()
+                }
+              
+            }) {
+                Text("Create")
+            }
+            .buttonStyle(.borderedProminent)
         }
+//        .onAppear {
+//            authViewModel.householdFirestoreListener()
+//        }
     }
-    
-    struct CreateHouseholdView_Previews: PreviewProvider {
-        static var previews: some View {
-            CreateHouseholdView()
-        }
+}
+
+struct CreateHouseholdView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateHouseholdView()
     }
 }
