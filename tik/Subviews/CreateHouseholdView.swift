@@ -45,7 +45,7 @@ struct CreateHouseholdView: View {
                         
                     
                 }
-                .frame(width: 300, height: 200)
+                .frame(width: 200, height: 70)
                 Button(action: {
                     if householdName != "" && householdPin != "" {
                         firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)

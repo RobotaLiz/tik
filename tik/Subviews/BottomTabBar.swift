@@ -11,18 +11,23 @@ struct BottomTabBar: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
 
     var body: some View {
+        
+        
         TabView {
             ShoppingListView()
                 .tabItem() {
                     Image(systemName: "cart")
                     Text("Shopping List")
+            
                 }
             TaskListView()
                 .tabItem() {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
                 }
+            
         }
+        .accentColor(Color.black)
     }
 }
 
