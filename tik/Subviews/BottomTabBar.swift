@@ -9,9 +9,10 @@ import SwiftUI
 
 struct BottomTabBar: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
+    @State var defaultTab : Int = 2
 
     var body: some View {
-        TabView {
+        TabView(selection: $defaultTab) {
             ShoppingListView(firestoreVm: firestoreManagerViewModel)
                 .tabItem() {
                     Image(systemName: "cart")
@@ -21,6 +22,11 @@ struct BottomTabBar: View {
                 .tabItem() {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
+                }
+            CalendarView()
+                .tabItem() {
+                    Image(systemName: "calendar")
+                    Text("Calendar")
                 }
         }
     }

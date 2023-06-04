@@ -16,14 +16,27 @@ class FirestoreManagerVM : ObservableObject {
     let auth = Auth.auth()
     @Published var  toast: Toast? = nil
     
-    let userCollRef = "Test_users"
-    let householdCollRef = "Test_households"
+    let userCollRef = "Users"
+    let householdCollRef = "Households"
+    let taskCollRef = "tasks"
     
     
     @Published var currentTikUser: User?
     @Published var currentHousehold: Household?
     @Published var tasks: [Task] = []
     @Published var shoppingItems: [ShoppingItemModel] = []
+    
+    init() {
+        addTasksSnapshotListener()
+    }
+    
+    
+    func assignUserToTask(taskId: String) {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        let taskRef = db.collection(self.householdCollRef).document(currentHouseholdDocID).collection(self.taskCollRef)
+        
+        
+    }
     
     /*
      Takes household name and pin as arguments.
