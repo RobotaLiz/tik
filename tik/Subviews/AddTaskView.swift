@@ -21,44 +21,107 @@ struct AddTaskView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                TextField("What to do:", text: $title)
-                    .padding()
-                TextField("How to do it:", text: $notes)
-                    .padding()
-                TextField("Where to do it:", text: $location)
-                    .padding()
-                HStack {
-                    Spacer()
-                    Text("When to do it:")
-                    DatePicker("", selection: $setDate)
-                    Spacer()
-                }
-                .padding()
-                Spacer()
-                Button("Add", action: {
+            ZStack {
+                // Add your image here
+                Image("Two Phone Mockup Download App Instagram Post(10)")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .edgesIgnoringSafeArea(.all)
+                
+                // Big yellow circle
+                Circle()
+                    .fill(Color.yellow)
+                    .frame(width: 300, height: 300)
+                    .offset(y: -230)
+                
+                VStack(alignment: .center) {
+                    TextField("What to do:", text: $title)
+                        .font(.custom("Roboto-Bold", size: 22))
+                        .multilineTextAlignment(.center)
+                        .padding()
+                    TextField("How to do it:", text: $notes)
+                        .font(.custom("Roboto-Bold", size: 22))
+                        .multilineTextAlignment(.center)
+                        .padding()
+                    TextField("Where to do it:", text: $location)
+                        .font(.custom("Roboto-Bold", size: 22))
+                        .multilineTextAlignment(.center)
+                        .padding()
                     
-                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+                    
+                    //                    Text("When to do it:")
+                    VStack {
+                        //                        Spacer()
+                        Text("When to do it:")
+                            .font(.custom("Roboto-Bold", size: 22))
+                            .foregroundColor(.black)
+                        //                        Spacer()
+                        DatePicker("", selection: $setDate)
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
                         
-                        
-                        // save to firestore.
-                        let newTask = Task(title: title,
-                                           notes: notes,
-                                           location: location,
-                                           assignedTo: [currentTikUser],
-                                           setDate: setDate)
-                        
-                        firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
-                        addTaskIsPresented = false
                     }
-                    
-                })
-                .navigationBarItems(trailing: Button {
-                    addTaskIsPresented = false
-                } label: {
-                    Image(systemName: "xmark")
-                })
+                    Button("Add", action: {
+                        
+                        if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+                            
+                            // save to firestore.
+                            let newTask = Task(title: title,
+                                               notes: notes,
+                                               location: location,
+                                               assignedTo: [currentTikUser],
+                                               setDate: setDate)
+                            
+                            firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
+                            addTaskIsPresented = false
+                        }
+                    })
+                    .buttonStyle(CustomButtonStyle())
+                    .navigationBarItems(trailing: Button {
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                    })
+                }
             }
+//            VStack {
+//                TextField("What to do:", text: $title)
+//                    .padding()
+//                TextField("How to do it:", text: $notes)
+//                    .padding()
+//                TextField("Where to do it:", text: $location)
+//                    .padding()
+//                HStack {
+//                    Spacer()
+//                    Text("When to do it:")
+//                    DatePicker("", selection: $setDate)
+//                    Spacer()
+//                }
+//                .padding()
+//                Spacer()
+//                Button("Add", action: {
+//
+//                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+//
+//
+//                        // save to firestore.
+//                        let newTask = Task(title: title,
+//                                           notes: notes,
+//                                           location: location,
+//                                           assignedTo: [currentTikUser],
+//                                           setDate: setDate)
+//
+//                        firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
+//                        addTaskIsPresented = false
+//                    }
+//
+//                })
+//                .navigationBarItems(trailing: Button {
+//                    addTaskIsPresented = false
+//                } label: {
+//                    Image(systemName: "xmark")
+//                })
+//            }
         }
     }
 }

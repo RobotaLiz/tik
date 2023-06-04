@@ -160,6 +160,7 @@ class FirestoreManagerVM : ObservableObject {
                     if let docID = household.docId {
                         self.updateLatestHousehold(householdID: docID)
                         self.addTasksSnapshotListener()
+                        self.addShoppingItemsSnapshotListener()
                     }
                     
                 case .failure(let error) : print("Error getting household \(error)")
