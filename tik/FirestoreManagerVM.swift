@@ -51,7 +51,7 @@ class FirestoreManagerVM : ObservableObject {
         let householdRef = db.collection(householdCollRef).document()
         let docID = householdRef.documentID
         
-        let newMember = User(docId: currentTikUser.docId, name: currentTikUser.name, email: currentTikUser.email)
+        let newMember = User(docId: userId, name: currentTikUser.name, email: currentTikUser.email)
         let newHousehold = Household(name: name, pin: pin, members: [newMember])
         
         
