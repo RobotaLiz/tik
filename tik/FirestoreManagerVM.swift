@@ -265,7 +265,7 @@ class FirestoreManagerVM : ObservableObject {
                     "email": email,
                 ]) { error in
                     if let error = error {
-                        self.toast = Toast(style: .error, message: "could not create account")
+                        self.toast = Toast(style: .error, message: "could not create account \(error)")
                     } else {
                         print("Document added with ID: \(newUserRef.documentID)")
                     }
@@ -323,7 +323,7 @@ class FirestoreManagerVM : ObservableObject {
     
     func saveTaskToFirestore(task: Task) {
         guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
-        let taskRef = db.collection(householdCollRef).document(docID).collection("tasks")
+        let taskRef = db.collection(householdCollRef).document(docID).collection(taskCollRef)
         
         do {
             try taskRef.addDocument(from: task)
@@ -333,9 +333,17 @@ class FirestoreManagerVM : ObservableObject {
     }
     
     
-    func removeTaskFromFirestore(task: Task) {
-        // To do
+    func deleteTaskFromFirestore(index: Int) {
+        let task = tasks[index]
+        guard let currentHousehold = currentHousehold,
+              let docID = currentHousehold.docId,
+              let taskID = task.docId else {return}
+        
+        let taskToDeleteRef = db.collection(householdCollRef).document(docID).collection(taskCollRef).document(taskID)
+        taskToDeleteRef.delete()
     }
+    
+    
     func saveShoppingItem (shoppingItem : ShoppingItemModel) {
         
         guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
