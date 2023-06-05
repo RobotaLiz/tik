@@ -12,6 +12,7 @@ struct BottomTabBar: View {
     @State var defaultTab : Int = 1
     
     var body: some View {
+        
         TabView(selection: $defaultTab) {
             TaskListView()
             
