@@ -34,7 +34,7 @@ struct TaskListRowView: View {
             Divider()
             HStack {
                 Menu {
-                    ForEach(firestoreManagerViewModel.currentHousehold!.members, id: \.self) { member in
+                    ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
                         if let name = member.name {
                             Button(name) {
                                 assignSelectedMemberToTask(memberName: name)

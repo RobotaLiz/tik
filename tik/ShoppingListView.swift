@@ -88,7 +88,8 @@ struct ShoppingListView: View {
             
             
             .navigationBarTitle("Shopping List")
-        }.onAppear {firestoreVm.addShoppingItemsSnapshotListener()}
+        }
+//        }.onAppear {firestoreVm.addShoppingItemsSnapshotListener()}
         
         
     }

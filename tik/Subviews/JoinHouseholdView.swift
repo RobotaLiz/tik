@@ -31,98 +31,118 @@ struct JoinHouseholdView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    Spacer()
-                    Text("Input PIN to search")
-                        .padding()
-                    Spacer()
-                }
-                HStack {
-                    Spacer(minLength: 40)
-                    TextField("PIN", text: $inputPin, onEditingChanged: { _ in
-                        pinIsValid = inputPin.count == 6
-                    })
-                        .padding(10)
-                        .border(pinIsValid ? .black : .red)
-                    Spacer(minLength: 20)
-                    Button(action: {
-                        pinIsValid = inputPin.count == 6 // Perform validation check
+            ZStack {
+                // Add your image here
+                Image("Two Phone Mockup Download App Instagram Post(10) copy")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    VStack {
                         
-                        if pinIsValid {
-                            alertMsg = "PIN is valid"
-                            searchStatus = .searching
-                            firestoreManagerViewModel.getHouseholds(pin: inputPin) { households, error in
-                                if let error = error {
-                                    // Handle the error
-                                    print("Error: \(error.localizedDescription)")
-                                    searchStatus = .notFound
-                                } else if let households = households {
-                                    searchResult = households
-                                    searchStatus = households.isEmpty ? .notFound : .found
-                                    print(searchResult ?? "No household found")
+                        Image("Two Phone tik2")
+                            .resizable()
+                            .frame(width: 150, height: 150)
+                            .padding(.bottom)
+                    }
+                    .edgesIgnoringSafeArea(.all)
+                    HStack {
+                        Spacer()
+                        Text("Input PIN to search")
+                            .font(.custom("Roboto-Bold", size: 24))
+                            .foregroundColor(.appYellow)
+                            .padding()
+                        
+                        Spacer()
+                    }
+                    HStack {
+                        Spacer(minLength: 40)
+                        TextField("PIN", text: $inputPin, onEditingChanged: { _ in
+                            pinIsValid = inputPin.count == 6
+                        })
+                        .font(.custom("Roboto-Bold", size: 24))
+                        .foregroundColor(.white)
+                        .border(pinIsValid ? .black : .appYellow)
+                        Spacer(minLength: 20)
+                        
+                        Button(action: {
+                            pinIsValid = inputPin.count == 6 // Perform validation check
+                            
+                            if pinIsValid {
+                                alertMsg = "PIN is valid"
+                                searchStatus = .searching
+                                firestoreManagerViewModel.getHouseholds(pin: inputPin) { households, error in
+                                    if let error = error {
+                                        // Handle the error
+                                        print("Error: \(error.localizedDescription)")
+                                        searchStatus = .notFound
+                                    } else if let households = households {
+                                        searchResult = households
+                                        searchStatus = households.isEmpty ? .notFound : .found
+                                        print(searchResult ?? "No household found")
+                                        
+                                    }
+                                }
+                            } else {
+                                pinAlert = true
+                            }
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                        }
+                        .buttonStyle(CustomButtonStyle())
+                        Spacer(minLength: 40)
+                    }
+                    
+                    switch searchStatus {
+                    case .idle:
+                        EmptyView()
+                    case .searching:
+                        ProgressView()
+                        
+                    case .found:
+                        if let searchResult = searchResult {
+                            VStack {
+                                Text(searchResult[0].name)
+                                    .font(.title)
+                                Button(action: {
+                                    firestoreManagerViewModel.joinHousehold(household: searchResult[0])
+                                    
+                                    joinSuccessful = true
+                                    presentationMode.wrappedValue.dismiss()
+                                }) {                               Text("Join")
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .disabled(!pinIsValid)
+                                .sheet(isPresented: $joinSuccessful) {
+                                    ContentView()
                                 }
                             }
-                        } else {
-                            alertMsg = "PIN is not valid"
-                            pinAlert = true
-                            searchResult = nil
-                            searchStatus = .idle
+                            .frame(width: 200, height: 150)
+                            .background(Color.gray)
+                            .cornerRadius(10)
+                            .padding()
+                            .font(.footnote)
                         }
-                    }) {
-                        Image(systemName: "magnifyingglass")
+                        
+                    case .notFound:
+                        Text("No household found")
+                            .font(.title)
+                            .frame(width: 200, height: 150)
+                            .background(Color.gray)
+                            .cornerRadius(10)
+                            .padding()
+                            .font(.footnote)
                     }
-
-                    .buttonStyle(.borderedProminent)
-                    Spacer(minLength: 40)
                 }
-
-                switch searchStatus {
-                case .idle:
-                    EmptyView()
-                case .searching:
-                    ProgressView()
-                case .found:
-                    if let searchResult = searchResult {
-                        VStack {
-                            Text(searchResult[0].name)
-                                .font(.title)
-                            Button(action: {
-                                firestoreManagerViewModel.joinHousehold(household: searchResult[0])
-                                joinSuccessful = true
-                                presentationMode.wrappedValue.dismiss()
-                            }) {
-                                Text("Join")
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .disabled(!pinIsValid)
-                            .sheet(isPresented: $joinSuccessful) {
-                                ContentView()
-                            }
-                        }
-                        .frame(width: 200, height: 150)
-                        .background(Color.gray)
-                        .cornerRadius(10)
-                        .padding()
-                        .font(.footnote)
-                    }
-                case .notFound:
-                    Text("No household found")
-                        .font(.title)
-                        .frame(width: 200, height: 150)
-                        .background(Color.gray)
-                        .cornerRadius(10)
-                        .padding()
-                        .font(.footnote)
+                .alert(isPresented: $pinAlert) {
+                    Alert(title: Text("Invalid PIN"), message: Text("Please enter a valid 6-digit PIN."), dismissButton: .default(Text("OK")))
                 }
-            }
-
-            .alert(isPresented: $pinAlert) {
-                Alert(title: Text("Test"), message: Text(alertMsg!), dismissButton: .default(Text("OK")))
             }
         }
     }
 }
+
+
 
 struct JoinHouseholdView_Previews: PreviewProvider {
     static var previews: some View {

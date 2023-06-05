@@ -51,7 +51,7 @@ class FirestoreManagerVM : ObservableObject {
         let householdRef = db.collection(householdCollRef).document()
         let docID = householdRef.documentID
         
-        let newMember = User(docId: currentTikUser.docId, name: currentTikUser.name, email: currentTikUser.email)
+        let newMember = User(docId: userId, name: currentTikUser.name, email: currentTikUser.email)
         let newHousehold = Household(name: name, pin: pin, members: [newMember])
         
         
@@ -160,6 +160,7 @@ class FirestoreManagerVM : ObservableObject {
                     if let docID = household.docId {
                         self.updateLatestHousehold(householdID: docID)
                         self.addTasksSnapshotListener()
+                        self.addShoppingItemsSnapshotListener()
                     }
                     
                 case .failure(let error) : print("Error getting household \(error)")
