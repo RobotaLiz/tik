@@ -10,10 +10,7 @@ import SwiftUI
 struct TaskListRowView: View {
     
     var task : Task
-    //var isDone : Bool
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
-    @State var mockMembers = ["Antonio", "Tobias", "Liza", "Miguel", "Håkan"]
-    @State var selectedMembers : [String] = []
     
     var body: some View {
         VStack {
@@ -35,9 +32,9 @@ struct TaskListRowView: View {
             HStack {
                 Menu {
                     ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
-                        if let name = member.name {
+                        if let name = member.name, let taskId = task.docId {
                             Button(name) {
-                                assignSelectedMemberToTask(memberName: name)
+                                firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: member)
                             }
                         }
 
@@ -47,12 +44,16 @@ struct TaskListRowView: View {
                         .font(.system(size: 26))
                 }
                 
-                ForEach(selectedMembers, id: \.self) { selectedMember in
-                    Text(selectedMember)
+                ForEach(task.assignedTo, id: \.self) { selectedMember in
+                    if let name = selectedMember.name {
+                        Text(name)
+                    }
                 }
                 
                 Button(action: {
-                    assignMyselfToTask()
+                    if let taskId = task.docId, let currentUser = firestoreManagerViewModel.currentTikUser {
+                        firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: currentUser)
+                    }
                 }) {
                     Image(systemName: "figure.wave.circle.fill")
                         .font(.system(size: 26))
@@ -63,27 +64,6 @@ struct TaskListRowView: View {
         }
         .cornerRadius(10)
     }
-    
-    
-    // TODO: Integration with firestore, integration in view model, removing mock data, add task listener, styling??
-    func assignMyselfToTask() {
-        if selectedMembers.contains("Current User") {
-            selectedMembers.removeAll { $0 == "Current User" }
-        } else {
-            selectedMembers.append("Current User")
-        }
-    }
-    
-    func assignSelectedMemberToTask(memberName: String) {
-        if selectedMembers.contains(memberName) {
-            selectedMembers.removeAll { $0 == memberName }
-        } else {
-            selectedMembers.append(memberName)
-        }
-    }
-
-    
-    
 
 }
 

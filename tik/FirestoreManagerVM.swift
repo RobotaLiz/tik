@@ -30,12 +30,63 @@ class FirestoreManagerVM : ObservableObject {
         addTasksSnapshotListener()
     }
     
+    /*
+     Assigns and removes a user from a task
+     */
     
-    func assignUserToTask(taskId: String) {
+    func toggleUserToTask(taskId: String, member: User) {
+        
         guard let currentHouseholdDocID = currentHousehold?.docId else {return}
-        let taskRef = db.collection(self.householdCollRef).document(currentHouseholdDocID).collection(self.taskCollRef)
         
+        let taskRef = db.collection(self.householdCollRef)
+                        .document(currentHouseholdDocID)
+                        .collection(self.taskCollRef)
+                        .document(taskId)
         
+        // Retrieves task document from firestore (with error handling)
+        taskRef.getDocument { (document, error) in
+            if let error = error {
+                print("Error fetching task document: \(error)")
+                return
+            }
+
+            guard let document = document, document.exists else {
+                print("Task document does not exist")
+                return
+            }
+
+            // Retrieves assignedTo
+            var assignedTo = document.data()?["assignedTo"] as? [[String: Any]] ?? []
+            
+            // Converting User object (named "member") to dictionary using the User properties
+            let memberDict: [String: Any] = [
+                "docId": member.docId ?? "",
+                "name": member.name ?? "",
+                "email": member.email ?? "",
+                "latestHousehold": member.latestHousehold ?? ""
+            ]
+            
+            // If assignedTo contains a matching dict (index is found), that dict is removed.
+            // Else, appends it to the array.
+            
+            if let index = assignedTo.firstIndex(where: { $0["docId"] as? String == member.docId }) {
+                assignedTo.remove(at: index)
+            } else {
+                assignedTo.append(memberDict)
+            }
+            
+            // Updates assignedTo in firestore doc
+            taskRef.updateData([
+                "assignedTo": assignedTo
+            ]) { error in
+                if let error = error {
+                    print("Error updating task document: \(error)")
+                } else {
+                    print("Users added to task")
+                }
+            }
+
+        }
     }
     
     /*
