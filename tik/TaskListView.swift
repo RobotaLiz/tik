@@ -59,7 +59,9 @@ struct TaskListView: View {
                         for _ in indexSet {
                             mockData.remove(atOffsets: indexSet)
                         }
-                    }
+                    }         
+                    .buttonStyle(.borderless)
+                    .padding([.trailing], 20)
                 }
                 .scrollContentBackground(.hidden)
                 .cornerRadius(10)

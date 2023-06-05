@@ -49,14 +49,15 @@ struct JoinHouseholdView: View {
                     HStack {
                         Spacer()
                         Text("Input PIN to search")
-                            .font(.custom("Roboto-Bold", size: 24))
-                            .foregroundColor(.appYellow)
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                            .bold()
+                            .foregroundColor(.white)
                             .padding()
                         
                         Spacer()
                     }
                     HStack {
-                        Spacer(minLength: 40)
+                        Spacer(minLength: 80)
                         TextField("PIN", text: $inputPin, onEditingChanged: { _ in
                             pinIsValid = inputPin.count == 6
                         })
@@ -90,7 +91,7 @@ struct JoinHouseholdView: View {
                             Image(systemName: "magnifyingglass")
                         }
                         .buttonStyle(CustomButtonStyle())
-                        Spacer(minLength: 40)
+                        Spacer(minLength: 60)
                     }
                     
                     switch searchStatus {

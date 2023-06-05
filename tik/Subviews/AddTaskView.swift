@@ -32,9 +32,9 @@ struct AddTaskView: View {
                 Circle()
                     .fill(Color.yellow)
                     .frame(width: 300, height: 300)
-                    .offset(y: -230)
-                
+                    .offset(y: -220)
                 VStack(alignment: .center) {
+                    Spacer().frame(height: 40)
                     TextField("What to do:", text: $title)
                         .font(.custom("Roboto-Bold", size: 22))
                         .multilineTextAlignment(.center)
@@ -51,11 +51,11 @@ struct AddTaskView: View {
                     
                     //                    Text("When to do it:")
                     VStack {
-                        //                        Spacer()
+                        Spacer().frame(height: 50)
                         Text("When to do it:")
-                            .font(.custom("Roboto-Bold", size: 22))
-                            .foregroundColor(.black)
-                        //                        Spacer()
+                            .font(.title)
+                            .bold()
+                        .foregroundColor(.black)
                         DatePicker("", selection: $setDate)
                             .datePickerStyle(WheelDatePickerStyle())
                             .labelsHidden()
