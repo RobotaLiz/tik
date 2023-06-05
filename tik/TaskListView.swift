@@ -56,10 +56,15 @@ struct TaskListView: View {
                         TaskListRowView(task: task)
                     }
                     .onDelete() { indexSet in
-                        for _ in indexSet {
-                            mockData.remove(atOffsets: indexSet)
+                        for index in indexSet {
+                            firestoreManagerViewModel.deleteTaskFromFirestore(index: index)
                         }
-                    }         
+                    }
+//                    .onDelete() { indexSet in
+//                        for _ in indexSet {
+//                            mockData.remove(atOffsets: indexSet)
+//                        }
+//                    }
                     .buttonStyle(.borderless)
                     .padding([.trailing], 20)
                 }
