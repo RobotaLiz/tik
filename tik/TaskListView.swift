@@ -23,7 +23,9 @@ struct TaskListView: View {
                            Task(title: "Buy ice cream", setDate: Date())]
     
     var body: some View {
+        
         NavigationView {
+            
             VStack {
                 if let uid = auth.currentUser?.uid {
                     
@@ -60,11 +62,11 @@ struct TaskListView: View {
                             firestoreManagerViewModel.deleteTaskFromFirestore(index: index)
                         }
                     }
-//                    .onDelete() { indexSet in
-//                        for _ in indexSet {
-//                            mockData.remove(atOffsets: indexSet)
-//                        }
-//                    }
+                    //                    .onDelete() { indexSet in
+                    //                        for _ in indexSet {
+                    //                            mockData.remove(atOffsets: indexSet)
+                    //                        }
+                    //                    }
                     .buttonStyle(.borderless)
                     .padding([.trailing], 20)
                 }
@@ -78,49 +80,59 @@ struct TaskListView: View {
                     addTaskIsPresented = true
                     print("!")
                 }) {
-                    Image(systemName: "plus.circle")
-                        .imageScale(.large)
-                }
-                .buttonStyle(.borderless)
-                .padding([.trailing], 20)
-            }
-            // AddTaskView is presented as a sheet.
-            .sheet(isPresented: $addTaskIsPresented) {
-                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
-            }
-            .navigationViewStyle(.stack)
-            .navigationBarTitle("Tasks")
-            .listStyle(.plain)
-            .navigationBarItems(trailing: {
-                Menu {
-                    Button(action: {
-                        firestoreManagerViewModel.checkOutHousehold()
-                        //authViewModel.loggedIn = false
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Label("Sign out from household", systemImage: "figure.walk.departure")
+                    VStack{
+                        
+                        Text("Add Task")
+                            .font(.custom("Roboto-Bold", size: 24))
+                            .foregroundColor(.black)
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.black)
                     }
-                    Button(action: {
-                        firestoreManagerViewModel.signOut()
-                        //authViewModel.loggedIn = false
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")
-                    }
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .imageScale(.large)
+                    .buttonStyle(.borderless)
+                    .padding([.trailing], 20)
                 }
-            }())
+                // AddTaskView is presented as a sheet.
+                .sheet(isPresented: $addTaskIsPresented) {
+                    AddTaskView(addTaskIsPresented: $addTaskIsPresented)
+                }
+                .navigationViewStyle(.stack)
+                .navigationBarTitle("Tasks")
+                .listStyle(.plain)
+                .navigationBarItems(trailing: {
+                    Menu {
+                        Button(action: {
+                            firestoreManagerViewModel.checkOutHousehold()
+                            //authViewModel.loggedIn = false
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Label("Sign out from household", systemImage: "figure.walk.departure")
+                        }
+                        Button(action: {
+                            firestoreManagerViewModel.signOut()
+                            //authViewModel.loggedIn = false
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")
+                        }
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+
+                    }
+                }())
+            }
         }
     }
-}
-
-struct TaskListView_Previews: PreviewProvider {
-    static var previews: some View {
-        let vm = FirestoreManagerVM()
-        TaskListView().environmentObject(vm)
+    
+    struct TaskListView_Previews: PreviewProvider {
+        static var previews: some View {
+            let vm = FirestoreManagerVM()
+            TaskListView().environmentObject(vm)
+        }
     }
+    
+    
 }
-
-

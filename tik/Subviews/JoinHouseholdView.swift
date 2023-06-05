@@ -31,6 +31,7 @@ struct JoinHouseholdView: View {
     
     var body: some View {
         NavigationView {
+            
             ZStack {
                 // Add your image here
                 Image("Two Phone Mockup Download App Instagram Post(10) copy")
@@ -38,6 +39,7 @@ struct JoinHouseholdView: View {
                     .aspectRatio(contentMode: .fill)
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    
                     VStack {
                         
                         Image("Two Phone tik2")
@@ -57,14 +59,17 @@ struct JoinHouseholdView: View {
                         Spacer()
                     }
                     HStack {
-                        Spacer(minLength: 80)
-                        TextField("PIN", text: $inputPin, onEditingChanged: { _ in
+                        Spacer(minLength: 90)
+                        TextField(" PIN", text: $inputPin, onEditingChanged: { _ in
                             pinIsValid = inputPin.count == 6
                         })
                         .font(.custom("Roboto-Bold", size: 24))
                         .foregroundColor(.white)
-                        .border(pinIsValid ? .black : .appYellow)
+                        .frame(height: 50) // <-- Specify your desired height here
+                        .background()
+                        .border(pinIsValid ? .white : .appYellow)
                         Spacer(minLength: 20)
+
                         
                         Button(action: {
                             pinIsValid = inputPin.count == 6 // Perform validation check

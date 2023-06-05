@@ -23,7 +23,14 @@ struct CreateHouseholdView: View {
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                Spacer().frame(height: 180)
+                Spacer()
+                VStack {
+                    Image("Two Phone Mockup Download App Instagram Post(14)")
+                        .resizable()
+                        .frame(width: 150, height: 150)
+                        .padding(.bottom)
+                }
+//                Spacer().frame(height: 180)
                 HStack {
                     Spacer(minLength: 50)
                     TextField("Enter name", text: $householdName)
