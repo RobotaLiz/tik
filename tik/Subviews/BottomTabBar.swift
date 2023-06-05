@@ -9,23 +9,26 @@ import SwiftUI
 
 struct BottomTabBar: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
-
+    @State var defaultTab : Int = 1
+    
     var body: some View {
-        
-        
-        TabView {
-            ShoppingListView()
-                .tabItem() {
-                    Image(systemName: "cart")
-                    Text("Shopping List")
-            
-                }
+        TabView(selection: $defaultTab) {
             TaskListView()
+            
                 .tabItem() {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
                 }
-            
+            ShoppingListView(firestoreVm: firestoreManagerViewModel)
+                .tabItem() {
+                    Image(systemName: "cart")
+                    Text("Shopping List")
+                }
+            CalendarView()
+                .tabItem() {
+                    Image(systemName: "calendar")
+                    Text("Calendar")
+                }
         }
         .accentColor(Color.black)
     }

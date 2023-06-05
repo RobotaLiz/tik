@@ -16,11 +16,6 @@ struct UserLogInView: View {
     @State private var email = ""
     @State private var password = ""
     @FocusState private var focusedField: Field?
-    // Tobbe added this to navigate to the list view on log in: (Also, see content view)
-    // loggedIn is changed in signIn function.
-    //@Binding var loggedIn: Bool
-    
-    // Antonio's view model stuff
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     
@@ -40,32 +35,35 @@ struct UserLogInView: View {
                     .padding(.bottom)
             }
             .edgesIgnoringSafeArea(.all)
-
-            // Form and Buttons in a semi-transparent box
+            
+            //Form and Buttons in a semi-transparent box
             VStack {
                 Form {
-                    TextField("Name", text: $name)
-                        .textFieldStyle(AuthTextFieldStyle())
-                        .keyboardType(.emailAddress)
-                        .focused($focusedField, equals: .usernameField)
-                        .textInputAutocapitalization(.never)
-                    
-                    TextField("Email:", text: $email)
-                        .textFieldStyle(AuthTextFieldStyle())
-                        .keyboardType(.emailAddress).font(.title3)
-                        .focused($focusedField, equals: .usernameField)
-                        .textInputAutocapitalization(.never)
-                    
-                    SecureField("Password:", text: $password)
-                        .textFieldStyle(AuthTextFieldStyle())
-                        .focused($focusedField, equals: .passwordField)
+                    VStack{
+                        TextField("Name", text: $name)
+                            .textFieldStyle(AuthTextFieldStyle())
+                        
+                            .focused($focusedField, equals: .usernameField)
+                            .textInputAutocapitalization(.never)
+                        
+                        TextField("Email:", text: $email)
+                            .textFieldStyle(AuthTextFieldStyle())
+                            .keyboardType(.emailAddress).font(.title3)
+                            .focused($focusedField, equals: .emailField)
+                            .textInputAutocapitalization(.never)
+                        
+                        SecureField("Password:", text: $password)
+                            .textFieldStyle(AuthTextFieldStyle())
+                            .focused($focusedField, equals: .passwordField)
+                    }
                 }
                 .padding()
-
+                
                 HStack {
                     Button("Add account", action: {
                         firestoreManagerViewModel.addAccount(name: name, email: email, password: password)
-                        
+
+                            
                     }
                            
                     )
@@ -73,10 +71,10 @@ struct UserLogInView: View {
                     .foregroundColor(.appBlack)
                     Image(systemName: "person.fill.badge.plus")
                         .foregroundColor(.appBlack)
-                        
+                    
                 }
                 .padding(.top)
-
+                
                 Button("Sign In") {
                     firestoreManagerViewModel.signIn(email: email, password: password)
                 }
@@ -88,10 +86,10 @@ struct UserLogInView: View {
                 .padding(.top, 20)
             }
             .frame(width: 300, height: 400)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            .padding()
+           
             
+            .padding()
+            .toastView(toast: $firestoreManagerViewModel.toast)
         }
     }
 }

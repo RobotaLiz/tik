@@ -43,7 +43,7 @@ struct CreateHouseholdView: View {
                     Color(.white)
                         .cornerRadius(40)
                     Text(householdPin)
-                        
+                    
                     
                 }
                 .frame(width: 200, height: 70)
@@ -51,8 +51,6 @@ struct CreateHouseholdView: View {
                 Button(action: {
                     if householdName != "" && householdPin != "" {
                         firestoreManagerViewModel.addHousehold(name: householdName, pin: householdPin)
-                        //householdViewModel.currentUser?.isMember = true
-                        //authViewModel.makeCurrentUserMember()
                         presentationMode.wrappedValue.dismiss()
                     }
                     
@@ -71,15 +69,12 @@ struct CreateHouseholdView: View {
                 }
                 
             }
-            //        .onAppear {
-            //            authViewModel.householdFirestoreListener()
-            //        }
         }
     }
-    
-    struct CreateHouseholdView_Previews: PreviewProvider {
-        static var previews: some View {
-            CreateHouseholdView()
-        }
+}
+
+struct CreateHouseholdView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateHouseholdView()
     }
 }

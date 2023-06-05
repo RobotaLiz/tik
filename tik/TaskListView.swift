@@ -11,26 +11,11 @@ import FirebaseAuth
 struct TaskListView: View {
     // Tobbe's dirty fingers are everywhere...
     @State var addTaskIsPresented = false
-    //@ObservedObject var authViewModel : FirestoreManagerVM
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
-    // Antonio's side bar stuff - Work in progress
-    @State var isSidebarOpen = false
-    @State var selectedTag: String? = nil
-    @State var selectedTab : Int? = 0
     
     let auth = Auth.auth()
     
     @Environment(\.presentationMode) var presentationMode
-    
-    var selectedTagBinding: Binding<String?> {
-        Binding<String?>(
-            get: { selectedTag },
-            set: { tag in
-                selectedTag = tag
-                isSidebarOpen = tag != nil
-            }
-        )
-    }
     
     @State var mockData = [Task(title: "Clean kitchen floor", setDate: Date()),
                            Task(title: "Dust living room", setDate: Date()),
@@ -39,116 +24,98 @@ struct TaskListView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                // Add your image here
-                Image("Two Phone Mockup Download App Instagram Post(10)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    if let uid = auth.currentUser?.uid {
-                        
-                        Text("Firestore UID: \(uid)")
-                    } else {
-                        Text("UID: N/A")
-                    }
+            VStack {
+                if let uid = auth.currentUser?.uid {
                     
-                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
-                        HStack {
-                            if let email = currentTikUser.email {
-                                Text("Tik user: \(email)")
-                            }
-                            if let docID = currentTikUser.docId {
-                                Text(("ID: \(docID)"))
-                            }
+                    Text("Firestore UID: \(uid)")
+                } else {
+                    Text("UID: N/A")
+                }
+                
+                if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+                    HStack {
+                        if let email = currentTikUser.email {
+                            Text("Tik user: \(email)")
+                        }
+                        if let docID = currentTikUser.docId {
+                            Text(("ID: \(docID)"))
                         }
                     }
-                    
-                    if let currentHousehold = firestoreManagerViewModel.currentHousehold {
-                        HStack {
-                            Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
-                            if let docID = currentHousehold.docId {
-                                Text("ID: \(docID)")
-                            }
+                }
+                
+                if let currentHousehold = firestoreManagerViewModel.currentHousehold {
+                    HStack {
+                        Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
+                        if let docID = currentHousehold.docId {
+                            Text("ID: \(docID)")
                         }
                     }
-                    List {
-                        ForEach(firestoreManagerViewModel.tasks) { task in
-                            TaskListRowView(task: task, isDone: true)
-                        }
-                        .onDelete() { indexSet in
-                            for _ in indexSet {
-                                mockData.remove(atOffsets: indexSet)
-                            }
-                        }
+                }
+                List {
+                    ForEach(firestoreManagerViewModel.tasks) { task in
+                        TaskListRowView(task: task)
                     }
-                    .scrollContentBackground(.hidden)
-                    .cornerRadius(10)
-                    
-                    // Navigation to AddTaskView added.
-                    Button(action: {
-                        addTaskIsPresented = true
-                        print("!")
-                    })
-                    {
-                        VStack {
-                            Text("Add Task")
-                                .font(.custom("Roboto-Bold", size: 24))
-                                .foregroundColor(.black)
-                                
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.black)
+                    .onDelete() { indexSet in
+                        for _ in indexSet {
+                            mockData.remove(atOffsets: indexSet)
                         }
-                    }
-                    
+                    }         
                     .buttonStyle(.borderless)
                     .padding([.trailing], 20)
                 }
-                // AddTaskView is presented as a sheet.
-                .sheet(isPresented: $addTaskIsPresented) {
-                    AddTaskView(addTaskIsPresented: $addTaskIsPresented)
+                .scrollContentBackground(.hidden)
+                .cornerRadius(10)
+                
+                // Navigation to AddTaskView added.
+                Button(action: {
+                    
+                    
+                    addTaskIsPresented = true
+                    print("!")
+                }) {
+                    Image(systemName: "plus.circle")
+                        .imageScale(.large)
                 }
-                .navigationViewStyle(.stack)
-                .navigationBarTitle("Tasks")
-                .listStyle(.plain)
-                .onAppear {
-                    if !isSidebarOpen {
-                        isSidebarOpen = false
-                    }
-                }
-                .navigationBarItems(trailing: {
-                    Menu {
-                        Button(action: {
-                            firestoreManagerViewModel.checkOutHousehold()
-                            //authViewModel.loggedIn = false
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Label("Sign out from household", systemImage: "figure.walk.departure")
-                        }
-                        Button(action: {
-                            firestoreManagerViewModel.signOut()
-                            //authViewModel.loggedIn = false
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")
-                        }
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-                            .imageScale(.large)
-                            .accentColor(Color.black)
-                    }
-                }())
+                .buttonStyle(.borderless)
+                .padding([.trailing], 20)
             }
-        }
-    }
-    
-    struct TaskListView_Previews: PreviewProvider {
-        static var previews: some View {
-            let vm = FirestoreManagerVM()
-            TaskListView().environmentObject(vm)
+            // AddTaskView is presented as a sheet.
+            .sheet(isPresented: $addTaskIsPresented) {
+                AddTaskView(addTaskIsPresented: $addTaskIsPresented)
+            }
+            .navigationViewStyle(.stack)
+            .navigationBarTitle("Tasks")
+            .listStyle(.plain)
+            .navigationBarItems(trailing: {
+                Menu {
+                    Button(action: {
+                        firestoreManagerViewModel.checkOutHousehold()
+                        //authViewModel.loggedIn = false
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Label("Sign out from household", systemImage: "figure.walk.departure")
+                    }
+                    Button(action: {
+                        firestoreManagerViewModel.signOut()
+                        //authViewModel.loggedIn = false
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")
+                    }
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .imageScale(.large)
+                }
+            }())
         }
     }
 }
+
+struct TaskListView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = FirestoreManagerVM()
+        TaskListView().environmentObject(vm)
+    }
+}
+
 
