@@ -15,7 +15,6 @@ struct BottomTabBar: View {
         
         TabView(selection: $defaultTab) {
             TaskListView()
-            
                 .tabItem() {
                     Image(systemName: "list.clipboard")
                     Text("Tasks")
@@ -29,6 +28,11 @@ struct BottomTabBar: View {
                 .tabItem() {
                     Image(systemName: "calendar")
                     Text("Calendar")
+                }
+            UserManagementView()
+                .tabItem() {
+                    Image(systemName: "person")
+                    Text("User Management")
                 }
         }
         .accentColor(Color.black)

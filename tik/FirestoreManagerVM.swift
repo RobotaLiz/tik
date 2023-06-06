@@ -25,9 +25,39 @@ class FirestoreManagerVM : ObservableObject {
     @Published var currentHousehold: Household?
     @Published var tasks: [Task] = []
     @Published var shoppingItems: [ShoppingItemModel] = []
+    @Published var isCurrentUserAdmin : Bool?
     
     init() {
         addTasksSnapshotListener()
+    }
+    
+    func adminCheck() {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        guard let currentTikUser = currentTikUser else { return }
+        guard let userId = currentTikUser.docId else {return}
+        
+        // 1. Gets admin from household document on firestore
+        let householdRef = db.collection(self.householdCollRef).document(currentHouseholdDocID)
+        
+        householdRef.getDocument { (document, error) in
+            if let error = error {
+                print("Error fetching task document: \(error)")
+                return
+            }
+
+            guard let document = document, document.exists else {
+                print("Task document does not exist")
+                return
+            }
+            
+            let adminDocId = document.data()?["admin"] as? String ?? ""
+            
+            if userId == adminDocId {
+                self.isCurrentUserAdmin = true
+            }
+            
+        }
+  
     }
     
     /*
