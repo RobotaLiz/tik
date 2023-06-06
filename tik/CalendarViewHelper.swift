@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CalendarViewHelper {
     //TODO: add dates for last and next month (and move functionality out of this funciton
@@ -97,4 +98,12 @@ struct CalendarViewHelper {
         
         return calendar.component(.weekday, from: firstDay)
     }
+}
+
+//
+// Color extensions
+//
+extension Color {
+    static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
+    static let oWhite = Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)
 }

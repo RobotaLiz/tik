@@ -75,11 +75,12 @@ class  CalendarViewModel: ObservableObject {
         components.minute = 0
         components.second = 0
         
-        let startingDate = Calendar.current.date(from: components)
-        
-        if let startingDate {
-            dateToReturn = tasks.sorted {$0.setDate < $1.setDate}
-                .first {$0.setDate > startingDate}?.setDate ?? nil
+        //let startingDate = Calendar.current.date(from: components)
+
+        if let startingDate  = Calendar.current.date(from: components) {
+            dateToReturn = allTasks.sorted {$0.setDate < $1.setDate}
+                .first {Calendar.current.isDateInToday($0.setDate) || $0.setDate > startingDate}?.setDate
+                //.first {$0.setDate > startingDate}?.setDate
         }
         
         return dateToReturn

@@ -4,9 +4,11 @@
 //
 //  Created by Hakan Johansson on 2023-06-06.
 //
+//
 
 import Foundation
 import UserNotifications
+import SwiftUI
 
 struct UserNotifications {
     let unCenter = UNUserNotificationCenter.current()
@@ -22,11 +24,11 @@ struct UserNotifications {
     func addSingleAlert(task: Task) {
         unCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional {
-                setAlert(task: task)
+                setAlert(task: task, timeToAdd: -15)
             } else {
                 unCenter.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
-                        setAlert(task: task)
+                        setAlert(task: task, timeToAdd: -15)
                     } else {
                         
                     }
@@ -35,13 +37,13 @@ struct UserNotifications {
         }
     }
     
-    func setAlert(task: Task) {
+    func setAlert(task: Task, timeToAdd: Int) {
         let content = UNMutableNotificationContent()
         content.title = task.title
         content.subtitle = "15 min left"
         content.sound = UNNotificationSound.default
         
-        if let date = Calendar.current.date(byAdding: .minute, value: -15, to: task.setDate) {
+        if let date = Calendar.current.date(byAdding: .minute, value: timeToAdd, to: task.setDate) {
             
             var dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
@@ -52,22 +54,25 @@ struct UserNotifications {
         }
     }
     
-    func setAllAlert() {
-        let tasks = [Task]()
-        
+    func setAllAlert(user: User, tasks: [Task]) {
         for task in tasks {
-            setAlert(task: task)
+            task.assignedTo.forEach {
+                if $0.email == user.email {
+                    setAlert(task: task, timeToAdd: -15)
+                }
+            }
         }
+        
     }
     
-    func setNotificationsForSelf() {
+    func setNotificationsForSelf(user: User, tasks: [Task]) {
         unCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional {
-                setAllAlert()
+                setAllAlert(user: user, tasks: tasks)
             } else {
                 unCenter.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
-                        setAllAlert()
+                        setAllAlert(user: user, tasks: tasks)
                     } else {
                         
                     }
