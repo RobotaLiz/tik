@@ -329,6 +329,10 @@ class FirestoreManagerVM : ObservableObject {
     
     
     func addAccount(name: String, email: String, password: String) {
+        if password.count < 6 {
+            self.toast = Toast(style: .error, message: "Password must contain at least six characters")
+            return
+        }
         auth.createUser(withEmail: email, password: password) { (result, error) in
             guard let user = result?.user, error == nil else {
                 self.toast = Toast(style: .error, message: "could not create account")
