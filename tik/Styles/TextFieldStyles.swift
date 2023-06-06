@@ -13,15 +13,8 @@ struct AuthTextFieldStyle: TextFieldStyle {
         configuration
             .font(.custom("Roboto-Regular", size: 16))
             .foregroundColor(.black)
-            .overlay(RoundedRectangle(cornerRadius: 20)
-                .frame(height: 2)
-            .padding(.top, 35)
-            )
-            .foregroundColor(.yellow)
-            .padding(10)
-        
-//            .shadow(color: .purple, radius: 10)
-//            .font(.title3)
+            .padding(20)
+            .background(RoundedRectangle(cornerRadius: 20).stroke(Color.yellow, lineWidth: 2))
     }
 }
 
