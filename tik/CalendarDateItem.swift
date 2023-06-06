@@ -22,14 +22,10 @@ struct CalendarDateItem: View {
         let day = calendar.dateComponents([.day], from: date).day ?? 0
         
         ZStack {
-            if day < 10 {
                 circle
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: -5, y: -5)
+                    .shadow(color: Color.white.opacity(0.7), radius: 5, x: 10, y: 10)
                 Text("\(day)")
-            }
-            else {
-                circle
-                Text("\(day)")
-            }
         }
         .onTapGesture {
             pressed()
@@ -84,7 +80,7 @@ struct CalendarDateItem: View {
             }
             else if calendarVM.dateIsInTaskList(date: date) {
                 calendarVM.toggleTask(date: date)
-
+                
             }
         }
         setState()
@@ -105,3 +101,5 @@ struct CalendarDateItem: View {
         }
     }
 }
+
+

@@ -33,10 +33,10 @@ struct CalendarCustomView: View {
                         .onAppear {
                             //Scroll to closet date in the future
                             /*var index = 0
-                            if let date = calendarVM.getClosestDate() {
-                                index = calendarVM.getAllDates().firstIndex(of: date) ?? 0
-                            }
-                            value.scrollTo(index, anchor: .center)*/
+                             if let date = calendarVM.getClosestDate() {
+                             index = calendarVM.getAllDates().firstIndex(of: date) ?? 0
+                             }
+                             value.scrollTo(index, anchor: .center)*/
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
@@ -108,7 +108,7 @@ struct CalendarCustomView: View {
                 }
             }
         }
-
+        
         for day in daysInMonth {
             weekArray.append(day)
             if weekArray.count == 7 {
@@ -116,7 +116,7 @@ struct CalendarCustomView: View {
                 weekArray = [Date]()
             }
         }
-                
+        
         if let nextMonth = calendar.date(byAdding: DateComponents(month: 1), to: calendarVM.currentMonth) {
             let daysInNextMonth = rangeOfDaysMonth(date: nextMonth)
             if (7-weekArray.count) > 0 {
@@ -137,10 +137,10 @@ struct CalendarCustomView: View {
         //so works in sweden
         let now = date
         let calendar = Calendar.current
-
+        
         guard let dayRange = calendar.range(of: .day, in: .month, for: now) else { return [] }
         var components = calendar.dateComponents([.day, .month, .year, .era], from: now)
-
+        
         let componentsForWholeMonth = dayRange.compactMap { day -> DateComponents? in
             components.day = day
             components.hour = 12
@@ -178,28 +178,36 @@ struct CalendarCustomView: View {
         return calendar.component(.weekday, from: firstDay)
     }
 }
-    
+
 struct dateItem: View {
     let date: Date
     let calendarVM: CalendarViewModel
-    @State var color = Color.yellow
+    @State var selected = false
     
     var body: some View {
-        VStack {
+        ZStack {
+            if selected {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(.yellow)
+            }
+            else {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(.yellow)
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 4, y: 4)
+                    .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
+            }
             Text(date.formatted(.dateTime.day().month()))
-                .padding(.horizontal)
-                .background(color)
-                .cornerRadius(10)
-                .onTapGesture {
-                    calendarVM.toggleTask(date: date)
-                }
+                .padding()//.horizontal)
+        }
+        .onTapGesture {
+            calendarVM.toggleTask(date: date)
         }
         .onReceive(calendarVM.$dateList) { month in
             if calendarVM.dateIsSelected(date: date) {
-                color = Color.blue
+                selected = true
             }
             else {
-                color = Color.yellow
+                selected = false
             }
         }
     }
