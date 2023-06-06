@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C177A812A2F56170075F943 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C177A802A2F56170075F943 /* UserNotifications.swift */; };
+		6C177A832A2F7F470075F943 /* CalendarViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C177A822A2F7F470075F943 /* CalendarViewHelper.swift */; };
 		6C70E7AB2A29E1870060A66C /* CalendarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */; };
 		6C70E7AC2A29E1870060A66C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A72A29E1860060A66C /* CalendarView.swift */; };
 		6C70E7AD2A29E1870060A66C /* CalendarDateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */; };
@@ -108,6 +109,7 @@
 
 /* Begin PBXFileReference section */
 		6C177A802A2F56170075F943 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		6C177A822A2F7F470075F943 /* CalendarViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewHelper.swift; sourceTree = "<group>"; };
 		6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCustomView.swift; sourceTree = "<group>"; };
 		6C70E7A72A29E1860060A66C /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDateItem.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				9C0DE5042A18DF6200B9C1F5 /* AddTaskVM.swift */,
 				A9CA3E432A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift */,
 				A92DB33A2A2E745100C7A99B /* UserManagementView.swift */,
+				6C177A822A2F7F470075F943 /* CalendarViewHelper.swift */,
 			);
 			path = tik;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				A9CA3E462A16944800DE7FE9 /* HouseholdSelectionView.swift in Sources */,
 				A992936A2A1C4F0C000C3892 /* AuthViewModel.swift in Sources */,
 				A9CA3E442A15C89D00DE7FE9 /* JoinHouseholdViewModel.swift in Sources */,
+				6C177A832A2F7F470075F943 /* CalendarViewHelper.swift in Sources */,
 				B30350392A29FAAF004C470A /* Toast.swift in Sources */,
 				A9CA3E3F2A12F43800DE7FE9 /* TaskListView.swift in Sources */,
 				9C0DE5032A18DC9000B9C1F5 /* AddTaskView.swift in Sources */,
