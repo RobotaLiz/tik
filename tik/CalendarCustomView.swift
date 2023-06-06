@@ -188,11 +188,11 @@ struct dateItem: View {
         ZStack {
             if selected {
                 RoundedRectangle(cornerRadius: 2)
-                    .fill(.yellow)
+                    .fill(Color.offWhite)
             }
             else {
                 RoundedRectangle(cornerRadius: 2)
-                    .fill(.yellow)
+                    .fill(Color.oWhite)
                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 4, y: 4)
                     .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
             }
@@ -212,4 +212,9 @@ struct dateItem: View {
         }
     }
     
+}
+
+extension Color {
+    static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
+    static let oWhite = Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)
 }
