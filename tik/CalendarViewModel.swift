@@ -15,18 +15,17 @@ import Foundation
 import Firebase
 
 class  CalendarViewModel: ObservableObject {
-    // @Published var household: Household
     @Published var tasks = [Task]()
     @Published var allTasks = [Task]()
     @Published var currentMonth = Date.now
     
-    var dateList = [Date]() //TODO: sorted set?
+    @Published var dateList = [Date]() //TODO: sorted set?
     
     let db = Firestore.firestore()
     let auth = Auth.auth()
     
     init() {
-        //getAllTasks()
+        
     }
     
     func toggleTask(date: Date) {
@@ -59,24 +58,6 @@ class  CalendarViewModel: ObservableObject {
             tasks.append(contentsOf: getTasks(fromDate: dates, toDate: dates))
             print(tasks)
         }
-    }
-    
-    func getAllTasks() {
-        //let id = "n1roMmDMZXNnuk7juPAtajkM0hu2"
-        let id = "VswPjuNyPGe6vEAnOhPBPhkgxhv2"
-        
-        db.collection("users").document(id).collection("tasks")
-            .getDocuments() { (snapshot, error) in
-                if let error {
-                    
-                }
-                else if let snapshot {
-                    self.allTasks = snapshot.documents.compactMap {
-                        try? $0.data(as: Task.self)
-                    }
-                }
-                
-            }
     }
     
     func getClosestDate() -> Date? {
@@ -143,13 +124,20 @@ class  CalendarViewModel: ObservableObject {
     }
     
     func getAllDates() -> [Date] {
-        var datesToReturn = [Date]()
+        let calendar = Calendar.current
+        var setOfDates = Set<Date>()
         
-        datesToReturn = allTasks.sorted {$0.setDate > $1.setDate}
-            .compactMap{
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: $0.setDate)
-                return Calendar.current.date(from: components) ?? $0.setDate
+        let datesToReturn = allTasks.filter { task in
+            let components = calendar.dateComponents([.year, .month, .day], from: task.setDate)
+            guard let date = calendar.date(from: components) else {
+                return false
             }
+            let isUnique = setOfDates.insert(date).inserted
+            return isUnique
+            
+        }
+            .compactMap { $0.setDate }
+            .sorted {$0 < $1}
         
         return datesToReturn
     }

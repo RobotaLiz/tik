@@ -74,26 +74,20 @@ struct CalendarDateItem: View {
             print(date)
             print(calendarVM.currentMonth)
             if calendar.isDate(date, equalTo: nextMonth, toGranularity: .month) {
-                itemState = .nextMonth
                 calendarVM.currentMonth = nextMonth
             }
             else if calendar.isDate(date, equalTo: lastMonth, toGranularity: .month) {
-                itemState = .lastMonth
                 calendarVM.currentMonth = lastMonth
             }
             else if calendarVM.dateIsSelected(date: date) {
-                itemState = .selected
                 calendarVM.toggleTask(date: date)
             }
             else if calendarVM.dateIsInTaskList(date: date) {
-                itemState = .available
                 calendarVM.toggleTask(date: date)
 
             }
-            else {
-                itemState = .notAvailable
-            }
         }
+        setState()
     }
     
     var circle: some View {

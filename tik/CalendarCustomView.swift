@@ -22,12 +22,9 @@ struct CalendarCustomView: View {
                     Text(calendarVM.currentMonth.formatted(.dateTime.year()))
                     ScrollViewReader { value in
                         ScrollView(.horizontal) {
-                            LazyHStack {
+                            HStack {
                                 ForEach(calendarVM.getAllDates(), id: \.self) { date in
                                     dateItem(date: date, calendarVM: calendarVM)
-                                        .padding(.horizontal)
-                                        .background(.yellow)
-                                        .cornerRadius(10)
                                 }
                             }
                             
@@ -35,11 +32,11 @@ struct CalendarCustomView: View {
                         }
                         .onAppear {
                             //Scroll to closet date in the future
-                            var index = 0
+                            /*var index = 0
                             if let date = calendarVM.getClosestDate() {
                                 index = calendarVM.getAllDates().firstIndex(of: date) ?? 0
                             }
-                            value.scrollTo(index, anchor: .center)
+                            value.scrollTo(index, anchor: .center)*/
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
@@ -77,7 +74,7 @@ struct CalendarCustomView: View {
             }
             List {
                 ForEach(calendarVM.tasks) { task in
-                    Text("\(task.title)")
+                    TaskListRowView(task: task)
                 }
             }
             .onAppear {
@@ -185,13 +182,26 @@ struct CalendarCustomView: View {
 struct dateItem: View {
     let date: Date
     let calendarVM: CalendarViewModel
+    @State var color = Color.yellow
     
     var body: some View {
         VStack {
             Text(date.formatted(.dateTime.day().month()))
+                .padding(.horizontal)
+                .background(color)
+                .cornerRadius(10)
                 .onTapGesture {
                     calendarVM.toggleTask(date: date)
                 }
         }
+        .onReceive(calendarVM.$dateList) { month in
+            if calendarVM.dateIsSelected(date: date) {
+                color = Color.blue
+            }
+            else {
+                color = Color.yellow
+            }
+        }
     }
+    
 }
