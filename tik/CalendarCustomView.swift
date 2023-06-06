@@ -19,7 +19,7 @@ struct CalendarCustomView: View {
         VStack {
             if toggle {
                 VStack {
-                    Text(calendarVM.currentMonth.formatted(.dateTime.year()))
+                    //Text(calendarVM.currentMonth.formatted(.dateTime.year()))
                     ScrollViewReader { value in
                         ScrollView(.horizontal) {
                             HStack {
@@ -32,11 +32,11 @@ struct CalendarCustomView: View {
                         }
                         .onAppear {
                             //Scroll to closet date in the future
-                            /*var index = 0
+                            var index = 0
                              if let date = calendarVM.getClosestDate() {
                              index = calendarVM.getAllDates().firstIndex(of: date) ?? 0
                              }
-                             value.scrollTo(index, anchor: .center)*/
+                             value.scrollTo(index, anchor: .center)
                         }
                     }
                     .fixedSize(horizontal: false, vertical: true)
@@ -67,11 +67,13 @@ struct CalendarCustomView: View {
                     }
                 }
             }
-            Button("v") {
+            Button() {
                 withAnimation {
                     toggle.toggle()
                 }
-            }
+            } label: {
+                Image(systemName: toggle ? "arrow.down.square" : "arrow.up.square")
+        }
             List {
                 ForEach(calendarVM.tasks) { task in
                     TaskListRowView(task: task)
@@ -211,7 +213,6 @@ struct dateItem: View {
             }
         }
     }
-    
 }
 
 extension Color {
