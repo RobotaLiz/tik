@@ -79,10 +79,12 @@ struct AddTaskView: View {
                     })
                     .buttonStyle(CustomButtonStyle())
                     .navigationBarItems(trailing: Button {
+                        addTaskIsPresented = false
                     } label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.black)
                     })
+                    
                 }
             }
 //            VStack {
