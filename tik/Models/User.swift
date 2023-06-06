@@ -18,5 +18,6 @@ struct User : Codable, Hashable {
     
     // Tobbe added this:
     var latestHousehold : String?
+    //var id = UUID()
   
 }

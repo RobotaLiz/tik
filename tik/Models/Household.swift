@@ -17,7 +17,7 @@ struct Household : Codable {
     // Changed this! (from [User])
     var members : [User]
     //var tasks : [Task] = [] //Added as sub collection instead
-    var admin : User? // Only one user can be admin right now (more admins in the future?)
+    var admin : String? // String representing admin's user id
     
 //    init(name: String, pinNum: String) {
 //        self.name = name
