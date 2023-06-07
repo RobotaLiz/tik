@@ -78,6 +78,7 @@ struct CalendarView: View {
             }
             .onReceive(firestoreManagerVM.$tasks) { tasks in
                 calendarVM.allTasks = firestoreManagerVM.tasks
+                calendarVM.upateTaskList()
             }
         }
     }

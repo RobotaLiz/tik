@@ -63,6 +63,7 @@ class  CalendarViewModel: ObservableObject {
     func getClosestDate() -> Date? {
         var dateToReturn: Date?
         
+        //remove
         var components = Calendar.current.dateComponents(
             [
                 .year,
@@ -74,18 +75,17 @@ class  CalendarViewModel: ObservableObject {
         components.hour = 0
         components.minute = 0
         components.second = 0
-        
-        //let startingDate = Calendar.current.date(from: components)
 
+        //use getAlldates
         if let startingDate  = Calendar.current.date(from: components) {
             dateToReturn = allTasks.sorted {$0.setDate < $1.setDate}
                 .first {Calendar.current.isDateInToday($0.setDate) || $0.setDate > startingDate}?.setDate
-                //.first {$0.setDate > startingDate}?.setDate
         }
         
         return dateToReturn
     }
     
+    //remove components
     func getTasks(fromDate: Date, toDate: Date) -> [Task] {
         var tasksToReturn = [Task]()
         
@@ -117,6 +117,7 @@ class  CalendarViewModel: ObservableObject {
         
         let endingDate = Calendar.current.date(from: components)
         
+        //rewrite with isintoday
         if let startingDate,
            let endingDate {
             tasksToReturn = allTasks.filter {$0.setDate > startingDate && $0.setDate < endingDate}

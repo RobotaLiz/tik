@@ -41,7 +41,7 @@ struct CalendarViewHelper {
         
         if let nextMonth = calendar.date(byAdding: .month, value: 1, to: month) {
             let daysInNextMonth = rangeOfDaysMonth(date: nextMonth)
-            if (7-weekArray.count) > 0 {
+            if (7-weekArray.count) > 0 { //Fix
                 for dateNumber in 0...(6-weekArray.count) {
                     weekArray.append(daysInNextMonth[dateNumber])
                 }
@@ -61,17 +61,24 @@ struct CalendarViewHelper {
         let calendar = Calendar.current
         
         guard let dayRange = calendar.range(of: .day, in: .month, for: now) else { return [] }
-        var components = calendar.dateComponents([.day, .month, .year, .era], from: now)
+        var components = calendar.dateComponents([.day, .month, .year], from: now)
         
-        let componentsForWholeMonth = dayRange.compactMap { day -> DateComponents? in
+        /*let componentsForWholeMonth = dayRange.compactMap { day -> DateComponents? in
             components.day = day
             components.hour = 12
             return calendar.date(from: components).flatMap {
                 calendar.dateComponents([.weekday, .day, .month, .year, .hour], from: $0)
             }
-        }
+        }*/
         
-        return componentsForWholeMonth.compactMap {calendar.date(from: $0)}
+        let datesForWholeMonth = dayRange.compactMap { day -> Date? in
+            components.day = day
+            components.hour = 12
+            return calendar.date(from: components)
+        }.compactMap{$0}
+        
+        return datesForWholeMonth
+        //return componentsForWholeMonth.compactMap {calendar.date(from: $0)}
     }
     
     //Get the number of the the weekday a ceratin month start on

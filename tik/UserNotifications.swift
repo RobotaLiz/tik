@@ -65,6 +65,10 @@ struct UserNotifications {
         
     }
     
+    func isNotificationSet(task: Task) {
+        
+    }
+    
     func setNotificationsForSelf(user: User, tasks: [Task]) {
         unCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional {
