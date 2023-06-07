@@ -27,6 +27,8 @@ struct TaskListView: View {
         NavigationView {
             
             VStack {
+                
+                /*
                 if let uid = auth.currentUser?.uid {
                     
                     Text("Firestore UID: \(uid)")
@@ -53,6 +55,7 @@ struct TaskListView: View {
                         }
                     }
                 }
+                */
                 List {
                     ForEach(firestoreManagerViewModel.tasks) { task in
                         TaskListRowView(task: task)
@@ -62,11 +65,6 @@ struct TaskListView: View {
                             firestoreManagerViewModel.deleteTaskFromFirestore(index: index)
                         }
                     }
-                    //                    .onDelete() { indexSet in
-                    //                        for _ in indexSet {
-                    //                            mockData.remove(atOffsets: indexSet)
-                    //                        }
-                    //                    }
                     .buttonStyle(.borderless)
                     .padding([.trailing], 20)
                 }
@@ -104,14 +102,12 @@ struct TaskListView: View {
                     Menu {
                         Button(action: {
                             firestoreManagerViewModel.checkOutHousehold()
-                            //authViewModel.loggedIn = false
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Label("Sign out from household", systemImage: "figure.walk.departure")
                         }
                         Button(action: {
                             firestoreManagerViewModel.signOut()
-                            //authViewModel.loggedIn = false
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Label("Log out", systemImage: "person.crop.circle.fill.badge.xmark")

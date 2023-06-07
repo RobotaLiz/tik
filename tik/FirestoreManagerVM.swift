@@ -24,11 +24,79 @@ class FirestoreManagerVM : ObservableObject {
     @Published var currentTikUser: User?
     @Published var currentHousehold: Household?
     @Published var tasks: [Task] = []
+    @Published var members: [User] = []
     @Published var shoppingItems: [ShoppingItemModel] = []
     @Published var isCurrentUserAdmin : Bool?
     
     init() {
         addTasksSnapshotListener()
+    }
+    
+    func memberListener() {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        let householdRef = db.collection(self.householdCollRef).document(currentHouseholdDocID)
+        let membersRef = householdRef.collection("members")
+        
+        membersRef.addSnapshotListener() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                self.members.removeAll()
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    if let member = try? document.data(as: User.self) {
+                        self.members.append(member)
+                    }
+                }
+                
+            }
+        }
+        
+        
+    }
+    
+    func makeAdmin(userDocId: String) {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        let householdRef = db.collection(self.householdCollRef).document(currentHouseholdDocID)
+        
+        householdRef.updateData(["admin": userDocId]) { error in
+            if let error = error {
+                print("Error updating admin field: \(error.localizedDescription)")
+            } else {
+                print("Member with docId \(userDocId) is now an admin")
+                self.isCurrentUserAdmin = false
+            }
+        }
+
+    }
+    
+    func kick(userDocId: String) {
+        guard let currentHouseholdDocID = currentHousehold?.docId else {return}
+        let householdRef = db.collection(self.householdCollRef).document(currentHouseholdDocID)
+        let memberRef = householdRef.collection("members").document(userDocId)
+        
+        print("Kicked member's docId: \(userDocId)")
+        
+        memberRef.delete { error in
+            if let error = error {
+                print("Error kicking member: \(error.localizedDescription)")
+            } else {
+                print("Member kicked successfully")
+            }
+        }
+        
+    }
+
+    
+    func printHouseholdMembers() {
+
+        guard let currentMembers = currentHousehold?.members else {return}
+        print("Current household members: ")
+        for member in currentMembers {
+            print(member.name ?? "xxx")
+            print(member.docId ?? "dai")
+        }
+        
     }
     
     func adminCheck() {
@@ -38,6 +106,8 @@ class FirestoreManagerVM : ObservableObject {
         
         // 1. Gets admin from household document on firestore
         let householdRef = db.collection(self.householdCollRef).document(currentHouseholdDocID)
+        
+        // 2. Error handling - backend
         
         householdRef.getDocument { (document, error) in
             if let error = error {
@@ -50,8 +120,10 @@ class FirestoreManagerVM : ObservableObject {
                 return
             }
             
+            // 3. Gets data and turns it into a variable
             let adminDocId = document.data()?["admin"] as? String ?? ""
             
+            // 4. Checks if ids match and switches admin on
             if userId == adminDocId {
                 self.isCurrentUserAdmin = true
             }
@@ -133,9 +205,12 @@ class FirestoreManagerVM : ObservableObject {
         let docID = householdRef.documentID
         
         let newMember = User(docId: userId, name: currentTikUser.name, email: currentTikUser.email)
-        let newHousehold = Household(name: name, pin: pin, members: [newMember])
         
+        print("New Member docId: \(userId)")
+        self.members.append(newMember)
         
+        let newHousehold = Household(name: name, pin: pin, members: [newMember], admin: userId)
+    
         do {
             print("Adding household \(name) to Firestore")
             try householdRef.setData(from: newHousehold) { error in
@@ -143,7 +218,24 @@ class FirestoreManagerVM : ObservableObject {
                     print("Error saving household to database: \(error.localizedDescription)")
                 } else {
                     print("Household created successfully.")
-                    self.checkInHousehold(docID: docID)
+                    //self.checkInHousehold(docID: docID)
+                    
+                    let membersCollectionRef = householdRef.collection("members")
+                    
+                    // Create a new member document in the subcollection
+                    let newMemberDocumentRef = membersCollectionRef.document(userId)
+                    do {
+                        try newMemberDocumentRef.setData(from: newMember) { error in
+                            if let error = error {
+                                print("Error adding new member to subcollection: \(error.localizedDescription)")
+                            } else {
+                                print("New member added to subcollection successfully.")
+                                self.checkInHousehold(docID: docID)
+                            }
+                        }
+                    } catch {
+                        print("Error saving new member to subcollection: \(error.localizedDescription)")
+                    }
                 }
             }
         } catch {
@@ -208,9 +300,27 @@ class FirestoreManagerVM : ObservableObject {
             }
         }
         
-        let newMember = Member(userID: userID, admin: false)
+        let newMember = User(docId: userID, name: currentTikUser.name, email: currentTikUser.email)
         
-        let newMemberData = try? Firestore.Encoder().encode(newMember)
+        self.members.append(newMember)
+        
+        let membersCollectionRef = householdRef.collection("members")
+        let newMemberDocumentRef = membersCollectionRef.document(userID)
+
+        do {
+            try newMemberDocumentRef.setData(from: newMember) { [weak self] error in
+                if let error = error {
+                    print("Error adding new member to subcollection: \(error.localizedDescription)")
+                } else {
+                    print("New member added to subcollection successfully.")
+                    self?.checkInHousehold(docID: householdID)
+                }
+            }
+        } catch {
+            print("Error saving new member to subcollection: \(error.localizedDescription)")
+        }
+        
+        /*let newMemberData = try? Firestore.Encoder().encode(newMember)
         
         if let newMemberData = newMemberData {
             print("Adding member \(currentTikUser.name ?? "Anon") to Firestore")
@@ -222,7 +332,7 @@ class FirestoreManagerVM : ObservableObject {
                     self.checkInHousehold(docID: householdID)
                 }
             }
-        }
+        }*/
     }
     
     
@@ -242,6 +352,8 @@ class FirestoreManagerVM : ObservableObject {
                         self.updateLatestHousehold(householdID: docID)
                         self.addTasksSnapshotListener()
                         self.addShoppingItemsSnapshotListener()
+                        self.memberListener()
+                        self.adminCheck()
                     }
                     
                 case .failure(let error) : print("Error getting household \(error)")
@@ -348,6 +460,7 @@ class FirestoreManagerVM : ObservableObject {
                 newUserRef.setData([
                     "name": name,
                     "email": email,
+                    "id": newUser.id.uuidString
                 ]) { error in
                     if let error = error {
                         self.toast = Toast(style: .error, message: "could not create account \(error)")
@@ -400,6 +513,7 @@ class FirestoreManagerVM : ObservableObject {
             try auth.signOut()
             self.currentTikUser = nil
             self.currentHousehold = nil
+            self.isCurrentUserAdmin = false
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }

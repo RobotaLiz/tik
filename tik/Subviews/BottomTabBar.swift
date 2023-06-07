@@ -29,11 +29,15 @@ struct BottomTabBar: View {
                     Image(systemName: "calendar")
                     Text("Calendar")
                 }
-            UserManagementView()
-                .tabItem() {
-                    Image(systemName: "person")
-                    Text("User Management")
+            if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
+                if isAdmin {
+                    UserManagementView()
+                        .tabItem() {
+                            Image(systemName: "person")
+                            Text("User Management")
+                        }
                 }
+            }
         }
         .accentColor(Color.black)
     }
