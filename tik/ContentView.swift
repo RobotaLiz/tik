@@ -26,13 +26,6 @@ struct ContentView: View {
         }
     }
         
-
-//        .onAppear {
-//            //authViewModel.checkLoggedInStatus()
-//            householdViewModel.userListener()
-//        }
-//    }
-        
 }
 
 
