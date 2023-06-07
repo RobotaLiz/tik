@@ -18,6 +18,8 @@ struct CalendarView: View {
     @State var calendarSettingsViewPresented = false
     @State var selectedInterval: DateInterval = .day
     
+    @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -33,42 +35,24 @@ struct CalendarView: View {
                 switch selectedInterval {
                 case .day:
                     List {
-                        ForEach(calendarVM.tasks) { task in
+                        ForEach(calendarVM.allTasks) { task in
                             if Calendar.current.isDateInToday(task.setDate) {
                                 TaskListRowView(task: task)
                             }
                         }
                     }
-                    .onAppear() {
-                        calendarVM.tasks.forEach {print(Calendar.current.isDate($0.setDate, inSameDayAs: now))}
-                        print(now)
-                    }
                 case .week:
                     List {
-                        ForEach(calendarVM.tasks) { task in
-                            let components1 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: now)
-                            let components2 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: task.setDate)
-                            if components1.weekOfYear == components2.weekOfYear {
+                        ForEach(calendarVM.allTasks) { task in
+                            if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .weekOfYear) {
                                 TaskListRowView(task: task)
                             }
                         }
                     }
-                    .onAppear() {
-                        for task in calendarVM.tasks {
-                            let components1 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: now)
-                            let components2 = Calendar.current.dateComponents([.weekOfYear, .yearForWeekOfYear], from: task.setDate)
-                            print(components1.weekOfYear)
-                            print(components2.weekOfYear)
-                            print(components1.weekOfYear == components2.weekOfYear)
-                        }
-                    }
                 case .month:
                     List {
-                        ForEach(calendarVM.tasks) { task in
-                            let components1 = Calendar.current.dateComponents([.month, .year], from: Date())
-                            let components2 = Calendar.current.dateComponents([.month, .year], from: task.setDate)
-                            
-                            if components1.month == components2.month {
+                        ForEach(calendarVM.allTasks) { task in
+                            if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .month) {
                                 TaskListRowView(task: task)
                             }
                         }
@@ -81,9 +65,6 @@ struct CalendarView: View {
             .sheet(isPresented: $calendarSettingsViewPresented) {
                 CalendarSettingsView()
             }
-            .onAppear() {
-
-            }
             .navigationTitle("Calendar")
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -94,6 +75,9 @@ struct CalendarView: View {
                         calendarSettingsViewPresented = true
                     }
                 }
+            }
+            .onReceive(firestoreManagerVM.$tasks) { tasks in
+                calendarVM.allTasks = firestoreManagerVM.tasks
             }
         }
     }
