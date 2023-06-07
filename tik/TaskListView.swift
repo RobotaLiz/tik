@@ -25,12 +25,25 @@ struct TaskListView: View {
     var body: some View {
         
         NavigationView {
+
             ZStack {
                 // Add your image here
                 Image("Two Phone Mockup Download App Instagram Post(10)")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .edgesIgnoringSafeArea(.all)
+
+            
+            VStack {
+                
+                /*
+                if let uid = auth.currentUser?.uid {
+                    
+                    Text("Firestore UID: \(uid)")
+                } else {
+                    Text("UID: N/A")
+                }
+
                 
                 VStack {
                     if let uid = auth.currentUser?.uid {
@@ -50,6 +63,7 @@ struct TaskListView: View {
                             }
                         }
                     }
+
                     
                     if let currentHousehold = firestoreManagerViewModel.currentHousehold {
                         HStack {
@@ -58,6 +72,10 @@ struct TaskListView: View {
                                 Text("ID: \(docID)")
                             }
                         }
+
+                }
+                */
+
                     }
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
@@ -76,12 +94,14 @@ struct TaskListView: View {
                         .buttonStyle(.borderless)
                         .padding([.trailing], 20)
                     }
+
                     .scrollContentBackground(.hidden)
                     .cornerRadius(10)
                     
                     // Navigation to AddTaskView added.
                     Button(action: {
                         
+
                         
                         addTaskIsPresented = true
                         print("!")
@@ -95,6 +115,7 @@ struct TaskListView: View {
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.black)
+
                         }
                         .buttonStyle(.borderless)
                         .padding(.bottom, 70.0)
