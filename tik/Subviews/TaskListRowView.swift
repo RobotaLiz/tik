@@ -21,14 +21,14 @@ struct TaskListRowView: View {
                     firestoreManagerViewModel.toggleTikBox(task: task)
                 }) {
                     if task.isCompleted {
-                        Image(systemName: "checkmark.square")
+                        Image(systemName: "checkmark.circle.fill")
                     } else {
                         Image(systemName: "square")
                     }
                 }
                 .buttonStyle(PlainButtonStyle())
             }
-            Divider()
+//            Divider()
             HStack {
                 Menu {
                     ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
@@ -63,12 +63,21 @@ struct TaskListRowView: View {
             }
         }
         .cornerRadius(10)
+        .accentColor(Color.black)
+        .font(.custom("Roboto-Bold", size: 18))
+        .padding()
+        .background(.yellow)
+        .foregroundColor(.black)
+        .clipShape(Capsule())
+        .padding()
+    
+
     }
 
 }
 
 struct TaskListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListRowView(task: Task(title: "Test Task", setDate: Date()))
+        TaskListRowView(task: Task(title: "Test Task", setDate: Date())).environmentObject(FirestoreManagerVM())
     }
 }
