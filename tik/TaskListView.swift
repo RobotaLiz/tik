@@ -75,8 +75,6 @@ struct TaskListView: View {
 
                 }
                 */
-
-                    }
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
@@ -86,11 +84,6 @@ struct TaskListView: View {
                                 firestoreManagerViewModel.deleteTaskFromFirestore(index: index)
                             }
                         }
-                        //                    .onDelete() { indexSet in
-                        //                        for _ in indexSet {
-                        //                            mockData.remove(atOffsets: indexSet)
-                        //                        }
-                        //                    }
                         .buttonStyle(.borderless)
                         .padding([.trailing], 20)
                     }
@@ -157,13 +150,12 @@ struct TaskListView: View {
         }
         
     }
-    
-    struct TaskListView_Previews: PreviewProvider {
-        static var previews: some View {
-            let vm = FirestoreManagerVM()
-            TaskListView().environmentObject(vm)
-        }
+  
+}
+
+struct TaskListView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = FirestoreManagerVM()
+        TaskListView().environmentObject(vm)
     }
-    
-    
 }
