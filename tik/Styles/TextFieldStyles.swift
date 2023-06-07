@@ -18,8 +18,10 @@ struct AuthTextFieldStyle: TextFieldStyle {
             )
             .foregroundColor(.yellow)
             .padding(10)
+            
         
 //            .shadow(color: .purple, radius: 10)
 //            .font(.title3)
     }
+    
 }

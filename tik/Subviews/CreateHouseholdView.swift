@@ -47,12 +47,12 @@ struct CreateHouseholdView: View {
                 }
                 .buttonStyle(CustomButtonStyle())
                 ZStack {
-                    Color(.white)
+                    Color(.black)
                         .cornerRadius(40)
                     Text(householdPin)
-                    
-                    
+
                 }
+                .foregroundColor(.white)
                 .frame(width: 200, height: 70)
                 Spacer()
                 Button(action: {
