@@ -8,75 +8,79 @@
 
 import Foundation
 import UserNotifications
-import SwiftUI
 
 struct UserNotifications {
-    let unCenter = UNUserNotificationCenter.current()
+    private let unCenter = UNUserNotificationCenter.current()
     
     func removeAllNotfications() {
         unCenter.removeAllPendingNotificationRequests()
     }
     
     func removeNotfication(task: Task) {
-        unCenter.removePendingNotificationRequests(withIdentifiers: [task.docId ?? " ", task.id.uuidString])
+        unCenter.removePendingNotificationRequests(withIdentifiers: [task.id.uuidString])
     }
     
-    func addSingleAlert(task: Task) {
+    //Sets an alert for a single task
+    func setSingleAlert(task: Task, time: Date) {
         unCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional {
-                setAlert(task: task, timeToAdd: -15)
+                setAlert(task: task, time: time)
             } else {
                 unCenter.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
-                        setAlert(task: task, timeToAdd: -15)
+                        setAlert(task: task, time: time)
                     } else {
                         
                     }
+                    
                 }
             }
         }
     }
     
-    func setAlert(task: Task, timeToAdd: Int) {
+    private func setAlert(task: Task, time: Date) {
         let content = UNMutableNotificationContent()
         content.title = task.title
-        content.subtitle = "15 min left"
+        content.subtitle = ""
         content.sound = UNNotificationSound.default
         
-        if let date = Calendar.current.date(byAdding: .minute, value: timeToAdd, to: task.setDate) {
-            
-            var dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
-            
-            let request = UNNotificationRequest(identifier: task.docId ?? task.id.uuidString, content: content, trigger: trigger)
-            
-            unCenter.add(request)
-        }
+        let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: time)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: task.id.uuidString, content: content, trigger: trigger)
+        
+        unCenter.add(request)
+        
     }
     
-    func setAllAlert(user: User, tasks: [Task]) {
+    private func setAllAlert(user: User, tasks: [Task], timeToAdd: Int) {
         for task in tasks {
-            task.assignedTo.forEach {
-                if $0.email == user.email {
-                    setAlert(task: task, timeToAdd: -15)
-                }
+            if let date = Calendar.current.date(byAdding: .second, value: timeToAdd, to: Date.now),
+               task.assignedTo.contains(where: {$0.email == user.email}) {
+                setAlert(task: task, time: date)
             }
         }
-        
     }
     
-    func isNotificationSet(task: Task) {
-        
+    func getNotification(task: Task) async -> UNNotificationRequest? {
+        return await unCenter.pendingNotificationRequests().filter {$0.identifier == task.id.uuidString}[0]
     }
     
-    func setNotificationsForSelf(user: User, tasks: [Task]) {
+    func isNotificationSet(task: Task) async -> Bool {
+        let requests = await unCenter.pendingNotificationRequests()
+        return requests.contains {$0.identifier == task.id.uuidString}
+    }
+    
+    //timeToAdd is in minutes. - for before
+    //Sets alerts for all tasks in list
+    func setNotificationsForSelf(user: User, tasks: [Task], timeToAdd: Int) {
         unCenter.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional {
-                setAllAlert(user: user, tasks: tasks)
+                setAllAlert(user: user, tasks: tasks, timeToAdd: timeToAdd)
             } else {
                 unCenter.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
-                        setAllAlert(user: user, tasks: tasks)
+                        setAllAlert(user: user, tasks: tasks, timeToAdd: timeToAdd)
                     } else {
                         
                     }
@@ -86,3 +90,4 @@ struct UserNotifications {
         
     }
 }
+
