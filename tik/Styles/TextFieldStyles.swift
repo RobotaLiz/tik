@@ -1,4 +1,3 @@
-//
 //  TextFieldStyles.swift
 //  tik
 //
@@ -24,4 +23,3 @@ struct AuthTextFieldStyle: TextFieldStyle {
 //            .font(.title3)
     }
 }
-

@@ -85,7 +85,7 @@ struct UserLogInView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
             }
-            .frame(width: 300, height: 400)
+            .frame(width: 300, height: 370)
            
             
             .padding()
