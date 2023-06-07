@@ -22,14 +22,15 @@ struct CalendarDateItem: View {
         let day = calendar.dateComponents([.day], from: date).day ?? 0
         
         ZStack {
-            if day < 10 {
+            if itemState == .available {
                 circle
-                Text("\(day)")
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 4, y: 4)
+                    .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
             }
             else {
                 circle
-                Text("\(day)")
             }
+                Text("\(day)")
         }
         .onTapGesture {
             pressed()
@@ -74,36 +75,31 @@ struct CalendarDateItem: View {
             print(date)
             print(calendarVM.currentMonth)
             if calendar.isDate(date, equalTo: nextMonth, toGranularity: .month) {
-                itemState = .nextMonth
                 calendarVM.currentMonth = nextMonth
             }
             else if calendar.isDate(date, equalTo: lastMonth, toGranularity: .month) {
-                itemState = .lastMonth
                 calendarVM.currentMonth = lastMonth
             }
+            //remove
             else if calendarVM.dateIsSelected(date: date) {
-                itemState = .selected
                 calendarVM.toggleTask(date: date)
             }
             else if calendarVM.dateIsInTaskList(date: date) {
-                itemState = .available
                 calendarVM.toggleTask(date: date)
-
-            }
-            else {
-                itemState = .notAvailable
+                
             }
         }
+        setState()
     }
     
     var circle: some View {
         switch itemState {
         case .available:
-            return Circle().fill(.yellow)
+            return Circle().fill(Color.oWhite)
         case .notAvailable:
-            return Circle().fill(.pink)
+            return Circle().fill(.clear)
         case .selected:
-            return Circle().fill(.blue)
+            return Circle().fill(Color.offWhite)
         case .lastMonth:
             return Circle().fill(.gray)
         case .nextMonth:
@@ -111,3 +107,5 @@ struct CalendarDateItem: View {
         }
     }
 }
+
+
