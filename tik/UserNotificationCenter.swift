@@ -9,7 +9,7 @@
 import Foundation
 import UserNotifications
 
-struct UserNotifications {
+struct UserNotificationCenter {
     private let unCenter = UNUserNotificationCenter.current()
     
     func removeAllNotfications() {
