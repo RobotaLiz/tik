@@ -58,6 +58,8 @@ struct UserLogInView: View {
                     }
                 }
                 .padding()
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                
                 
                 HStack {
                     Button("Add account", action: {

@@ -97,8 +97,10 @@ struct TaskListView: View {
                                 .foregroundColor(.black)
                         }
                         .buttonStyle(.borderless)
-                        .padding([.trailing], 20)
+                        .padding(.bottom, 70.0)
+                        
                     }
+               
                     // AddTaskView is presented as a sheet.
                     .sheet(isPresented: $addTaskIsPresented) {
                         AddTaskView(addTaskIsPresented: $addTaskIsPresented)
