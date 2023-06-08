@@ -37,7 +37,7 @@ struct TaskListView: View {
 
                 
                 VStack {
-                    /*
+                   
                     Spacer()
 //                    if let uid = auth.currentUser?.uid {
 //
