@@ -10,6 +10,7 @@ import SwiftUI
 struct UserManagementView: View {
     
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
+    @State var selfKickAlertPresented = false
     
     var body: some View {
         VStack {
@@ -18,12 +19,13 @@ struct UserManagementView: View {
                     VStack {
                         HStack {
                             Spacer()
-                            Text("Current user has the power!")
+                            Text("Current user has the power!").font(.headline)
                             Spacer()
                         }
+                        Spacer()
                         HStack {
                             Spacer()
-                            Text("Member Management")
+                            Text("Household Member Management").font(.subheadline)
                             Spacer()
                         }
                         List {
@@ -33,11 +35,16 @@ struct UserManagementView: View {
                                         
                                     }) {
                                         Text(name)
-                                        Text(docId)
+                                        //Text(docId)
                                     }
                                     .contextMenu {
                                         Button(action: {
-                                            firestoreManagerViewModel.kick(userDocId: docId)
+                                            //firestoreManagerViewModel.kick(userDocId: docId)
+                                            if firestoreManagerViewModel.currentTikUser?.docId == docId {
+                                                selfKickAlertPresented = true
+                                            } else {
+                                                firestoreManagerViewModel.kick(userDocId: docId)
+                                            }
                                         }) {
                                             Label("Remove member", systemImage: "person.badge.minus")
 
@@ -65,6 +72,9 @@ struct UserManagementView: View {
                 }
             }
             
+        }
+        .alert(isPresented: $selfKickAlertPresented) {
+            Alert(title: Text("Invalid Action"), message: Text("You can't kick yourself, you dummy."), dismissButton: .default(Text("OK")))
         }
         .onAppear {
             //firestoreManagerViewModel.adminCheck()

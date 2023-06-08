@@ -80,7 +80,7 @@ struct AddTaskView: View {
                                 let newTask = Task(title: title,
                                                    notes: notes,
                                                    location: location,
-                                                   assignedTo: [currentTikUser],
+                                                   assignedTo: [],
                                                    setDate: setDate)
                                 
                                 firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
