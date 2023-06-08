@@ -45,20 +45,26 @@ struct UserLogInView: View {
                         
                             .focused($focusedField, equals: .usernameField)
                             .textInputAutocapitalization(.never)
+                            .padding(.vertical, 10.0)
+
                         
                         TextField("Email:", text: $email)
                             .textFieldStyle(AuthTextFieldStyle())
                             .keyboardType(.emailAddress).font(.title3)
                             .focused($focusedField, equals: .emailField)
                             .textInputAutocapitalization(.never)
+                            .padding(.bottom, 10.0)
                         
                         SecureField("Password:", text: $password)
                             .textFieldStyle(AuthTextFieldStyle())
                             .focused($focusedField, equals: .passwordField)
+                            .textInputAutocapitalization(.never)
+                            .padding(.bottom, 10.0)
                     }
                 }
-                .padding()
+                .padding(.top, 20.0)
                 .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                .scrollContentBackground(.hidden)
                 
                 
                 HStack {
@@ -87,7 +93,7 @@ struct UserLogInView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
             }
-            .frame(width: 300, height: 370)
+            .frame(width: 350, height: 370)
            
             
             .padding()

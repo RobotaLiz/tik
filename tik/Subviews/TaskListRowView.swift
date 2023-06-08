@@ -13,21 +13,37 @@ struct TaskListRowView: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center)
+        
+        {
             HStack {
+                
                 Text(task.title)
+                    .padding(.leading, 30.0)
+                
                 Spacer()
+                    
                 Button(action: {
                     firestoreManagerViewModel.toggleTikBox(task: task)
                 }) {
                     if task.isCompleted {
                         Image(systemName: "checkmark.circle.fill")
+                            .padding(.trailing, 20.0)
                     } else {
                         Image(systemName: "square")
+                            .padding(.trailing, 20.0)
                     }
+                   
                 }
-                .buttonStyle(PlainButtonStyle())
+                
+//                .buttonStyle(PlainButtonStyle())
+                
+                
             }
+            
+            .frame(width: 350.0, height: 20.0)
+            
+            
 //            Divider()
             HStack {
                 Menu {
@@ -43,6 +59,7 @@ struct TaskListRowView: View {
                     Label("", systemImage: "person.fill.badge.plus")
                         .font(.system(size: 26))
                 }
+                
                 
                 ForEach(task.assignedTo, id: \.self) { selectedMember in
                     if let name = selectedMember.name {
@@ -62,14 +79,17 @@ struct TaskListRowView: View {
                 
             }
         }
-        .cornerRadius(10)
+//        .frame(width: 350.0, height: 80.0)
+        .cornerRadius(5)
         .accentColor(Color.black)
         .font(.custom("Roboto-Bold", size: 18))
-        .padding()
+
         .background(.yellow)
         .foregroundColor(.black)
         .clipShape(Capsule())
-        .padding()
+        
+        .listRowBackground(Color.clear)
+
     
 
     }

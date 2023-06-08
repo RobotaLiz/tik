@@ -25,14 +25,18 @@ struct TaskListView: View {
     var body: some View {
         
         NavigationView {
-            ZStack {
+            
                 // Add your image here
-                Image("Two Phone Mockup Download App Instagram Post(10)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(.all)
+                ZStack (alignment: .center) {
+                    
+                    
+                        Image("Two Phone Mockup Download App Instagram Post(10)")
+                            .resizable()
+                            .scaledToFill()
+                            .edgesIgnoringSafeArea(.all)
                 
                 VStack {
+                    Spacer()
                     if let uid = auth.currentUser?.uid {
                         
                         Text("Firestore UID: \(uid)")
@@ -74,7 +78,7 @@ struct TaskListView: View {
                         //                        }
                         //                    }
                         .buttonStyle(.borderless)
-                        .padding([.trailing], 20)
+                        .padding()
                     }
                     .scrollContentBackground(.hidden)
                     .cornerRadius(10)
@@ -97,7 +101,7 @@ struct TaskListView: View {
                                 .foregroundColor(.black)
                         }
                         .buttonStyle(.borderless)
-                        .padding(.bottom, 70.0)
+                        .padding(.bottom, 50.0)
                         
                     }
                
