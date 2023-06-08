@@ -34,6 +34,7 @@ struct TaskListView: View {
                             .resizable()
                             .scaledToFill()
                             .edgesIgnoringSafeArea(.all)
+
                 
                 VStack {
                     Spacer()
@@ -54,6 +55,7 @@ struct TaskListView: View {
                             }
                         }
                     }
+
                     
                     if let currentHousehold = firestoreManagerViewModel.currentHousehold {
                         HStack {
@@ -62,7 +64,9 @@ struct TaskListView: View {
                                 Text("ID: \(docID)")
                             }
                         }
-                    }
+
+                }
+                */
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
@@ -72,20 +76,17 @@ struct TaskListView: View {
                                 firestoreManagerViewModel.deleteTaskFromFirestore(index: index)
                             }
                         }
-                        //                    .onDelete() { indexSet in
-                        //                        for _ in indexSet {
-                        //                            mockData.remove(atOffsets: indexSet)
-                        //                        }
-                        //                    }
                         .buttonStyle(.borderless)
                         .padding()
                     }
+
                     .scrollContentBackground(.hidden)
                     .cornerRadius(10)
                     
                     // Navigation to AddTaskView added.
                     Button(action: {
                         
+
                         
                         addTaskIsPresented = true
                         print("!")
@@ -99,6 +100,7 @@ struct TaskListView: View {
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.black)
+
                         }
                         .buttonStyle(.borderless)
                         .padding(.bottom, 50.0)
@@ -140,13 +142,12 @@ struct TaskListView: View {
         }
         
     }
-    
-    struct TaskListView_Previews: PreviewProvider {
-        static var previews: some View {
-            let vm = FirestoreManagerVM()
-            TaskListView().environmentObject(vm)
-        }
+  
+}
+
+struct TaskListView_Previews: PreviewProvider {
+    static var previews: some View {
+        let vm = FirestoreManagerVM()
+        TaskListView().environmentObject(vm)
     }
-    
-    
 }

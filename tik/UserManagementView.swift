@@ -13,11 +13,6 @@ struct UserManagementView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Text("Settings")
-                Spacer()
-            }
             if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
                 if isAdmin {
                     VStack {
@@ -28,22 +23,60 @@ struct UserManagementView: View {
                         }
                         HStack {
                             Spacer()
-                            Text("Remove Member")
+                            Text("Member Management")
                             Spacer()
                         }
+                        List {
+                            ForEach(firestoreManagerViewModel.members, id: \.self) { member in
+                                if let name = member.name, let docId = member.docId {
+                                    Button(action: {
+                                        
+                                    }) {
+                                        Text(name)
+                                        Text(docId)
+                                    }
+                                    .contextMenu {
+                                        Button(action: {
+                                            firestoreManagerViewModel.kick(userDocId: docId)
+                                        }) {
+                                            Label("Remove member", systemImage: "person.badge.minus")
+
+                                        }
+                                        
+                                        Button(action: {
+                                            firestoreManagerViewModel.makeAdmin(userDocId: docId)
+                                        }) {
+                                            Label("Make admin", systemImage: "crown")
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding()
+                        Spacer()
                     }
+                }
+            } else {
+                HStack {
+                    Spacer()
+                    Text("You are not an admin.")
+                    Spacer()
                 }
             }
             
         }
         .onAppear {
-            firestoreManagerViewModel.adminCheck()
+            //firestoreManagerViewModel.adminCheck()
+            //firestoreManagerViewModel.memberListener()
+            firestoreManagerViewModel.printHouseholdMembers()
         }
     }
 }
 
 struct UserManagementView_Previews: PreviewProvider {
     static var previews: some View {
-        UserManagementView()
+        let vm = FirestoreManagerVM()
+        UserManagementView().environmentObject(vm)
     }
 }

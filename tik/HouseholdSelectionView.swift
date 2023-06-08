@@ -16,6 +16,7 @@ struct HouseholdSelectionView: View {
     var body: some View {
         NavigationView {
             VStack {
+                /*
                 if let uid = firestoreManagerViewModel.auth.currentUser?.uid {
                     
                     Text("Firestore UID: \(uid)")
@@ -42,6 +43,7 @@ struct HouseholdSelectionView: View {
                         }
                     }
                 }
+                */
                 
                 HStack {
                     Spacer()
@@ -82,6 +84,7 @@ struct HouseholdSelectionView: View {
 
 struct HouseholdSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        HouseholdSelectionView()
+        let vm = FirestoreManagerVM()
+        HouseholdSelectionView().environmentObject(vm)
     }
 }
