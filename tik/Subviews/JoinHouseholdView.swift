@@ -64,7 +64,7 @@ struct JoinHouseholdView: View {
                             pinIsValid = inputPin.count == 6
                         })
                         .font(.custom("Roboto-Bold", size: 24))
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                         .frame(height: 50) // <-- Specify your desired height here
                         .background()
                         .border(pinIsValid ? .white : .appYellow)

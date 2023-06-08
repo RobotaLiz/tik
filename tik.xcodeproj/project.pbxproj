@@ -234,7 +234,6 @@
 				A9CA3E412A12F68300DE7FE9 /* TaskListRowView.swift */,
 				A9CA3E472A1696C600DE7FE9 /* CreateHouseholdView.swift */,
 				A9CA3E492A1696DD00DE7FE9 /* JoinHouseholdView.swift */,
-				6C70E7A72A29E1860060A66C /* CalendarView.swift */,
 				9C0DE5022A18DC9000B9C1F5 /* AddTaskView.swift */,
 				A97740302A28ACA60022FC5F /* BottomTabBar.swift */,
 			);
@@ -267,6 +266,7 @@
 				6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */,
 				6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */,
 				6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */,
+				6C70E7A72A29E1860060A66C /* CalendarView.swift */,
 				6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */,
 				8AC9A87E2A1F59F800DEDE5A /* Roboto */,
 				A930D3382A1D42FB00637BD4 /* Styles */,
