@@ -27,13 +27,16 @@ struct ShoppingListView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 VStack{
-                    Spacer()
+                    
+                       
                     
                     List{
-                        
+                        Spacer()
+                            .listRowBackground(Color.clear)
                         ForEach(firestoreVm.shoppingItems) { list in
                             
                             HStack {
+                                Spacer()
                                 Text(list.name)
                                 Spacer()
                                     .padding(.top, 30.0)
@@ -54,8 +57,8 @@ struct ShoppingListView: View {
                         }
                         .listRowBackground(Color.yellow)
                         
-                       
                     }
+                    .scrollContentBackground(.hidden)
                     
                     
                     
