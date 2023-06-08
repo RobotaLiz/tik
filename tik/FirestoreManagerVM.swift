@@ -366,7 +366,7 @@ class FirestoreManagerVM : ObservableObject {
     
     func addTasksSnapshotListener() {
         guard let currentHousehold = self.currentHousehold, let docID = currentHousehold.docId else {return}
-        let taskRef = self.db.collection(self.householdCollRef).document(docID).collection("tasks")
+        let taskRef = self.db.collection(self.householdCollRef).document(docID).collection("tasks").order(by: "setDate")
         
         taskRef.addSnapshotListener() { (querySnapshot, err) in
             if let err = err {
