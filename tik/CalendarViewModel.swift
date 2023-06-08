@@ -20,8 +20,8 @@ class  CalendarViewModel: ObservableObject {
     @Published var currentMonth = Date.now
     @Published var dateList = [Date]()
     
-    @Published var startDate = Date()
-    @Published var endDate = Date()
+    @Published var startDate = Date.now
+    @Published var endDate = Date.now
     @Published var dateRange = [Date]()
     
     init() {
