@@ -25,27 +25,19 @@ struct TaskListView: View {
     var body: some View {
         
         NavigationView {
-
-            ZStack {
-                // Add your image here
-                Image("Two Phone Mockup Download App Instagram Post(10)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(.all)
-
             
-            VStack {
-                
-                /*
-                if let uid = auth.currentUser?.uid {
+                // Add your image here
+                ZStack (alignment: .center) {
                     
-                    Text("Firestore UID: \(uid)")
-                } else {
-                    Text("UID: N/A")
-                }
+                    
+                        Image("Two Phone Mockup Download App Instagram Post(10)")
+                            .resizable()
+                            .scaledToFill()
+                            .edgesIgnoringSafeArea(.all)
 
                 
                 VStack {
+                    Spacer()
                     if let uid = auth.currentUser?.uid {
                         
                         Text("Firestore UID: \(uid)")
@@ -74,7 +66,7 @@ struct TaskListView: View {
                         }
 
                 }
-                */
+                
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
@@ -85,7 +77,7 @@ struct TaskListView: View {
                             }
                         }
                         .buttonStyle(.borderless)
-                        .padding([.trailing], 20)
+                        .padding()
                     }
 
                     .scrollContentBackground(.hidden)
@@ -111,7 +103,7 @@ struct TaskListView: View {
 
                         }
                         .buttonStyle(.borderless)
-                        .padding(.bottom, 70.0)
+                        .padding(.bottom, 50.0)
                         
                     }
                
