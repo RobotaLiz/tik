@@ -15,7 +15,6 @@ enum DateInterval {
 struct CalendarView: View {
     
     @StateObject var calendarVM = CalendarViewModel()
-    @State var calendarSettingsViewPresented = false
     @State var selectedInterval: DateInterval = .day
     
     @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
@@ -41,6 +40,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 case .week:
                     List {
                         ForEach(calendarVM.allTasks) { task in
@@ -49,6 +49,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 case .month:
                     List {
                         ForEach(calendarVM.allTasks) { task in
@@ -57,27 +58,37 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                     
                 case .custom:
                     CalendarCustomView(calendarVM: calendarVM)
                 }
             }
-            .sheet(isPresented: $calendarSettingsViewPresented) {
-                CalendarSettingsView()
-            }
             .navigationTitle("Calendar")
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Calendar")
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Settings") {
-                        calendarSettingsViewPresented = true
+                    Menu {
+                        Button("Add selected") {
+                            if let user = firestoreManagerVM.currentTikUser {
+                                calendarVM.addAlertsSelected(user: user, selected: selectedInterval)
+                            }
+                        }
+                        Button("Add all") {
+                            if let user = firestoreManagerVM.currentTikUser {
+                                calendarVM.addAlertsAllDate(user: user)
+                            }
+                        }
                     }
+                label: {
+                    Label("", systemImage: "alarm.waves.left.and.right")
+                        .font(.system(size: 14))
+                }
+                    //}
                 }
             }
-            .onReceive(firestoreManagerVM.$tasks) { tasks in
+            .onReceive(firestoreManagerVM.$tasks) { _ in
                 calendarVM.allTasks = firestoreManagerVM.tasks
+                calendarVM.upateTaskList()
             }
         }
     }
