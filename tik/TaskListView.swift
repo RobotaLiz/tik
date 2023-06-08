@@ -39,35 +39,26 @@ struct TaskListView: View {
                 VStack {
                     /*
                     Spacer()
-                    if let uid = auth.currentUser?.uid {
-                        
-                        Text("Firestore UID: \(uid)")
-                    } else {
-                        Text("UID: N/A")
-                    }
-                    
-                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
-                        HStack {
-                            if let email = currentTikUser.email {
-                                Text("Tik user: \(email)")
-                            }
-                            if let docID = currentTikUser.docId {
-                                Text(("ID: \(docID)"))
-                            }
-                        }
-                    }
+//                    if let uid = auth.currentUser?.uid {
+//
+//                        Text("Firestore UID: \(uid)")
+//                    } else {
+////                        Text("UID: N/A")
+//                    }
+//
+//                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+//                        HStack {
+//                            if let email = currentTikUser.email {
+//                                Text("Tik user: \(email)")
+//                            }
+//                            if let docID = currentTikUser.docId {
+//                                Text(("ID: \(docID)"))
+//                            }
+//                        }
+//                    }
 
                     
-                    if let currentHousehold = firestoreManagerViewModel.currentHousehold {
-                        HStack {
-                            Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
-                            if let docID = currentHousehold.docId {
-                                Text("ID: \(docID)")
-                            }
-                        }
 
-                    }
-                     */
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
