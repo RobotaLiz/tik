@@ -55,7 +55,7 @@ struct UserNotificationCenter {
     
     private func setAllAlert(user: User, tasks: [Task], timeToAdd: Int) {
         for task in tasks {
-            if let date = Calendar.current.date(byAdding: .second, value: timeToAdd, to: Date.now),
+            if let date = Calendar.current.date(byAdding: .minute, value: timeToAdd, to: task.setDate),
                task.assignedTo.contains(where: {$0.email == user.email}) {
                 setAlert(task: task, time: date)
             }

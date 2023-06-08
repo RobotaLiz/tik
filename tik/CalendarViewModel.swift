@@ -75,7 +75,7 @@ class  CalendarViewModel: ObservableObject {
         components.hour = 0
         components.minute = 0
         components.second = 0
-
+        
         //use getAlldates
         if let startingDate  = Calendar.current.date(from: components) {
             dateToReturn = allTasks.sorted {$0.setDate < $1.setDate}
@@ -143,4 +143,32 @@ class  CalendarViewModel: ObservableObject {
         
         return datesToReturn
     }
+    
+    func addAlertsAllDate(user: User) {
+        let unCenter = UserNotificationCenter()
+        unCenter.setNotificationsForSelf(user: user, tasks: allTasks, timeToAdd: -15)
+    }
+    
+    func addAlertsSelected(user: User, selected: DateInterval) {
+        let unCenter = UserNotificationCenter()
+        let timeToAdd = -15
+        var tasksToAdd = [Task]()
+        
+        switch selected {
+        case .day:
+            tasksToAdd = allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+        case .week:
+            tasksToAdd = allTasks.filter {
+                Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
+        case .month:
+            tasksToAdd = allTasks.filter {
+                Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .month)}
+        case .custom:
+            tasksToAdd = tasks
+        }
+        unCenter.setNotificationsForSelf(user: user, tasks: tasksToAdd, timeToAdd: timeToAdd)
+    }
+
 }
+
+

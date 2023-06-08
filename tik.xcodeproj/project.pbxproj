@@ -14,7 +14,6 @@
 		6C70E7AC2A29E1870060A66C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A72A29E1860060A66C /* CalendarView.swift */; };
 		6C70E7AD2A29E1870060A66C /* CalendarDateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */; };
 		6C70E7AE2A29E1870060A66C /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */; };
-		6C70E7AF2A29E1870060A66C /* CalendarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */; };
 		8AC9A87B2A1F4F2700DEDE5A /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9A87A2A1F4F2700DEDE5A /* Color+Extension.swift */; };
 		8AC9A87D2A1F564F00DEDE5A /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9A87C2A1F564F00DEDE5A /* CustomButtonStyle.swift */; };
 		8AC9A88C2A1F59F900DEDE5A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AC9A87F2A1F59F800DEDE5A /* Roboto-Medium.ttf */; };
@@ -115,7 +114,6 @@
 		6C70E7A72A29E1860060A66C /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDateItem.swift; sourceTree = "<group>"; };
 		6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettingsView.swift; sourceTree = "<group>"; };
 		8AC9A87A2A1F4F2700DEDE5A /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		8AC9A87C2A1F564F00DEDE5A /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		8AC9A87F2A1F59F800DEDE5A /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -271,7 +269,6 @@
 			children = (
 				6C70E7A72A29E1860060A66C /* CalendarView.swift */,
 				6C70E7A62A29E1860060A66C /* CalendarCustomView.swift */,
-				6C70E7AA2A29E1860060A66C /* CalendarSettingsView.swift */,
 				6C70E7A82A29E1860060A66C /* CalendarDateItem.swift */,
 				6C177A842A2F81840075F943 /* DateItem.swift */,
 				6C70E7A92A29E1860060A66C /* CalendarViewModel.swift */,
@@ -505,7 +502,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C3D27A32A2743BC00B720CB /* FirestoreManagerVM.swift in Sources */,
-				6C70E7AF2A29E1870060A66C /* CalendarSettingsView.swift in Sources */,
 				B3B579562A23C8A00031DC2D /* ShoppingListView.swift in Sources */,
 				B37F234C2A0E191400F9FF24 /* ContentView.swift in Sources */,
 				B3B579582A23CADC0031DC2D /* ShoppingItemModel.swift in Sources */,

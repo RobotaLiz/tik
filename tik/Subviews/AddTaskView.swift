@@ -17,6 +17,9 @@ struct AddTaskView: View {
     @State var location = ""
     @State var setDate = Date()
     
+    @State private var notificationDate = Date()
+    @State private var addNotification = false
+    
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
@@ -59,9 +62,16 @@ struct AddTaskView: View {
                         DatePicker("", selection: $setDate)
                             .datePickerStyle(WheelDatePickerStyle())
                             .labelsHidden()
+                        HStack {
+                            Toggle("Alert", isOn: $addNotification).fixedSize()
+                                .tint(Color.appYellow)
+                            DatePicker("Time for notification", selection: $notificationDate, in: Date.now...)
+                                .labelsHidden()
+                        }
                         
                     }
-                    Spacer().frame(height: 70)
+                    //Spacer().frame(height: 70)
+ 
                     Button("Add", action: {
                         
                         if let currentTikUser = firestoreManagerViewModel.currentTikUser {
@@ -74,6 +84,11 @@ struct AddTaskView: View {
                                                setDate: setDate)
                             
                             firestoreManagerViewModel.saveTaskToFirestore(task: newTask)
+                            if addNotification {
+                                let unCenter = UserNotificationCenter()
+                                unCenter.setSingleAlert(task: newTask, time: notificationDate)
+                                print("Notification date: \(notificationDate)")
+                            }
                             addTaskIsPresented = false
                         }
                     })

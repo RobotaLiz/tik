@@ -165,7 +165,8 @@ class FirestoreManagerVM : ObservableObject {
                 "docId": member.docId ?? "",
                 "name": member.name ?? "",
                 "email": member.email ?? "",
-                "latestHousehold": member.latestHousehold ?? ""
+                "latestHousehold": member.latestHousehold ?? "",
+                "id": member.id.uuidString
             ]
             
             // If assignedTo contains a matching dict (index is found), that dict is removed.
