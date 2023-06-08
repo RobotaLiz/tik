@@ -66,7 +66,7 @@ struct TaskListView: View {
                         }
 
                 }
-                */
+                
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
