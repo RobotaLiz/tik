@@ -18,14 +18,21 @@ class  CalendarViewModel: ObservableObject {
     @Published var tasks = [Task]()
     @Published var allTasks = [Task]()
     @Published var currentMonth = Date.now
+    @Published var dateList = [Date]()
     
-    @Published var dateList = [Date]() //TODO: sorted set?
-    
-    let db = Firestore.firestore()
-    let auth = Auth.auth()
+    @Published var startDate = Date()
+    @Published var endDate = Date()
+    @Published var dateRange = [Date]()
     
     init() {
         
+    }
+    
+    func updateDateRange() {
+        let calendar = Calendar.current
+        //Could use range but have to check if endDate is bigger than startDate (startDate ... endDate).contains(task.setDate)
+        dateRange = getAllDates().filter {calendar.isDateInToday($0) || calendar.isDate($0, inSameDayAs: endDate) ||
+            (startDate < $0 && $0 < endDate)}
     }
     
     func toggleTask(date: Date) {
@@ -168,7 +175,7 @@ class  CalendarViewModel: ObservableObject {
         }
         unCenter.setNotificationsForSelf(user: user, tasks: tasksToAdd, timeToAdd: timeToAdd)
     }
-
+    
 }
 
 

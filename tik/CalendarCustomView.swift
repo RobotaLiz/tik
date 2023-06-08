@@ -17,31 +17,59 @@ struct CalendarCustomView: View {
     @StateObject var calendarVM : CalendarViewModel
     @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
     
+    @State var toggleStartDate = false
+    @State var toggleEndDate = false
+    
     var body: some View {
         VStack {
             if toggle {
                 VStack {
                     //Text(calendarVM.currentMonth.formatted(.dateTime.year()))
-                    ScrollViewReader { value in
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(calendarVM.getAllDates(), id: \.self) { date in
-                                    dateItem(date: date, calendarVM: calendarVM)
-                                        .id(date)
+                    HStack {
+                        Button() {
+                            toggleEndDate = false
+                            toggleStartDate.toggle()
+                        } label: {
+                            Image(systemName: toggleStartDate ?  "chevron.down" : "chevron.forward")
+                        }
+                        .padding(.leading)
+                        ScrollViewReader { value in
+                            ScrollView(.horizontal) {
+                                HStack {
+                                    ForEach(calendarVM.dateRange, id: \.self) { date in
+                                        dateItem(date: date, calendarVM: calendarVM)
+                                            .id(date)
+                                    }
+                                }
+                                .padding(.bottom)
+                            }
+                            .onAppear {
+                                //Scroll to closet date in the future
+                                if let date = calendarVM.getClosestDate() {
+                                    value.scrollTo(date, anchor: .center)
                                 }
                             }
-                            .padding(.bottom)
                         }
-                        .onAppear {
-                            //Scroll to closet date in the future
-                            if let date = calendarVM.getClosestDate() {
-                                value.scrollTo(date, anchor: .center)
-                            }
+                        .fixedSize(horizontal: false, vertical: true)
+                        Button() {
+                            toggleStartDate = false
+                            toggleEndDate.toggle()
+                        } label: {
+                            Image(systemName: toggleEndDate ?  "chevron.down" : "chevron.backward")
                         }
+                        .padding(.trailing)
                     }
-                    .fixedSize(horizontal: false, vertical: true)
+                    if toggleStartDate {
+                        DatePicker("Start date", selection: $calendarVM.startDate, displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                    }
+                    if toggleEndDate {
+                        DatePicker("End date", selection: $calendarVM.endDate, displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                    }
                 }
-            }
+                    
+                    }
             else {
                 Text(calendarVM.currentMonth.formatted(.dateTime.month()))
                 VStack {
@@ -72,7 +100,7 @@ struct CalendarCustomView: View {
                     toggle.toggle()
                 }
             } label: {
-                Image(systemName: toggle ? "arrow.down.square" : "arrow.up.square")
+                Image(systemName: toggle ? "chevron.down" : "chevron.up")
             }
             List {
                 ForEach(calendarVM.tasks) { task in
@@ -86,6 +114,12 @@ struct CalendarCustomView: View {
         }
         .onReceive(calendarVM.$currentMonth) { month in
             calendarArray = cvHelper.createMonth(month: month)
+        }
+        .onReceive(calendarVM.$startDate) { _ in
+            calendarVM.updateDateRange()
+        }
+        .onReceive(calendarVM.$endDate) { _ in
+            calendarVM.updateDateRange()
         }
     }
 }
