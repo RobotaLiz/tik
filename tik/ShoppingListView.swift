@@ -27,12 +27,17 @@ struct ShoppingListView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 VStack{
+                    Spacer()
+                    
                     List{
+                        
                         ForEach(firestoreVm.shoppingItems) { list in
                             
                             HStack {
                                 Text(list.name)
                                 Spacer()
+                                    .padding(.top, 30.0)
+                                    
                                 Button(action: {
                                     firestoreVm.deletShoppItem(shoppingItem: list)
                                 })
@@ -47,7 +52,13 @@ struct ShoppingListView: View {
                             }
                             
                         }
+                        .listRowBackground(Color.yellow)
+                        
+                       
                     }
+                    
+                    
+                    
                     Button(action: {
                         addingItem = true
                         print("open ssessamiii")
@@ -70,41 +81,48 @@ struct ShoppingListView: View {
                     
                 }
                 
-                .sheet(isPresented: $addingItem)
-                
-                {
-                    
-                    
-                    Label("Add item to list", systemImage:"cart")
-                        .font(.largeTitle)
-                        .bold()
-                        .font(.largeTitle)
-                        .padding(.top)
-                    Spacer()
-                    
-                    TextField("Name:", text: $name)
-                        .font(.title)
-                        .padding()
-                    
-                    
-                    Button("Add   ", action: {
-                        let item = ShoppingItemModel(name: name, household: "")
-                        firestoreVm.saveShoppingItem(shoppingItem: item)
-                        addingItem = false
-                        name = ""
+                .sheet(isPresented: $addingItem) {
+                    ZStack {
+                        // Background Image
+                        Image("Two Phone Mockup Download App Instagram Post(10) copy")
+                            .resizable()
+                            .scaledToFill()
+                            .edgesIgnoringSafeArea(.all)
                         
-                        
-                    })
+                        // Content View
+                        VStack {
+                            Label("Add item to list", systemImage: "cart")
+                                .font(.largeTitle)
+                                .bold()
+                                .font(.largeTitle)
+                                .padding(.top)
+                                .foregroundColor(.white)
+                            Spacer()
+                            
+                            TextField("Name:", text: $name)
+                                .frame(width: 250.0)
+                                .font(.title)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background()
+                                
+                                
+                            
                     
-                    .foregroundColor(.black)
-                    .background(.yellow)
-                    
-                    .cornerRadius(20)
-                    .font(.title2)
-                    .padding(150)
-                    .bold()
-                    
+                            
+                            
+                            Button("Add", action: {
+                                let item = ShoppingItemModel(name: name, household: "")
+                                firestoreVm.saveShoppingItem(shoppingItem: item)
+                                addingItem = false
+                                name = ""
+                            })
+                            .buttonStyle(CustomButtonStyle())
+                            .padding(150)
+                        }
+                    }
                 }
+
                 
                 
                 .navigationBarTitle("Shopping List")
