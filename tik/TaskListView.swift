@@ -37,6 +37,7 @@ struct TaskListView: View {
 
                 
                 VStack {
+                    /*
                     Spacer()
 //                    if let uid = auth.currentUser?.uid {
 //
@@ -57,16 +58,7 @@ struct TaskListView: View {
 //                    }
 
                     
-//                    if let currentHousehold = firestoreManagerViewModel.currentHousehold {
-//                        HStack {
-//                            Text("Household: \(currentHousehold.name), Pin: \(currentHousehold.pin)")
-//                            if let docID = currentHousehold.docId {
-//                                Text("ID: \(docID)")
-//                            }
-//                        }
-//
-//                }
-                
+
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)

@@ -46,18 +46,22 @@ struct TaskListRowView: View {
             
 //            Divider()
             HStack {
-                Menu {
-                    ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
-                        if let name = member.name, let taskId = task.docId {
-                            Button(name) {
-                                firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: member)
-                            }
-                        }
+                if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
+                    if isAdmin {
+                        Menu {
+                            ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
+                                if let name = member.name, let taskId = task.docId {
+                                    Button(name) {
+                                        firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: member)
+                                    }
+                                }
 
+                            }
+                        } label: {
+                            Label("", systemImage: "person.fill.badge.plus")
+                                .font(.system(size: 26))
+                        }
                     }
-                } label: {
-                    Label("", systemImage: "person.fill.badge.plus")
-                        .font(.system(size: 26))
                 }
                 
                 

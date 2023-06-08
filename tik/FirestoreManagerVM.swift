@@ -165,13 +165,14 @@ class FirestoreManagerVM : ObservableObject {
                 "docId": member.docId ?? "",
                 "name": member.name ?? "",
                 "email": member.email ?? "",
-                "latestHousehold": member.latestHousehold ?? ""
+                "latestHousehold": member.latestHousehold ?? "",
+                "id": member.id.uuidString
             ]
             
             // If assignedTo contains a matching dict (index is found), that dict is removed.
             // Else, appends it to the array.
             
-            if let index = assignedTo.firstIndex(where: { $0["docId"] as? String == member.docId }) {
+            if let index = assignedTo.firstIndex(where: { $0["email"] as? String == member.email }) {
                 assignedTo.remove(at: index)
             } else {
                 assignedTo.append(memberDict)
