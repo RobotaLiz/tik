@@ -40,6 +40,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 case .week:
                     List {
                         ForEach(calendarVM.allTasks) { task in
@@ -48,6 +49,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 case .month:
                     List {
                         ForEach(calendarVM.allTasks) { task in
@@ -56,6 +58,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                     
                 case .custom:
                     CalendarCustomView(calendarVM: calendarVM)

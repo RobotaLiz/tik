@@ -102,11 +102,14 @@ struct CalendarCustomView: View {
             } label: {
                 Image(systemName: toggle ? "chevron.down" : "chevron.up")
             }
+            Divider()
+                .padding(.top)
             List {
                 ForEach(calendarVM.tasks) { task in
                     TaskListRowView(task: task)
                 }
             }
+            .scrollContentBackground(.hidden)
             .onAppear {
                 calendarArray = cvHelper.createMonth(month: calendarVM.currentMonth)
             }
