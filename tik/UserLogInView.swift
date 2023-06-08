@@ -58,6 +58,8 @@ struct UserLogInView: View {
                     }
                 }
                 .padding()
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                
                 
                 HStack {
                     Button("Add account", action: {
@@ -85,7 +87,7 @@ struct UserLogInView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
             }
-            .frame(width: 300, height: 400)
+            .frame(width: 300, height: 370)
            
             
             .padding()

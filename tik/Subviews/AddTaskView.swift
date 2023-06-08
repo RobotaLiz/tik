@@ -34,7 +34,7 @@ struct AddTaskView: View {
                     .frame(width: 300, height: 300)
                     .offset(y: -180)
                 VStack(alignment: .center) {
-                    Spacer().frame(height: 80)
+                    Spacer().frame(height: 90)
                     TextField("What to do:", text: $title)
                         .font(.custom("Roboto-Bold", size: 22))
                         .multilineTextAlignment(.center)
@@ -61,7 +61,7 @@ struct AddTaskView: View {
                             .labelsHidden()
                         
                     }
-                    Spacer()
+                    Spacer().frame(height: 70)
                     Button("Add", action: {
                         
                         if let currentTikUser = firestoreManagerViewModel.currentTikUser {
