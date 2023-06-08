@@ -37,6 +37,7 @@ struct TaskListView: View {
 
                 
                 VStack {
+                    /*
                     Spacer()
                     if let uid = auth.currentUser?.uid {
                         
@@ -65,8 +66,8 @@ struct TaskListView: View {
                             }
                         }
 
-                }
-                
+                    }
+                     */
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
