@@ -18,14 +18,21 @@ class  CalendarViewModel: ObservableObject {
     @Published var tasks = [Task]()
     @Published var allTasks = [Task]()
     @Published var currentMonth = Date.now
+    @Published var dateList = [Date]()
     
-    @Published var dateList = [Date]() //TODO: sorted set?
-    
-    let db = Firestore.firestore()
-    let auth = Auth.auth()
+    @Published var startDate = Date.now
+    @Published var endDate = Date.now
+    @Published var dateRange = [Date]()
     
     init() {
         
+    }
+    
+    func updateDateRange() {
+        let calendar = Calendar.current
+        //Could use range but have to check if endDate is bigger than startDate (startDate ... endDate).contains(task.setDate)
+        dateRange = getAllDates().filter {calendar.isDateInToday($0) || calendar.isDate($0, inSameDayAs: endDate) ||
+            (startDate < $0 && $0 < endDate)}
     }
     
     func toggleTask(date: Date) {
@@ -63,6 +70,7 @@ class  CalendarViewModel: ObservableObject {
     func getClosestDate() -> Date? {
         var dateToReturn: Date?
         
+        //remove
         var components = Calendar.current.dateComponents(
             [
                 .year,
@@ -75,16 +83,16 @@ class  CalendarViewModel: ObservableObject {
         components.minute = 0
         components.second = 0
         
-        let startingDate = Calendar.current.date(from: components)
-        
-        if let startingDate {
-            dateToReturn = tasks.sorted {$0.setDate < $1.setDate}
-                .first {$0.setDate > startingDate}?.setDate ?? nil
+        //use getAlldates
+        if let startingDate  = Calendar.current.date(from: components) {
+            dateToReturn = allTasks.sorted {$0.setDate < $1.setDate}
+                .first {Calendar.current.isDateInToday($0.setDate) || $0.setDate > startingDate}?.setDate
         }
         
         return dateToReturn
     }
     
+    //remove components
     func getTasks(fromDate: Date, toDate: Date) -> [Task] {
         var tasksToReturn = [Task]()
         
@@ -116,6 +124,7 @@ class  CalendarViewModel: ObservableObject {
         
         let endingDate = Calendar.current.date(from: components)
         
+        //rewrite with isintoday
         if let startingDate,
            let endingDate {
             tasksToReturn = allTasks.filter {$0.setDate > startingDate && $0.setDate < endingDate}
@@ -141,4 +150,32 @@ class  CalendarViewModel: ObservableObject {
         
         return datesToReturn
     }
+    
+    func addAlertsAllDate(user: User) {
+        let unCenter = UserNotificationCenter()
+        unCenter.setNotificationsForSelf(user: user, tasks: allTasks, timeToAdd: -15)
+    }
+    
+    func addAlertsSelected(user: User, selected: DateInterval) {
+        let unCenter = UserNotificationCenter()
+        let timeToAdd = -15
+        var tasksToAdd = [Task]()
+        
+        switch selected {
+        case .day:
+            tasksToAdd = allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+        case .week:
+            tasksToAdd = allTasks.filter {
+                Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
+        case .month:
+            tasksToAdd = allTasks.filter {
+                Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .month)}
+        case .custom:
+            tasksToAdd = tasks
+        }
+        unCenter.setNotificationsForSelf(user: user, tasks: tasksToAdd, timeToAdd: timeToAdd)
+    }
+    
 }
+
+
