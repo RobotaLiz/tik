@@ -67,6 +67,7 @@ struct UserManagementView: View {
                                 }
                             }
                             .padding()
+                            .scrollContentBackground(.hidden)
                             Spacer()
                         }
                     }
