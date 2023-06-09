@@ -13,80 +13,87 @@ struct UserManagementView: View {
     @State var selfKickAlertPresented = false
     
     var body: some View {
-        VStack {
-            if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
-                if isAdmin {
-                    VStack {
-                        HStack {
+        ZStack {
+            // Add your image here
+            Image("Two Phone Mockup Download App Instagram Post(10)")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
+                    if isAdmin {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Text("Current user has the power!").font(.headline)
+                                Spacer()
+                            }
                             Spacer()
-                            Text("Current user has the power!").font(.headline)
-                            Spacer()
-                        }
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Text("Household Member Management").font(.subheadline)
-                            Spacer()
-                        }
-                        List {
-                            ForEach(firestoreManagerViewModel.members, id: \.self) { member in
-                                if let name = member.name, let docId = member.docId {
-                                    Button(action: {
-                                        
-                                    }) {
-                                        Text(name)
-                                        //Text(docId)
-                                    }
-                                    .contextMenu {
+                            HStack {
+                                Spacer()
+                                Text("Household Member Management").font(.subheadline)
+                                Spacer()
+                            }
+                            List {
+                                ForEach(firestoreManagerViewModel.members, id: \.self) { member in
+                                    if let name = member.name, let docId = member.docId {
                                         Button(action: {
-                                            //firestoreManagerViewModel.kick(userDocId: docId)
-                                            if firestoreManagerViewModel.currentTikUser?.docId == docId {
-                                                selfKickAlertPresented = true
-                                            } else {
-                                                firestoreManagerViewModel.kick(userDocId: docId)
-                                            }
+                                            
                                         }) {
-                                            Label("Remove member", systemImage: "person.badge.minus")
-
+                                            Text(name)
+                                            //Text(docId)
                                         }
-                                        
-                                        Button(action: {
-                                            firestoreManagerViewModel.makeAdmin(userDocId: docId)
-                                        }) {
-                                            Label("Make admin", systemImage: "crown")
-
+                                        .contextMenu {
+                                            Button(action: {
+                                                //firestoreManagerViewModel.kick(userDocId: docId)
+                                                if firestoreManagerViewModel.currentTikUser?.docId == docId {
+                                                    selfKickAlertPresented = true
+                                                } else {
+                                                    firestoreManagerViewModel.kick(userDocId: docId)
+                                                }
+                                            }) {
+                                                Label("Remove member", systemImage: "person.badge.minus")
+                                                
+                                            }
+                                            
+                                            Button(action: {
+                                                firestoreManagerViewModel.makeAdmin(userDocId: docId)
+                                            }) {
+                                                Label("Make admin", systemImage: "crown")
+                                                
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .padding()
+                            Spacer()
                         }
-                        .padding()
+                    }
+                } else {
+                    HStack {
+                        Spacer()
+                        Text("You are not an admin.")
                         Spacer()
                     }
                 }
-            } else {
-                HStack {
-                    Spacer()
-                    Text("You are not an admin.")
-                    Spacer()
-                }
+                
             }
-            
-        }
-        .alert(isPresented: $selfKickAlertPresented) {
-            Alert(title: Text("Invalid Action"), message: Text("You can't kick yourself, you dummy."), dismissButton: .default(Text("OK")))
-        }
-        .onAppear {
-            //firestoreManagerViewModel.adminCheck()
-            //firestoreManagerViewModel.memberListener()
-            firestoreManagerViewModel.printHouseholdMembers()
+            .alert(isPresented: $selfKickAlertPresented) {
+                Alert(title: Text("Invalid Action"), message: Text("You can't kick yourself, you dummy."), dismissButton: .default(Text("OK")))
+            }
+            .onAppear {
+                //firestoreManagerViewModel.adminCheck()
+                //firestoreManagerViewModel.memberListener()
+                firestoreManagerViewModel.printHouseholdMembers()
+            }
         }
     }
-}
-
-struct UserManagementView_Previews: PreviewProvider {
-    static var previews: some View {
-        let vm = FirestoreManagerVM()
-        UserManagementView().environmentObject(vm)
+    
+    struct UserManagementView_Previews: PreviewProvider {
+        static var previews: some View {
+            let vm = FirestoreManagerVM()
+            UserManagementView().environmentObject(vm)
+        }
     }
 }

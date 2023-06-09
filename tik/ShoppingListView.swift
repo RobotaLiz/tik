@@ -38,6 +38,7 @@ struct ShoppingListView: View {
                             HStack {
                                 Spacer()
                                 Text(list.name)
+                                .foregroundColor(.black)
                                 Spacer()
                                     .padding(.top, 30.0)
                                     
@@ -105,8 +106,10 @@ struct ShoppingListView: View {
                             TextField("Name:", text: $name)
                                 .frame(width: 250.0)
                                 .font(.title)
+                                .foregroundColor(.black)
                                 .padding()
                                 .foregroundColor(.white)
+                                
                                 .background()
                                 
                                 
