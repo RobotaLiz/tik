@@ -48,6 +48,7 @@ struct CalendarView: View {
                             Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
+                        
                     case .week:
                         List {
                             ForEach(calendarVM.allTasks) { task in
