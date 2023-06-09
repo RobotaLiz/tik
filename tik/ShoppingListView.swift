@@ -38,6 +38,7 @@ struct ShoppingListView: View {
                             HStack {
                                 Spacer()
                                 Text(list.name)
+                                .foregroundColor(.black)
                                 Spacer()
                                     .padding(.top, 30.0)
                                     
@@ -106,8 +107,10 @@ struct ShoppingListView: View {
                                 .frame(width: 250.0)
                                 .foregroundColor(.black)
                                 .font(.title)
+                                .foregroundColor(.black)
                                 .padding()
                                 .foregroundColor(.white)
+                                
                                 .background()
                                 
                                 

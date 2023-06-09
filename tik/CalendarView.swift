@@ -21,74 +21,81 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Picker("Date Interval", selection: $selectedInterval) {
-                    Text("Daily").tag(DateInterval.day)
-                    Text("Weekly").tag(DateInterval.week)
-                    Text("Monthly").tag(DateInterval.month)
-                    Text("Custom").tag(DateInterval.custom)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                let now = Date()
-                switch selectedInterval {
-                case .day:
-                    List {
-                        ForEach(calendarVM.allTasks) { task in
-                            if Calendar.current.isDateInToday(task.setDate) {
-                                TaskListRowView(task: task)
-                            }
-                        }
+            ZStack {
+                // Add your image here
+                Image("Two Phone Mockup Download App Instagram Post(10)")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    Picker("Date Interval", selection: $selectedInterval) {
+                        Text("Daily").tag(DateInterval.day)
+                        Text("Weekly").tag(DateInterval.week)
+                        Text("Monthly").tag(DateInterval.month)
+                        Text("Custom").tag(DateInterval.custom)
                     }
-                    .scrollContentBackground(.hidden)
-                case .week:
-                    List {
-                        ForEach(calendarVM.allTasks) { task in
-                            if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .weekOfYear) {
-                                TaskListRowView(task: task)
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal)
+                    let now = Date()
+                    switch selectedInterval {
+                    case .day:
+                        List {
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDateInToday(task.setDate) {
+                                    TaskListRowView(task: task)
+                                }
                             }
                         }
+                        .scrollContentBackground(.hidden)
+                    case .week:
+                        List {
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .weekOfYear) {
+                                    TaskListRowView(task: task)
+                                }
+                            }
+                        }
+                        .scrollContentBackground(.hidden)
+                    case .month:
+                        List {
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .month) {
+                                    TaskListRowView(task: task)
+                                }
+                            }
+                        }
+                        .scrollContentBackground(.hidden)
+                        
+                    case .custom:
+                        CalendarCustomView(calendarVM: calendarVM)
                     }
-                    .scrollContentBackground(.hidden)
-                case .month:
-                    List {
-                        ForEach(calendarVM.allTasks) { task in
-                            if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .month) {
-                                TaskListRowView(task: task)
+                }
+                .navigationTitle("Calendar")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Menu {
+                            Button("Add selected") {
+                                if let user = firestoreManagerVM.currentTikUser {
+                                    calendarVM.addAlertsSelected(user: user, selected: selectedInterval)
+                                }
+                            }
+                            Button("Add all") {
+                                if let user = firestoreManagerVM.currentTikUser {
+                                    calendarVM.addAlertsAllDate(user: user)
+                                }
                             }
                         }
+                    label: {
+                        Label("", systemImage: "alarm.waves.left.and.right")
+                            .font(.system(size: 14))
                     }
-                    .scrollContentBackground(.hidden)
-                    
-                case .custom:
-                    CalendarCustomView(calendarVM: calendarVM)
-                }
-            }
-            .navigationTitle("Calendar")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button("Add selected") {
-                            if let user = firestoreManagerVM.currentTikUser {
-                                calendarVM.addAlertsSelected(user: user, selected: selectedInterval)
-                            }
-                        }
-                        Button("Add all") {
-                            if let user = firestoreManagerVM.currentTikUser {
-                                calendarVM.addAlertsAllDate(user: user)
-                            }
-                        }
+                        //}
                     }
-                label: {
-                    Label("", systemImage: "alarm.waves.left.and.right")
-                        .font(.system(size: 14))
                 }
-                    //}
+                .onReceive(firestoreManagerVM.$tasks) { _ in
+                    calendarVM.allTasks = firestoreManagerVM.tasks
+                    calendarVM.upateTaskList()
                 }
-            }
-            .onReceive(firestoreManagerVM.$tasks) { _ in
-                calendarVM.allTasks = firestoreManagerVM.tasks
-                calendarVM.upateTaskList()
             }
         }
     }
