@@ -108,6 +108,7 @@ struct CalendarCustomView: View {
                 ForEach(calendarVM.tasks) { task in
                     TaskListRowView(task: task)
                 }
+                Spacer().listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
             .onAppear {
