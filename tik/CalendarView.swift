@@ -101,6 +101,7 @@ struct CalendarView: View {
                 }
                 .onAppear() {
                     calendarVM.allTasks = firestoreManagerVM.tasks
+                    calendarVM.upateTaskList()
                 }
             }
         }
