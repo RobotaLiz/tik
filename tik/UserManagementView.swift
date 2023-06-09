@@ -13,13 +13,13 @@ struct UserManagementView: View {
     @State var selfKickAlertPresented = false
     
     var body: some View {
-        ZStack {
-            // Add your image here
-            Image("Two Phone Mockup Download App Instagram Post(10)")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
+        VStack {
+            ZStack (alignment: .center) {
+                
+                Image("Two Phone Mockup Download App Instagram Post(10)")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
                 if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
                     if isAdmin {
                         VStack {
