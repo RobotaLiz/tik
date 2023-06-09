@@ -24,8 +24,8 @@ struct CalendarDateItem: View {
         ZStack {
             if itemState == .available {
                 circle
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 4, y: 4)
-                    .shadow(color: Color.white.opacity(0.7), radius: 5, x: -2, y: -2)
+                    .shadow(color: Color.black.opacity(0.4), radius: 5, x: 6, y: 6)
+                    .shadow(color: Color.white.opacity(0.1), radius: 5, x: -2, y: -2)
             }
             else {
                 circle
@@ -99,7 +99,7 @@ struct CalendarDateItem: View {
         case .notAvailable:
             return Circle().fill(.clear)
         case .selected:
-            return Circle().fill(Color.offWhite)
+            return Circle().fill(Color.appYellow)
         case .lastMonth:
             return Circle().fill(.gray)
         case .nextMonth:
