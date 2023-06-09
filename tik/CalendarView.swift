@@ -36,7 +36,7 @@ struct CalendarView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
-                    let now = Date()
+                    let now = Date()	
                     switch selectedInterval {
                     case .day:
                         List {
@@ -98,6 +98,9 @@ struct CalendarView: View {
                 .onReceive(firestoreManagerVM.$tasks) { _ in
                     calendarVM.allTasks = firestoreManagerVM.tasks
                     calendarVM.upateTaskList()
+                }
+                .onAppear() {
+                    calendarVM.allTasks = firestoreManagerVM.tasks
                 }
             }
         }

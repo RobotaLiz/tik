@@ -14,7 +14,7 @@ struct CalendarCustomView: View {
     let cvHelper = CalendarViewHelper()
     @State var calendarArray: [[Date]] = []
     @State var toggle = true
-    @StateObject var calendarVM : CalendarViewModel
+    @ObservedObject var calendarVM : CalendarViewModel
     @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
     
     @State var toggleStartDate = false
