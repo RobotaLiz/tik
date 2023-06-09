@@ -108,13 +108,6 @@ struct CalendarCustomView: View {
                 ForEach(calendarVM.tasks) { task in
                     TaskListRowView(task: task)
                 }
-                .onDelete() { indexSet in
-                    for index in indexSet {
-                        if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == calendarVM.tasks[index].id}) {
-                            firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
-                        }
-                    }
-                }
                 Spacer().listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
