@@ -39,30 +39,48 @@ struct CalendarView: View {
                     let now = Date()
                     switch selectedInterval {
                     case .day:
+                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
                         List {
-                            ForEach(calendarVM.allTasks) { task in
-                                if Calendar.current.isDateInToday(task.setDate) {
-                                    TaskListRowView(task: task)
+                            ForEach(itemsToDisplay) { task in
+                                TaskListRowView(task: task)
+                            }
+                            .onDelete() { indexSet in
+                                for index in indexSet {
+                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
+                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
+                                    }
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                     case .week:
+                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDate(now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
                         List {
-                            ForEach(calendarVM.allTasks) { task in
-                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .weekOfYear) {
-                                    TaskListRowView(task: task)
+                            ForEach(itemsToDisplay) { task in
+                                TaskListRowView(task: task)
+                            }
+                            .onDelete() { indexSet in
+                                for index in indexSet {
+                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
+                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
+                                    }
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                     case .month:
+                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDate(now, equalTo: $0.setDate, toGranularity: .month)}
                         List {
-                            ForEach(calendarVM.allTasks) { task in
-                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .month) {
-                                    TaskListRowView(task: task)
+                            ForEach(itemsToDisplay) { task in
+                                TaskListRowView(task: task)
+                            }
+                            .onDelete() { indexSet in
+                                for index in indexSet {
+                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
+                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
+                                    }
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
