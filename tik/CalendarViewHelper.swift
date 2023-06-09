@@ -63,14 +63,6 @@ struct CalendarViewHelper {
         guard let dayRange = calendar.range(of: .day, in: .month, for: now) else { return [] }
         var components = calendar.dateComponents([.day, .month, .year], from: now)
         
-        /*let componentsForWholeMonth = dayRange.compactMap { day -> DateComponents? in
-            components.day = day
-            components.hour = 12
-            return calendar.date(from: components).flatMap {
-                calendar.dateComponents([.weekday, .day, .month, .year, .hour], from: $0)
-            }
-        }*/
-        
         let datesForWholeMonth = dayRange.compactMap { day -> Date? in
             components.day = day
             components.hour = 12
@@ -78,7 +70,6 @@ struct CalendarViewHelper {
         }.compactMap{$0}
         
         return datesForWholeMonth
-        //return componentsForWholeMonth.compactMap {calendar.date(from: $0)}
     }
     
     //Get the number of the the weekday a ceratin month start on

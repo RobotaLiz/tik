@@ -66,14 +66,12 @@ struct CalendarDateItem: View {
         }
     }
     
+    //TODO: Rewrite checking with enum
     func pressed() {
         let calendar = Calendar.current
         
         if let nextMonth = calendar.date(byAdding: DateComponents(month: 1), to: calendarVM.currentMonth),
            let lastMonth = calendar.date(byAdding: DateComponents(month: -1), to: calendarVM.currentMonth) {
-            print(calendar.isDate(date, equalTo: nextMonth, toGranularity: .month))
-            print(date)
-            print(calendarVM.currentMonth)
             if calendar.isDate(date, equalTo: nextMonth, toGranularity: .month) {
                 calendarVM.currentMonth = nextMonth
             }
