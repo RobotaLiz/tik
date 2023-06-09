@@ -89,7 +89,7 @@ class FirestoreManagerVM : ObservableObject {
 
     
     func printHouseholdMembers() {
-
+        
         guard let currentMembers = currentHousehold?.members else {return}
         print("Current household members: ")
         for member in currentMembers {
@@ -321,19 +321,6 @@ class FirestoreManagerVM : ObservableObject {
             print("Error saving new member to subcollection: \(error.localizedDescription)")
         }
         
-        /*let newMemberData = try? Firestore.Encoder().encode(newMember)
-        
-        if let newMemberData = newMemberData {
-            print("Adding member \(currentTikUser.name ?? "Anon") to Firestore")
-            householdRef.updateData(["members" : FieldValue.arrayUnion([newMemberData])]) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
-                    self.checkInHousehold(docID: householdID)
-                }
-            }
-        }*/
     }
     
     
@@ -431,7 +418,6 @@ class FirestoreManagerVM : ObservableObject {
             }
         }
     }
-    
     
     func generatePin() -> String {
         let lowest = 000_000

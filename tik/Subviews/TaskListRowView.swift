@@ -49,7 +49,7 @@ struct TaskListRowView: View {
                 if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
                     if isAdmin {
                         Menu {
-                            ForEach(firestoreManagerViewModel.currentHousehold?.members ?? [], id: \.self) { member in
+                            ForEach(firestoreManagerViewModel.members, id: \.self) { member in
                                 if let name = member.name, let taskId = task.docId {
                                     Button(name) {
                                         firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: member)
