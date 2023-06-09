@@ -67,7 +67,7 @@ class FirestoreManagerVM : ObservableObject {
                 self.isCurrentUserAdmin = false
             }
         }
-
+        
     }
     
     func kick(userDocId: String) {
@@ -86,7 +86,7 @@ class FirestoreManagerVM : ObservableObject {
         }
         
     }
-
+    
     
     func printHouseholdMembers() {
         
@@ -114,7 +114,7 @@ class FirestoreManagerVM : ObservableObject {
                 print("Error fetching task document: \(error)")
                 return
             }
-
+            
             guard let document = document, document.exists else {
                 print("Task document does not exist")
                 return
@@ -129,7 +129,7 @@ class FirestoreManagerVM : ObservableObject {
             }
             
         }
-  
+        
     }
     
     /*
@@ -141,9 +141,9 @@ class FirestoreManagerVM : ObservableObject {
         guard let currentHouseholdDocID = currentHousehold?.docId else {return}
         
         let taskRef = db.collection(self.householdCollRef)
-                        .document(currentHouseholdDocID)
-                        .collection(self.taskCollRef)
-                        .document(taskId)
+            .document(currentHouseholdDocID)
+            .collection(self.taskCollRef)
+            .document(taskId)
         
         // Retrieves task document from firestore (with error handling)
         taskRef.getDocument { (document, error) in
@@ -151,12 +151,12 @@ class FirestoreManagerVM : ObservableObject {
                 print("Error fetching task document: \(error)")
                 return
             }
-
+            
             guard let document = document, document.exists else {
                 print("Task document does not exist")
                 return
             }
-
+            
             // Retrieves assignedTo
             var assignedTo = document.data()?["assignedTo"] as? [[String: Any]] ?? []
             
@@ -188,7 +188,7 @@ class FirestoreManagerVM : ObservableObject {
                     print("Users added to task")
                 }
             }
-
+            
         }
     }
     
@@ -211,7 +211,7 @@ class FirestoreManagerVM : ObservableObject {
         self.members.append(newMember)
         
         let newHousehold = Household(name: name, pin: pin, members: [newMember], admin: userId)
-    
+        
         do {
             print("Adding household \(name) to Firestore")
             try householdRef.setData(from: newHousehold) { error in
@@ -307,7 +307,7 @@ class FirestoreManagerVM : ObservableObject {
         
         let membersCollectionRef = householdRef.collection("members")
         let newMemberDocumentRef = membersCollectionRef.document(userID)
-
+        
         do {
             try newMemberDocumentRef.setData(from: newMember) { [weak self] error in
                 if let error = error {
@@ -547,7 +547,7 @@ class FirestoreManagerVM : ObservableObject {
         let shopRef = self.db.collection(self.householdCollRef).document(docID).collection("shoppingItems")
         
         shopRef.document(shoppingItem.docId ?? "").delete() { err in
-            if let err = err {
+            if err != nil{
                 print("Error removing shoppingItem")
             }else{
                 print("removing successfully")

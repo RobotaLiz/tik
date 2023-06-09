@@ -68,8 +68,8 @@ struct CalendarCustomView: View {
                             .datePickerStyle(GraphicalDatePickerStyle())
                     }
                 }
-                    
-                    }
+                
+            }
             else {
                 Text(calendarVM.currentMonth.formatted(.dateTime.month()))
                 VStack {

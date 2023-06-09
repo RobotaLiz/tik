@@ -69,7 +69,7 @@ struct JoinHouseholdView: View {
                         .background()
                         .border(pinIsValid ? .white : .appYellow)
                         Spacer(minLength: 20)
-
+                        
                         
                         Button(action: {
                             pinIsValid = inputPin.count == 6 // Perform validation check

@@ -16,7 +16,7 @@ struct ContentView: View {
             } else if firestoreManagerViewModel.currentTikUser != nil && firestoreManagerViewModel.currentHousehold != nil {
                 //TaskListView(authViewModel: authViewModel)
                 BottomTabBar()
-
+                
             } else if firestoreManagerViewModel.currentTikUser != nil && firestoreManagerViewModel.currentHousehold == nil {
                 HouseholdSelectionView()
             }
@@ -25,7 +25,7 @@ struct ContentView: View {
             firestoreManagerViewModel.getCurrentTikUser()
         }
     }
-        
+    
 }
 
 

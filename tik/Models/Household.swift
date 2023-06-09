@@ -19,9 +19,9 @@ struct Household : Codable {
     //var tasks : [Task] = [] //Added as sub collection instead
     var admin : String? // String representing admin's user id
     
-//    init(name: String, pinNum: String) {
-//        self.name = name
-//        self.pin = pinNum
-//    }
+    //    init(name: String, pinNum: String) {
+    //        self.name = name
+    //        self.pin = pinNum
+    //    }
     
 }

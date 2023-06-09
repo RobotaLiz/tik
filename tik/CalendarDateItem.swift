@@ -30,7 +30,7 @@ struct CalendarDateItem: View {
             else {
                 circle
             }
-                Text("\(day)")
+            Text("\(day)")
         }
         .onTapGesture {
             pressed()

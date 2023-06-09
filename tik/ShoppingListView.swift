@@ -28,7 +28,7 @@ struct ShoppingListView: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     
-                       
+                    
                     
                     List{
                         Spacer()
@@ -38,10 +38,10 @@ struct ShoppingListView: View {
                             HStack {
                                 Spacer()
                                 Text(list.name)
-                                .foregroundColor(.black)
+                                    .foregroundColor(.black)
                                 Spacer()
                                     .padding(.top, 30.0)
-                                    
+                                
                                 Button(action: {
                                     firestoreVm.deletShoppItem(shoppingItem: list)
                                 })
@@ -76,7 +76,7 @@ struct ShoppingListView: View {
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.black)
-
+                            
                         }
                         .buttonStyle(.borderless)
                         .padding(.bottom, 50.0)
@@ -110,12 +110,12 @@ struct ShoppingListView: View {
                                 .foregroundColor(.black)
                                 .padding()
                                 .foregroundColor(.white)
-                                
-                                .background()
-                                
-                                
                             
-                    
+                                .background()
+                            
+                            
+                            
+                            
                             
                             
                             Button("Add", action: {
@@ -129,7 +129,7 @@ struct ShoppingListView: View {
                         }
                     }
                 }
-
+                
                 
                 
                 .navigationBarTitle("Shopping List")

@@ -26,39 +26,39 @@ struct TaskListView: View {
         
         NavigationView {
             
-                // Add your image here
-                ZStack (alignment: .center) {
-                    
-                    
-                        Image("Two Phone Mockup Download App Instagram Post(10)")
-                            .resizable()
-                            .scaledToFill()
-                            .edgesIgnoringSafeArea(.all)
-
+            // Add your image here
+            ZStack (alignment: .center) {
+                
+                
+                Image("Two Phone Mockup Download App Instagram Post(10)")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                
                 
                 VStack {
-                   
-                    Spacer()
-//                    if let uid = auth.currentUser?.uid {
-//
-//                        Text("Firestore UID: \(uid)")
-//                    } else {
-////                        Text("UID: N/A")
-//                    }
-//
-//                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
-//                        HStack {
-//                            if let email = currentTikUser.email {
-//                                Text("Tik user: \(email)")
-//                            }
-//                            if let docID = currentTikUser.docId {
-//                                Text(("ID: \(docID)"))
-//                            }
-//                        }
-//                    }
-
                     
-
+                    Spacer()
+                    //                    if let uid = auth.currentUser?.uid {
+                    //
+                    //                        Text("Firestore UID: \(uid)")
+                    //                    } else {
+                    ////                        Text("UID: N/A")
+                    //                    }
+                    //
+                    //                    if let currentTikUser = firestoreManagerViewModel.currentTikUser {
+                    //                        HStack {
+                    //                            if let email = currentTikUser.email {
+                    //                                Text("Tik user: \(email)")
+                    //                            }
+                    //                            if let docID = currentTikUser.docId {
+                    //                                Text(("ID: \(docID)"))
+                    //                            }
+                    //                        }
+                    //                    }
+                    
+                    
+                    
                     List {
                         ForEach(firestoreManagerViewModel.tasks) { task in
                             TaskListRowView(task: task)
@@ -71,14 +71,14 @@ struct TaskListView: View {
                         .buttonStyle(.borderless)
                         .padding()
                     }
-
+                    
                     .scrollContentBackground(.hidden)
                     .cornerRadius(10)
                     
                     // Navigation to AddTaskView added.
                     Button(action: {
                         
-
+                        
                         
                         addTaskIsPresented = true
                         print("!")
@@ -92,13 +92,13 @@ struct TaskListView: View {
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.black)
-
+                            
                         }
                         .buttonStyle(.borderless)
                         .padding(.bottom, 50.0)
                         
                     }
-               
+                    
                     // AddTaskView is presented as a sheet.
                     .sheet(isPresented: $addTaskIsPresented) {
                         AddTaskView(addTaskIsPresented: $addTaskIsPresented)
@@ -134,7 +134,7 @@ struct TaskListView: View {
         }
         
     }
-  
+    
 }
 
 struct TaskListView_Previews: PreviewProvider {
