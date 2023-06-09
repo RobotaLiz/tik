@@ -45,6 +45,7 @@ struct CalendarView: View {
                                     TaskListRowView(task: task)
                                 }
                             }
+                            Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                     case .week:
@@ -54,6 +55,7 @@ struct CalendarView: View {
                                     TaskListRowView(task: task)
                                 }
                             }
+                            Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                     case .month:
@@ -63,6 +65,7 @@ struct CalendarView: View {
                                     TaskListRowView(task: task)
                                 }
                             }
+                            Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                         
