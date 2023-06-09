@@ -16,6 +16,7 @@ struct CalendarView: View {
     
     @StateObject var calendarVM = CalendarViewModel()
     @State var selectedInterval: DateInterval = .day
+    @State var itemsToDisplayTwo = [Task]()
     
     @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
     
@@ -39,15 +40,16 @@ struct CalendarView: View {
                     let now = Date()
                     switch selectedInterval {
                     case .day:
-                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+                        //var itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
                         List {
-                            ForEach(itemsToDisplay) { task in
+                            ForEach(itemsToDisplayTwo) { task in
                                 TaskListRowView(task: task)
                             }
                             .onDelete() { indexSet in
                                 for index in indexSet {
-                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
+                                    if let indexToRemove = firestoreManagerVM.tasks.firstIndex(where: { $0.id == itemsToDisplayTwo[index].id}) {
                                         firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
+                                        print(indexToRemove)
                                     }
                                 }
                             }
@@ -116,8 +118,47 @@ struct CalendarView: View {
                 .onReceive(firestoreManagerVM.$tasks) { _ in
                     calendarVM.allTasks = firestoreManagerVM.tasks
                     calendarVM.upateTaskList()
+                    /*switch selectedInterval {
+                    case .day:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+                    case .week:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
+                    case .month:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .month)}
+                    case .custom:
+                       break
+                    }*/
+                    updateList()
+                }
+                .onAppear() {
+                    calendarVM.allTasks = firestoreManagerVM.tasks
+                    /*switch selectedInterval {
+                    case .day:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+                    case .week:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
+                    case .month:
+                        itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .month)}
+                    case .custom:
+                       break
+                    }*/
+                    //updateList()
                 }
             }
+        }
+    }
+    
+    func updateList() {
+        itemsToDisplayTwo = []
+        switch selectedInterval {
+        case .day:
+            itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
+        case .week:
+            itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
+        case .month:
+            itemsToDisplayTwo = calendarVM.allTasks.filter {Calendar.current.isDate(Date.now, equalTo: $0.setDate, toGranularity: .month)}
+        case .custom:
+           break
         }
     }
 }
