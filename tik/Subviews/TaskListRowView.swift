@@ -36,7 +36,7 @@ struct TaskListRowView: View {
                    
                 }
                 
-//                .buttonStyle(PlainButtonStyle())
+                .buttonStyle(.borderless)
                 
                 
             }
@@ -61,6 +61,7 @@ struct TaskListRowView: View {
                             Label("", systemImage: "person.fill.badge.plus")
                                 .font(.system(size: 26))
                         }
+                        .buttonStyle(.borderless)
                     }
                 }
                 
@@ -79,7 +80,7 @@ struct TaskListRowView: View {
                     Image(systemName: "figure.wave.circle.fill")
                         .font(.system(size: 26))
                     
-                }
+                }.buttonStyle(.borderless)
                 
             }
         }

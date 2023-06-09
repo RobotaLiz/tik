@@ -14,7 +14,7 @@ struct CalendarCustomView: View {
     let cvHelper = CalendarViewHelper()
     @State var calendarArray: [[Date]] = []
     @State var toggle = true
-    @StateObject var calendarVM : CalendarViewModel
+    @ObservedObject var calendarVM : CalendarViewModel
     @EnvironmentObject var firestoreManagerVM : FirestoreManagerVM
     
     @State var toggleStartDate = false
@@ -107,13 +107,6 @@ struct CalendarCustomView: View {
             List {
                 ForEach(calendarVM.tasks) { task in
                     TaskListRowView(task: task)
-                }
-                .onDelete() { indexSet in
-                    for index in indexSet {
-                        if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == calendarVM.tasks[index].id}) {
-                            firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
-                        }
-                    }
                 }
                 Spacer().listRowBackground(Color.clear)
             }

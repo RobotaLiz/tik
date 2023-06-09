@@ -36,51 +36,34 @@ struct CalendarView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
-                    let now = Date()
+                    let now = Date()	
                     switch selectedInterval {
                     case .day:
-                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDateInToday($0.setDate)}
                         List {
-                            ForEach(itemsToDisplay) { task in
-                                TaskListRowView(task: task)
-                            }
-                            .onDelete() { indexSet in
-                                for index in indexSet {
-                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
-                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
-                                    }
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDateInToday(task.setDate) {
+                                    TaskListRowView(task: task)
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
+                        
                     case .week:
-                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDate(now, equalTo: $0.setDate, toGranularity: .weekOfYear)}
                         List {
-                            ForEach(itemsToDisplay) { task in
-                                TaskListRowView(task: task)
-                            }
-                            .onDelete() { indexSet in
-                                for index in indexSet {
-                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
-                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
-                                    }
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .weekOfYear) {
+                                    TaskListRowView(task: task)
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
                         }
                         .scrollContentBackground(.hidden)
                     case .month:
-                        let itemsToDisplay = calendarVM.allTasks.filter {Calendar.current.isDate(now, equalTo: $0.setDate, toGranularity: .month)}
                         List {
-                            ForEach(itemsToDisplay) { task in
-                                TaskListRowView(task: task)
-                            }
-                            .onDelete() { indexSet in
-                                for index in indexSet {
-                                    if let indexToRemove = calendarVM.allTasks.firstIndex(where: { $0.id == itemsToDisplay[index].id}) {
-                                        firestoreManagerVM.deleteTaskFromFirestore(index: indexToRemove)
-                                    }
+                            ForEach(calendarVM.allTasks) { task in
+                                if Calendar.current.isDate(now, equalTo: task.setDate, toGranularity: .month) {
+                                    TaskListRowView(task: task)
                                 }
                             }
                             Spacer().listRowBackground(Color.clear)
@@ -114,6 +97,10 @@ struct CalendarView: View {
                     }
                 }
                 .onReceive(firestoreManagerVM.$tasks) { _ in
+                    calendarVM.allTasks = firestoreManagerVM.tasks
+                    calendarVM.upateTaskList()
+                }
+                .onAppear() {
                     calendarVM.allTasks = firestoreManagerVM.tasks
                     calendarVM.upateTaskList()
                 }
