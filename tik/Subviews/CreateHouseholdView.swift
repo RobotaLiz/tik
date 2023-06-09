@@ -30,7 +30,7 @@ struct CreateHouseholdView: View {
                         .frame(width: 150, height: 150)
                         .padding(.bottom)
                 }
-//                Spacer().frame(height: 180)
+                //                Spacer().frame(height: 180)
                 HStack {
                     Spacer(minLength: 60)
                     TextField("Enter name", text: $householdName)
@@ -50,7 +50,7 @@ struct CreateHouseholdView: View {
                     Color(.black)
                         .cornerRadius(40)
                     Text(householdPin)
-
+                    
                 }
                 .foregroundColor(.white)
                 .frame(width: 200, height: 70)
@@ -63,7 +63,7 @@ struct CreateHouseholdView: View {
                     
                 }) {
                     VStack{
-                
+                        
                         Text("Add Household")
                             .font(.custom("Roboto-Bold", size: 24))
                             .foregroundColor(.black)

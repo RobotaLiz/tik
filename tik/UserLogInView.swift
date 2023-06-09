@@ -46,7 +46,7 @@ struct UserLogInView: View {
                             .focused($focusedField, equals: .usernameField)
                             .textInputAutocapitalization(.never)
                             .padding(.vertical, 10.0)
-
+                        
                         
                         TextField("Email:", text: $email)
                             .textFieldStyle(AuthTextFieldStyle())
@@ -70,8 +70,8 @@ struct UserLogInView: View {
                 HStack {
                     Button("Add account", action: {
                         firestoreManagerViewModel.addAccount(name: name, email: email, password: password)
-
-                            
+                        
+                        
                     }
                            
                     )
@@ -94,7 +94,7 @@ struct UserLogInView: View {
                 .padding(.top, 20)
             }
             .frame(width: 350, height: 370)
-           
+            
             
             .padding()
             .toastView(toast: $firestoreManagerViewModel.toast)

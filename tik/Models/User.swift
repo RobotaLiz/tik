@@ -20,5 +20,5 @@ struct User : Codable, Hashable {
     var latestHousehold : String?
     // Antonio added this for testing - can and will be removed
     var id = UUID()
-  
+    
 }

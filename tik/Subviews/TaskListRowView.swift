@@ -13,16 +13,13 @@ struct TaskListRowView: View {
     @EnvironmentObject var firestoreManagerViewModel : FirestoreManagerVM
     
     var body: some View {
-        VStack(alignment: .center)
-        
-        {
+        VStack(alignment: .center) {
             HStack {
-                
                 Text(task.title)
                     .padding(.leading, 30.0)
                 
                 Spacer()
-                    
+                
                 Button(action: {
                     firestoreManagerViewModel.toggleTikBox(task: task)
                 }) {
@@ -33,7 +30,7 @@ struct TaskListRowView: View {
                         Image(systemName: "square")
                             .padding(.trailing, 20.0)
                     }
-                   
+                    
                 }
                 
                 .buttonStyle(.borderless)
@@ -44,7 +41,7 @@ struct TaskListRowView: View {
             .frame(width: 350.0, height: 20.0)
             
             
-//            Divider()
+            //            Divider()
             HStack {
                 if let isAdmin = firestoreManagerViewModel.isCurrentUserAdmin {
                     if isAdmin {
@@ -55,7 +52,7 @@ struct TaskListRowView: View {
                                         firestoreManagerViewModel.toggleUserToTask(taskId: taskId, member: member)
                                     }
                                 }
-
+                                
                             }
                         } label: {
                             Label("", systemImage: "person.fill.badge.plus")
@@ -84,21 +81,21 @@ struct TaskListRowView: View {
                 
             }
         }
-//        .frame(width: 350.0, height: 80.0)
+        //        .frame(width: 350.0, height: 80.0)
         .cornerRadius(5)
         .accentColor(Color.black)
         .font(.custom("Roboto-Bold", size: 18))
-
+        
         .background(.yellow)
         .foregroundColor(.black)
         .clipShape(Capsule())
         
         .listRowBackground(Color.clear)
-
-    
-
+        
+        
+        
     }
-
+    
 }
 
 struct TaskListRowView_Previews: PreviewProvider {
