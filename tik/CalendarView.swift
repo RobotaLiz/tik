@@ -35,7 +35,7 @@ struct CalendarView: View {
                         Text("Custom").tag(DateInterval.custom)
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal)
+                    .padding()
                     let now = Date()
                     switch selectedInterval {
                     case .day:
