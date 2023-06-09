@@ -104,6 +104,7 @@ struct ShoppingListView: View {
                             
                             TextField("Name:", text: $name)
                                 .frame(width: 250.0)
+                                .foregroundColor(.black)
                                 .font(.title)
                                 .padding()
                                 .foregroundColor(.white)
